@@ -1,0 +1,1387 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl" data-theme="light">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>SmartVisionAI — تركي تقني</title>
+<style>
+:root[data-theme="light"]{
+  --bg:#EEEEEE; --bg-soft:#F5F5F5; --panel:#FFFFFF; --panel-alt:#CBCBCB;
+  --sidebar:#CBCBCB; --primary:#777C6D; --primary-hover:#5a5e51;
+  --accent:#B7B89F; --accent-hover:#a3a48d;
+  --text:#3d4036; --text-soft:#5a5e51; --muted:#777C6D;
+  --border:rgba(119,124,109,0.2); --shadow:0 4px 16px rgba(119,124,109,0.12);
+  --code-bg:#F0F0F0; --code-border:#CBCBCB;
+  --success:#5a8a4d; --danger:#a8433c;
+}
+:root[data-theme="dark"]{
+  --bg:#3d4036; --bg-soft:#4a4d42; --panel:#5a5e51; --panel-alt:#4a4d42;
+  --sidebar:#4a4d42; --primary:#B7B89F; --primary-hover:#CBCBCB;
+  --accent:#CBCBCB; --accent-hover:#EEEEEE;
+  --text:#EEEEEE; --text-soft:#CBCBCB; --muted:#B7B89F;
+  --border:rgba(238,238,238,0.15); --shadow:0 4px 20px rgba(0,0,0,0.3);
+  --code-bg:#4a4d42; --code-border:rgba(238,238,238,0.2);
+  --success:#A8DC8C; --danger:#E87B6E;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{font-family:"Segoe UI","Tahoma",system-ui,sans-serif;
+  background:var(--bg);color:var(--text);line-height:1.75;
+  -webkit-font-smoothing:antialiased;min-height:100vh}
+a{color:var(--primary);text-decoration:none}
+a:hover{text-decoration:underline}
+button{cursor:pointer;font-family:inherit;border:none;background:none;
+  color:inherit;font-size:inherit}
+
+/* INTRO */
+#introOverlay{position:fixed;inset:0;z-index:99999;
+  background:linear-gradient(135deg,#1a1c17 0%,#2a2c24 50%,#1a1c17 100%);
+  display:flex;align-items:center;justify-content:center;flex-direction:column;
+  transition:opacity 0.6s ease;cursor:not-allowed;user-select:none}
+#introOverlay.fade-out{opacity:0;pointer-events:none}
+.intro-phrase{font-size:clamp(30px,6vw,64px);font-weight:700;color:#EEEEEE;
+  text-align:center;padding:0 24px;opacity:0;transform:scale(0.95);
+  transition:opacity 0.15s ease,transform 0.15s ease;
+  text-shadow:0 0 50px rgba(183,184,159,0.5);max-width:900px;line-height:1.4}
+.intro-phrase.show{opacity:1;transform:scale(1)}
+.intro-phrase.fade{opacity:0;transform:scale(1.05)}
+.intro-dots{display:flex;gap:12px;position:absolute;bottom:48px}
+.intro-dot{width:10px;height:10px;border-radius:50%;
+  background:rgba(183,184,159,0.3);transition:all 0.2s ease}
+.intro-dot.active{background:#B7B89F;box-shadow:0 0 16px rgba(183,184,159,0.9);
+  transform:scale(1.4)}
+.intro-decoration{position:absolute;width:340px;height:340px;border-radius:50%;
+  border:1px solid rgba(183,184,159,0.15);pointer-events:none;
+  animation:rotate 15s linear infinite}
+.intro-decoration::before{content:"";position:absolute;inset:24px;border-radius:50%;
+  border:1px solid rgba(183,184,159,0.1)}
+@keyframes rotate{from{transform:rotate(0deg)}to{transform:rotate(360deg)}}
+
+/* HEADER */
+.top-header{position:sticky;top:0;z-index:100;background:var(--panel);
+  border-bottom:1px solid var(--border);padding:14px 28px;
+  display:flex;align-items:center;justify-content:space-between;
+  gap:16px;flex-wrap:wrap;box-shadow:var(--shadow)}
+.logo{display:flex;align-items:center;gap:12px;font-weight:800;
+  font-size:19px;color:var(--primary)}
+.logo-mark{width:40px;height:40px;border-radius:10px;
+  background:linear-gradient(135deg,var(--primary) 0%,var(--accent) 100%);
+  display:flex;align-items:center;justify-content:center;color:#FFFFFF;
+  font-size:17px;font-weight:900;box-shadow:0 3px 10px rgba(119,124,109,0.3)}
+.logo-text{display:flex;flex-direction:column;line-height:1.2}
+.logo-text strong{font-size:17px}
+.logo-text small{font-size:11px;font-weight:500;color:var(--muted);margin-top:2px}
+.header-actions{display:flex;gap:10px;align-items:center;flex-wrap:wrap}
+.btn-discover{background:linear-gradient(135deg,var(--primary) 0%,var(--accent) 100%);
+  color:#FFFFFF;padding:10px 20px;border-radius:10px;font-weight:700;font-size:13px;
+  display:inline-flex;align-items:center;gap:8px;transition:all 0.2s ease;
+  box-shadow:0 3px 12px rgba(119,124,109,0.3)}
+.btn-discover:hover{transform:translateY(-2px);
+  box-shadow:0 6px 20px rgba(119,124,109,0.4);text-decoration:none}
+.btn-discover svg{width:16px;height:16px;stroke:currentColor;fill:none;stroke-width:2.5}
+.btn-download-top{background:linear-gradient(135deg,#5a8a4d 0%,#7fb56a 100%);
+  color:#FFFFFF;padding:10px 20px;border-radius:10px;font-weight:700;font-size:13px;
+  display:inline-flex;align-items:center;gap:8px;transition:all 0.2s ease;
+  box-shadow:0 3px 12px rgba(90,138,77,0.35)}
+.btn-download-top:hover{transform:translateY(-2px);
+  box-shadow:0 6px 20px rgba(90,138,77,0.45);text-decoration:none;color:#FFFFFF}
+.btn-download-top svg{width:16px;height:16px;stroke:currentColor;fill:none;stroke-width:2.5}
+.icon-btn{width:40px;height:40px;border-radius:10px;background:var(--bg-soft);
+  border:1px solid var(--border);color:var(--text);display:flex;
+  align-items:center;justify-content:center;transition:all 0.2s ease;
+  font-size:13px;font-weight:800}
+.icon-btn:hover{background:var(--accent);color:var(--primary);border-color:var(--accent)}
+
+/* LAYOUT */
+.layout{display:flex;min-height:calc(100vh - 69px)}
+.sidebar{width:260px;flex-shrink:0;background:var(--sidebar);
+  border-left:1px solid var(--border);padding:24px 14px;
+  position:sticky;top:69px;height:calc(100vh - 69px);overflow-y:auto}
+[dir="ltr"] .sidebar{border-left:none;border-right:1px solid var(--border)}
+.sidebar-section{font-size:10px;font-weight:800;color:var(--muted);
+  text-transform:uppercase;letter-spacing:0.8px;padding:16px 14px 8px}
+.nav-item{display:flex;align-items:center;gap:11px;padding:11px 14px;
+  border-radius:9px;font-size:13px;color:var(--text-soft);
+  transition:all 0.15s ease;width:100%;text-align:start;margin-bottom:2px}
+.nav-item:hover{background:var(--panel-alt);color:var(--text)}
+.nav-item.active{background:var(--primary);color:#FFFFFF;font-weight:700}
+.nav-item svg{width:17px;height:17px;stroke:currentColor;fill:none;
+  stroke-width:2;flex-shrink:0}
+.main{flex:1;padding:36px 44px;max-width:1100px;min-width:0}
+@media(max-width:900px){.sidebar{display:none}.main{padding:20px 16px}
+  .top-header{padding:12px 16px}.btn-discover,.btn-download-top{padding:8px 14px;font-size:12px}}
+
+/* HERO */
+.hero{background:linear-gradient(135deg,var(--panel) 0%,var(--bg-soft) 100%);
+  border-radius:20px;padding:48px 40px;margin-bottom:44px;
+  border:1px solid var(--border);box-shadow:var(--shadow);
+  position:relative;overflow:hidden}
+.hero::before{content:"";position:absolute;top:-30%;left:-10%;
+  width:400px;height:400px;border-radius:50%;
+  background:radial-gradient(circle,var(--accent) 0%,transparent 70%);
+  opacity:0.15;pointer-events:none}
+.hero::after{content:"";position:absolute;bottom:-40%;right:-15%;
+  width:350px;height:350px;border-radius:50%;
+  background:radial-gradient(circle,var(--primary) 0%,transparent 70%);
+  opacity:0.1;pointer-events:none}
+.hero-content{position:relative;z-index:1}
+.hero-badge{display:inline-flex;align-items:center;gap:6px;
+  background:var(--accent);color:var(--primary);padding:5px 14px;
+  border-radius:20px;font-size:11px;font-weight:700;margin-bottom:16px;
+  letter-spacing:0.5px}
+.hero h1{font-size:clamp(28px,4vw,42px);font-weight:800;
+  color:var(--primary);margin-bottom:14px;line-height:1.25}
+.hero-subtitle{font-size:15px;color:var(--text-soft);
+  margin-bottom:28px;max-width:640px;line-height:1.8}
+.hero-stats{display:flex;gap:14px;flex-wrap:wrap}
+.hero-stat{background:var(--panel);padding:14px 22px;border-radius:12px;
+  border:1px solid var(--border);min-width:130px}
+.hero-stat .num{font-size:24px;font-weight:800;color:var(--primary);line-height:1}
+.hero-stat .lbl{font-size:11px;color:var(--muted);font-weight:600;margin-top:5px}
+
+/* SECTIONS */
+.section{margin-bottom:64px;scroll-margin-top:90px}
+.section-header{display:flex;align-items:center;gap:14px;margin-bottom:22px}
+.section-icon{width:44px;height:44px;border-radius:12px;
+  background:linear-gradient(135deg,var(--primary) 0%,var(--accent) 100%);
+  display:flex;align-items:center;justify-content:center;
+  color:#FFFFFF;flex-shrink:0}
+.section-icon svg{width:22px;height:22px;stroke:currentColor;fill:none;stroke-width:2}
+.section-title{font-size:26px;font-weight:800;color:var(--primary);margin:0}
+.section-lead{font-size:15px;color:var(--text-soft);margin-bottom:20px;max-width:750px}
+.section h3{font-size:18px;font-weight:700;color:var(--primary);margin:28px 0 12px}
+.section p{color:var(--text-soft);margin-bottom:14px;font-size:14.5px}
+.section ul,.section ol{padding-inline-start:26px;margin:10px 0 18px;
+  color:var(--text-soft);font-size:14.5px}
+.section li{margin-bottom:8px}
+
+/* CARDS */
+.cards-grid{display:grid;gap:16px;grid-template-columns:repeat(3,1fr);margin:18px 0}
+.cards-grid.two{grid-template-columns:repeat(2,1fr)}
+.cards-grid.four{grid-template-columns:repeat(4,1fr)}
+@media(max-width:900px){
+  .cards-grid,.cards-grid.three,.cards-grid.four{grid-template-columns:repeat(2,1fr)}
+}
+@media(max-width:600px){
+  .cards-grid,.cards-grid.two,.cards-grid.three,.cards-grid.four{grid-template-columns:1fr}
+}
+.card{background:var(--panel);border:1px solid var(--border);
+  border-radius:14px;padding:20px;box-shadow:var(--shadow);transition:all 0.2s ease}
+.card:hover{transform:translateY(-3px);border-color:var(--accent);
+  box-shadow:0 8px 24px rgba(119,124,109,0.18)}
+.card-icon{width:36px;height:36px;border-radius:9px;background:var(--bg-soft);
+  display:flex;align-items:center;justify-content:center;margin-bottom:12px}
+.card-icon svg{width:20px;height:20px;stroke:var(--primary);fill:none;stroke-width:2}
+.card h4{font-size:14px;font-weight:700;color:var(--primary);margin:0 0 6px}
+.card p{font-size:13px;color:var(--text-soft);margin:0;line-height:1.7}
+
+/* DOWNLOAD SECTION */
+.download-card{
+  background:var(--panel);border:2px solid var(--border);border-radius:16px;
+  text-align:center;transition:all 0.25s ease;
+  box-shadow:var(--shadow);position:relative;overflow:hidden;
+}
+.download-card::before{
+  content:"";position:absolute;top:0;left:0;right:0;height:4px;
+  background:linear-gradient(90deg,#5a8a4d,#7fb56a);
+  transition:all 0.25s ease;
+}
+.download-card:hover{transform:translateY(-5px);border-color:#5a8a4d;
+  box-shadow:0 12px 32px rgba(90,138,77,0.25)}
+.dl-icon{
+  border-radius:16px;display:flex;align-items:center;justify-content:center;
+  background:linear-gradient(135deg,#5a8a4d,#7fb56a);color:#fff;
+}
+.dl-icon svg{stroke:currentColor;fill:none;stroke-width:2.5}
+.download-btn{
+  display:inline-flex;align-items:center;justify-content:center;gap:10px;
+  padding:13px 28px;border-radius:10px;font-weight:800;
+  transition:all 0.2s ease;width:100%;text-decoration:none;
+  background:linear-gradient(135deg,#5a8a4d,#7fb56a);color:#FFFFFF;
+  box-shadow:0 4px 14px rgba(90,138,77,0.35);
+}
+.download-btn:hover{transform:translateY(-2px);
+  box-shadow:0 8px 22px rgba(90,138,77,0.45);color:#FFFFFF;text-decoration:none}
+.download-btn svg{stroke:currentColor;fill:none;stroke-width:2.5}
+
+.download-info{
+  background:var(--bg-soft);border-radius:12px;
+  padding:18px 20px;margin-top:20px;
+}
+.download-info h5{
+  font-size:13px;font-weight:800;color:var(--primary);
+  margin:0 0 10px;
+}
+.download-info ul{
+  list-style:none;padding:0;margin:0;
+}
+.download-info li{
+  padding:6px 0;padding-inline-start:22px;position:relative;
+  font-size:12.5px;color:var(--text-soft);
+}
+.download-info li::before{
+  content:"✓";position:absolute;inset-inline-start:0;
+  color:#5a8a4d;font-weight:800;
+}
+
+.download-note{
+  background:rgba(196,122,43,0.1);border:1px solid #c47a2b;
+  border-radius:10px;padding:14px 18px;margin-top:20px;
+  font-size:13px;color:var(--text-soft);line-height:1.7;
+}
+.download-note strong{color:#c47a2b}
+.download-note code{
+  background:var(--panel-alt);padding:2px 6px;border-radius:4px;
+  font-family:monospace;font-size:12px;color:var(--primary);
+}
+
+/* CODE */
+.code-block{background:var(--code-bg);border:1px solid var(--code-border);
+  border-radius:10px;margin:14px 0;overflow:hidden;direction:ltr;text-align:left}
+.code-header{display:flex;align-items:center;justify-content:space-between;
+  padding:9px 16px;background:var(--panel-alt);
+  border-bottom:1px solid var(--code-border);font-size:11px;
+  font-weight:700;color:var(--text-soft);letter-spacing:0.3px}
+.code-block pre{padding:16px 18px;overflow-x:auto;
+  font-family:"Consolas","Fira Code",monospace;font-size:12.5px;
+  line-height:1.65;color:var(--text);margin:0}
+.copy-btn{background:var(--primary);color:#FFFFFF;padding:3px 10px;
+  border-radius:5px;font-size:10px;font-weight:700}
+.copy-btn:hover{background:var(--primary-hover)}
+
+/* STEPS */
+.steps{display:flex;flex-direction:column;gap:14px;margin:18px 0}
+.step{display:flex;gap:16px;align-items:flex-start;background:var(--panel);
+  border:1px solid var(--border);border-radius:12px;padding:16px 18px}
+.step-num{width:34px;height:34px;border-radius:50%;background:var(--primary);
+  color:#FFFFFF;display:flex;align-items:center;justify-content:center;
+  font-weight:800;font-size:14px;flex-shrink:0}
+.step-body{flex:1}
+.step-body strong{display:block;margin-bottom:4px;color:var(--text);font-size:14px}
+.step-body p{font-size:13px;margin:0;color:var(--text-soft)}
+
+/* CALLOUT */
+.callout{border-radius:11px;padding:15px 18px;margin:16px 0;
+  font-size:13.5px;border-inline-start:4px solid var(--primary);
+  background:var(--bg-soft);color:var(--text-soft)}
+.callout strong{color:var(--text)}
+.callout.warn{border-color:#c47a2b;background:rgba(196,122,43,0.08)}
+.callout.ok{border-color:#5a8a4d;background:rgba(90,138,77,0.08)}
+.callout code{background:var(--panel-alt);padding:2px 6px;border-radius:4px;
+  font-family:monospace;font-size:12px;color:var(--primary)}
+
+/* PROS/CONS */
+.pros-cons{display:grid;gap:16px;grid-template-columns:1fr 1fr;margin:18px 0}
+@media(max-width:800px){.pros-cons{grid-template-columns:1fr}}
+.pros-box,.cons-box{background:var(--panel);border:1px solid var(--border);
+  border-radius:14px;padding:22px;box-shadow:var(--shadow)}
+.pros-box{border-top:4px solid #5a8a4d}
+.cons-box{border-top:4px solid #a8433c}
+.pros-box h4{color:#5a8a4d;margin:0 0 14px;font-size:16px;display:flex;
+  align-items:center;gap:8px}
+.cons-box h4{color:#a8433c;margin:0 0 14px;font-size:16px;display:flex;
+  align-items:center;gap:8px}
+.pros-box ul,.cons-box ul{list-style:none;padding:0;margin:0}
+.pros-box li,.cons-box li{padding:9px 0;padding-inline-start:26px;
+  position:relative;font-size:13.5px;color:var(--text-soft);
+  border-bottom:1px solid var(--border)}
+.pros-box li:last-child,.cons-box li:last-child{border-bottom:none}
+.pros-box li::before{content:"✓";position:absolute;inset-inline-start:0;
+  color:#5a8a4d;font-weight:800;font-size:15px}
+.cons-box li::before{content:"✗";position:absolute;inset-inline-start:0;
+  color:#a8433c;font-weight:800;font-size:15px}
+
+/* UI cards */
+.ui-grid{display:grid;gap:16px;grid-template-columns:repeat(2,1fr);margin:18px 0}
+@media(max-width:800px){.ui-grid{grid-template-columns:1fr}}
+.ui-card{background:var(--panel);border:1px solid var(--border);
+  border-radius:14px;overflow:hidden;box-shadow:var(--shadow);transition:all 0.2s ease}
+.ui-card:hover{transform:translateY(-3px);border-color:var(--accent)}
+.ui-card-head{background:linear-gradient(135deg,var(--primary) 0%,var(--accent) 100%);
+  color:#FFFFFF;padding:14px 18px;font-weight:800;font-size:14px;
+  display:flex;align-items:center;gap:10px}
+.ui-card-head svg{width:20px;height:20px;stroke:currentColor;fill:none;stroke-width:2.5}
+.ui-card-body{padding:16px 18px}
+.ui-card-body p{font-size:13px;color:var(--text-soft);margin:0 0 10px}
+.ui-card-body ul{list-style:none;padding:0;margin:0}
+.ui-card-body li{font-size:12.5px;color:var(--text-soft);padding:5px 0;
+  padding-inline-start:18px;position:relative}
+.ui-card-body li::before{content:"›";position:absolute;inset-inline-start:0;
+  color:var(--primary);font-weight:800;font-size:14px}
+
+/* TABLE */
+.table-wrap{overflow-x:auto;border-radius:10px;border:1px solid var(--border);margin:14px 0}
+table{width:100%;border-collapse:collapse;font-size:13px}
+th,td{padding:12px 14px;text-align:start;border-bottom:1px solid var(--border)}
+th{background:var(--panel-alt);font-weight:700;font-size:11.5px;
+  text-transform:uppercase;letter-spacing:0.5px;color:var(--text-soft)}
+tr:last-child td{border-bottom:none}
+tr:hover td{background:var(--bg-soft)}
+
+/* COPYRIGHT */
+.copyright-notice{background:linear-gradient(135deg,var(--panel) 0%,var(--bg-soft) 100%);
+  border:2px solid var(--primary);border-radius:16px;
+  padding:28px 32px;margin:40px 0;text-align:center;box-shadow:var(--shadow)}
+.copyright-notice .crown{width:56px;height:56px;margin:0 auto 14px;
+  border-radius:50%;background:linear-gradient(135deg,var(--primary) 0%,var(--accent) 100%);
+  display:flex;align-items:center;justify-content:center;
+  color:#FFFFFF;font-size:24px;font-weight:900;
+  box-shadow:0 4px 14px rgba(119,124,109,0.35)}
+.copyright-notice h3{font-size:22px;font-weight:800;color:var(--primary);margin:0 0 10px}
+.copyright-notice p{color:var(--text-soft);font-size:14px;margin:6px 0;line-height:1.8}
+.copyright-notice .rights{font-weight:800;color:var(--primary);font-size:15px;
+  margin-top:12px;padding-top:12px;border-top:1px dashed var(--border)}
+.copyright-notice .no-copy{font-size:12px;color:var(--muted);margin-top:8px;
+  font-style:italic}
+
+/* FOOTER */
+.footer{padding:36px 32px;text-align:center;color:var(--muted);
+  font-size:12.5px;border-top:2px solid var(--primary);margin-top:60px;
+  line-height:1.9;background:var(--bg-soft);border-radius:16px 16px 0 0}
+.footer strong{color:var(--primary)}
+.footer .copyright-line{font-weight:700;font-size:14px;color:var(--text);margin-bottom:6px}
+.footer .rights-line{font-size:12px;color:var(--primary);font-weight:700;
+  margin-top:10px;padding-top:10px;border-top:1px dashed var(--border);
+  display:inline-block;min-width:280px}
+.footer .tech-line{font-size:11px;opacity:0.75;margin-top:12px}
+
+/* SCROLLBAR */
+::-webkit-scrollbar{width:9px;height:9px}
+::-webkit-scrollbar-track{background:var(--bg-soft)}
+::-webkit-scrollbar-thumb{background:var(--panel-alt);border-radius:4px;
+  border:2px solid var(--bg-soft)}
+::-webkit-scrollbar-thumb:hover{background:var(--primary)}
+
+.mono{font-family:"Consolas","Fira Code",monospace;background:var(--panel-alt);
+  padding:2px 7px;border-radius:4px;font-size:12.5px;color:var(--primary)}
+.muted{color:var(--muted)}
+</style>
+</head>
+<body>
+
+<!-- INTRO -->
+<div id="introOverlay">
+  <div class="intro-decoration"></div>
+  <div class="intro-phrase" id="introPhrase">عطر فمك بذكر الله</div>
+  <div class="intro-dots" id="introDots">
+    <div class="intro-dot active"></div>
+    <div class="intro-dot"></div>
+    <div class="intro-dot"></div>
+    <div class="intro-dot"></div>
+  </div>
+</div>
+
+<!-- HEADER -->
+<header class="top-header">
+  <div class="logo">
+    <div class="logo-mark">T</div>
+    <div class="logo-text">
+      <strong data-i18n="brand">تركي تقني</strong>
+      <small>SmartVisionAI</small>
+    </div>
+  </div>
+  <div class="header-actions">
+    <a href="#app" class="btn-download-top">
+      <svg viewBox="0 0 24 24"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+      <span data-i18n="btnDownload">تحميل التطبيق</span>
+    </a>
+    <a href="#overview" class="btn-discover">
+      <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M12 8v4M12 16h.01"/></svg>
+      <span data-i18n="btnDiscover">تعرف على المشروع</span>
+    </a>
+    <button class="icon-btn" id="langBtn" title="Language">EN</button>
+    <button class="icon-btn" id="themeBtn" title="Theme">☾</button>
+  </div>
+</header>
+
+<div class="layout">
+  <aside class="sidebar">
+    <div class="sidebar-section" data-i18n="navStart">البداية</div>
+    <button class="nav-item active" data-target="overview">
+      <svg viewBox="0 0 24 24"><path d="M3 12l9-9 9 9M5 10v10h14V10"/></svg>
+      <span data-i18n="navOverview">نظرة عامة</span>
+    </button>
+    <button class="nav-item" data-target="goal">
+      <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="4"/></svg>
+      <span data-i18n="navGoal">الهدف</span>
+    </button>
+    <button class="nav-item" data-target="reason">
+      <svg viewBox="0 0 24 24"><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"/><path d="M12 17h.01"/><circle cx="12" cy="12" r="10"/></svg>
+      <span data-i18n="navReason">لماذا بُني؟</span>
+    </button>
+
+    <div class="sidebar-section" data-i18n="navTech">الشرح التقني</div>
+    <button class="nav-item" data-target="how">
+      <svg viewBox="0 0 24 24"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></svg>
+      <span data-i18n="navHow">طريقة العمل</span>
+    </button>
+    <button class="nav-item" data-target="features">
+      <svg viewBox="0 0 24 24"><path d="M12 2l3 7h7l-5.5 4.5 2 7.5L12 17l-6.5 4 2-7.5L2 9h7z"/></svg>
+      <span data-i18n="navFeatures">الميزات</span>
+    </button>
+    <button class="nav-item" data-target="proscons">
+      <svg viewBox="0 0 24 24"><path d="M12 2v20M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg>
+      <span data-i18n="navProsCons">الإيجابيات والسلبيات</span>
+    </button>
+
+    <div class="sidebar-section" data-i18n="navUse">الاستخدام</div>
+    <button class="nav-item" data-target="ui">
+      <svg viewBox="0 0 24 24"><rect x="2" y="3" width="20" height="14" rx="2"/><line x1="8" y1="21" x2="16" y2="21"/></svg>
+      <span data-i18n="navUI">واجهة التحكم</span>
+    </button>
+    <button class="nav-item" data-target="reports">
+      <svg viewBox="0 0 24 24"><path d="M4 20V8M10 20V4M16 20v-8M22 20H2"/></svg>
+      <span data-i18n="navReports">التقارير والإشعارات</span>
+    </button>
+    <button class="nav-item" data-target="app">
+      <svg viewBox="0 0 24 24"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/></svg>
+      <span data-i18n="navApp">تحميل التطبيق</span>
+    </button>
+
+    <div class="sidebar-section" data-i18n="navEnd">الخاتمة</div>
+    <button class="nav-item" data-target="copyright">
+      <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M15 9.4a3.6 3.6 0 1 1 0 5.2"/></svg>
+      <span data-i18n="navCopyright">حقوق المشروع</span>
+    </button>
+  </aside>
+
+  <main class="main">
+
+    <!-- HERO -->
+    <section class="hero">
+      <div class="hero-content">
+        <span class="hero-badge" data-i18n="heroBadge">نظام مراقبة ذكي محلي</span>
+        <h1 data-i18n="heroTitle">SmartVisionAI — رؤية ذكية بالذكاء الاصطناعي</h1>
+        <p class="hero-subtitle" data-i18n="heroSub">
+          تطبيق Windows متكامل يعمل محلياً بدون كرت رسوميات، يكتشف الأشخاص والسيارات بالذكاء الاصطناعي، ويحفظ الأحداث مع تقارير PDF احترافية، وبوتات تلجرام متعددة، ومستخدمين معزولين تماماً.
+        </p>
+        <div class="hero-stats">
+          <div class="hero-stat"><div class="num">3</div><div class="lbl" data-i18n="statCams">كاميرات كحد أقصى</div></div>
+          <div class="hero-stat"><div class="num">21</div><div class="lbl" data-i18n="statPerms">صلاحية</div></div>
+          <div class="hero-stat"><div class="num">CPU</div><div class="lbl" data-i18n="statCpu">بدون GPU</div></div>
+          <div class="hero-stat"><div class="num">EXE</div><div class="lbl" data-i18n="statExe">جاهز للتشغيل</div></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- OVERVIEW -->
+    <section class="section" id="overview">
+      <div class="section-header">
+        <div class="section-icon"><svg viewBox="0 0 24 24"><path d="M3 12l9-9 9 9M5 10v10h14V10"/></svg></div>
+        <h2 class="section-title" data-i18n="overviewTitle">نظرة عامة</h2>
+      </div>
+      <p class="section-lead" data-i18n="overviewLead">ما هو النظام، ما الذي يقدمه، وكيف يختلف عن الحلول التجارية.</p>
+
+      <h3 data-i18n="whatIs">ما هو SmartVisionAI؟</h3>
+      <p data-i18n="whatIsP">
+        SmartVisionAI هو تطبيق مراقبة ذكي محلي يعمل على أجهزة Windows ذات المواصفات الضعيفة باستخدام المعالج فقط دون الحاجة إلى كرت رسوميات. يستقبل بثاً من كاميرات IP عبر RTSP أو من تطبيقات الجوال عبر HTTP، ويشغّل نموذج YOLOv8n بصيغة ONNX لاكتشاف الأشخاص والسيارات، ثم يحفظ لقطة احترافية معلَّقة لكل حدث في قاعدة بيانات SQLite، ويولّد تقارير PDF بالعربية.
+      </p>
+
+      <h3 data-i18n="layersTitle">الطبقات الأربع</h3>
+      <div class="cards-grid four">
+        <div class="card">
+          <div class="card-icon"><svg viewBox="0 0 24 24"><rect x="2" y="6" width="14" height="12" rx="2"/><path d="M16 10l6-4v12l-6-4"/></svg></div>
+          <h4 data-i18n="layer1">الاستقبال</h4>
+          <p data-i18n="layer1P">كاميرات IP عبر RTSP، أو تطبيقات الجوال عبر HTTP، أو كاميرا ويب، أو ملف فيديو.</p>
+        </div>
+        <div class="card">
+          <div class="card-icon"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"/><path d="M12 1v6M12 17v6M4.2 4.2l4.2 4.2M15.6 15.6l4.2 4.2M1 12h6M17 12h6"/></svg></div>
+          <h4 data-i18n="layer2">الذكاء الاصطناعي</h4>
+          <p data-i18n="layer2P">YOLOv8n ONNX عبر ONNX Runtime مع تتبع خفيف لمنع التكرار.</p>
+        </div>
+        <div class="card">
+          <div class="card-icon"><svg viewBox="0 0 24 24"><ellipse cx="12" cy="5" rx="9" ry="3"/><path d="M3 5v14a9 3 0 0 0 18 0V5"/></svg></div>
+          <h4 data-i18n="layer3">التخزين</h4>
+          <p data-i18n="layer3P">SQLite للأحداث والمستخدمين، وملفات JPG/MP4 للوسائط، وPDF للتقارير.</p>
+        </div>
+        <div class="card">
+          <div class="card-icon"><svg viewBox="0 0 24 24"><rect x="2" y="3" width="20" height="14" rx="2"/><line x1="12" y1="17" x2="12" y2="21"/></svg></div>
+          <h4 data-i18n="layer4">العرض</h4>
+          <p data-i18n="layer4P">واجهة ويب متجاوبة مع دعم العربية والإنجليزية، وبوتات تلجرام بأوامر فورية.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- GOAL -->
+    <section class="section" id="goal">
+      <div class="section-header">
+        <div class="section-icon"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="4"/></svg></div>
+        <h2 class="section-title" data-i18n="goalTitle">الهدف</h2>
+      </div>
+      <p class="section-lead" data-i18n="goalLead">ما الذي يهدف إليه المشروع وما القيم التي يقدمها.</p>
+
+      <div class="cards-grid two">
+        <div class="card">
+          <div class="card-icon"><svg viewBox="0 0 24 24"><path d="M12 2l3 7h7l-5.5 4.5 2 7.5L12 17l-6.5 4 2-7.5L2 9h7z"/></svg></div>
+          <h4 data-i18n="goal1">استقلالية كاملة عن السحابة</h4>
+          <p data-i18n="goal1P">كل البيانات تُخزَّن على جهازك. لا تُرسَل صورة واحدة لأي خادم خارجي.</p>
+        </div>
+        <div class="card">
+          <div class="card-icon"><svg viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/></svg></div>
+          <h4 data-i18n="goal2">بدون اشتراكات شهرية</h4>
+          <p data-i18n="goal2P">الحلول التجارية تفرض اشتراكات سحابية. هنا: صفر تكاليف تشغيل.</p>
+        </div>
+        <div class="card">
+          <div class="card-icon"><svg viewBox="0 0 24 24"><rect x="2" y="3" width="20" height="14" rx="2"/><line x1="8" y1="21" x2="16" y2="21"/></svg></div>
+          <h4 data-i18n="goal3">يعمل على أجهزة ضعيفة</h4>
+          <p data-i18n="goal3P">لا يحتاج كرت رسوميات. YOLOv8n ONNX مُحسَّن ليعمل على CPU.</p>
+        </div>
+        <div class="card">
+          <div class="card-icon"><svg viewBox="0 0 24 24"><circle cx="9" cy="8" r="4"/><path d="M2 22a7 7 0 0 1 14 0"/></svg></div>
+          <h4 data-i18n="goal4">متعدد المستخدمين معزول</h4>
+          <p data-i18n="goal4P">كل مستخدم له قاعدة بياناته الخاصة وإعداداته وكاميراته. لا تسريب للبيانات.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- REASON -->
+    <section class="section" id="reason">
+      <div class="section-header">
+        <div class="section-icon"><svg viewBox="0 0 24 24"><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"/><path d="M12 17h.01"/><circle cx="12" cy="12" r="10"/></svg></div>
+        <h2 class="section-title" data-i18n="reasonTitle">لماذا بُني هذا النظام؟</h2>
+      </div>
+      <p class="section-lead" data-i18n="reasonLead">القصة وراء المشروع.</p>
+
+      <div class="cards-grid two">
+        <div class="card">
+          <div class="card-icon"><svg viewBox="0 0 24 24"><path d="M12 1v22M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg></div>
+          <h4 data-i18n="reason1">تكلفة عالية</h4>
+          <p data-i18n="reason1P">Hikvision وأمثالها تفرض رسوماً سنوية.</p>
+        </div>
+        <div class="card">
+          <div class="card-icon"><svg viewBox="0 0 24 24"><path d="M18 10h-1.26A8 8 0 1 0 9 20h9a5 5 0 0 0 0-10z"/></svg></div>
+          <h4 data-i18n="reason2">خصوصية مهددة</h4>
+          <p data-i18n="reason2P">الفيديوهات تُرسَل لخوادم بعيدة، وقد تُستخدم في تدريب نماذج.</p>
+        </div>
+        <div class="card">
+          <div class="card-icon"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/></svg></div>
+          <h4 data-i18n="reason3">معقدة الإعداد</h4>
+          <p data-i18n="reason3P">معظم الحلول تحتاج فنيين متخصصين.</p>
+        </div>
+        <div class="card">
+          <div class="card-icon"><svg viewBox="0 0 24 24"><rect x="2" y="2" width="20" height="20" rx="2"/></svg></div>
+          <h4 data-i18n="reason4">قليلة التخصيص</h4>
+          <p data-i18n="reason4P">لا يمكنك تعديل الواجهة بحرية.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- HOW -->
+    <section class="section" id="how">
+      <div class="section-header">
+        <div class="section-icon"><svg viewBox="0 0 24 24"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></svg></div>
+        <h2 class="section-title" data-i18n="howTitle">طريقة العمل</h2>
+      </div>
+      <p class="section-lead" data-i18n="howLead">كيف يتحول الفيديو إلى حدث محفوظ.</p>
+
+      <div class="steps">
+        <div class="step">
+          <div class="step-num">1</div>
+          <div class="step-body">
+            <strong data-i18n="how1">الاتصال بالكاميرا</strong>
+            <p data-i18n="how1P">فتح RTSP/HTTP/Webcam عبر OpenCV مع إعادة اتصال تلقائية.</p>
+          </div>
+        </div>
+        <div class="step">
+          <div class="step-num">2</div>
+          <div class="step-body">
+            <strong data-i18n="how2">قراءة الإطارات</strong>
+            <p data-i18n="how2P">حلقة قراءة مستمرة تحفظ الإطار للبث والكشف.</p>
+          </div>
+        </div>
+        <div class="step">
+          <div class="step-num">3</div>
+          <div class="step-body">
+            <strong data-i18n="how3">الاستدلال</strong>
+            <p data-i18n="how3P">تصغير الإطار، تشغيل YOLOv8n، فلترة الفئات، ثم NMS.</p>
+          </div>
+        </div>
+        <div class="step">
+          <div class="step-num">4</div>
+          <div class="step-body">
+            <strong data-i18n="how4">التتبع ومنع التكرار</strong>
+            <p data-i18n="how4P">تتبع IoU يمنع حفظ نفس الهدف مرتين.</p>
+          </div>
+        </div>
+        <div class="step">
+          <div class="step-num">5</div>
+          <div class="step-body">
+            <strong data-i18n="how5">إنشاء اللقطة</strong>
+            <p data-i18n="how5P">إطار + كاميرا + تاريخ + مربعات + عدادات.</p>
+          </div>
+        </div>
+        <div class="step">
+          <div class="step-num">6</div>
+          <div class="step-body">
+            <strong data-i18n="how6">الحفظ والعرض</strong>
+            <p data-i18n="how6P">الصورة تُحفظ، ويُضاف صف في SQLite، وتظهر في الواجهة.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- FEATURES -->
+    <section class="section" id="features">
+      <div class="section-header">
+        <div class="section-icon"><svg viewBox="0 0 24 24"><path d="M12 2l3 7h7l-5.5 4.5 2 7.5L12 17l-6.5 4 2-7.5L2 9h7z"/></svg></div>
+        <h2 class="section-title" data-i18n="featuresTitle">الميزات</h2>
+      </div>
+      <p class="section-lead" data-i18n="featuresLead">ما يميز SmartVisionAI.</p>
+
+      <div class="cards-grid two">
+        <div class="card">
+          <div class="card-icon"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"/><path d="M12 1v6M12 17v6"/></svg></div>
+          <h4 data-i18n="feat1">كشف ذكي</h4>
+          <p data-i18n="feat1P">YOLOv8n ONNX يكتشف الفئات المهمة بمربعات دقيقة.</p>
+        </div>
+        <div class="card">
+          <div class="card-icon"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M8 12l3 3 5-6"/></svg></div>
+          <h4 data-i18n="feat2">منع تكرار</h4>
+          <p data-i18n="feat2P">متتبع IoU يحفظ صورة واحدة فقط لكل حدث.</p>
+        </div>
+        <div class="card">
+          <div class="card-icon"><svg viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="2"/></svg></div>
+          <h4 data-i18n="feat3">لقطات احترافية</h4>
+          <p data-i18n="feat3P">إطار + كاميرا + تاريخ + مربعات + عدادات.</p>
+        </div>
+        <div class="card">
+          <div class="card-icon"><svg viewBox="0 0 24 24"><path d="M4 20V8M10 20V4M16 20v-8M22 20H2"/></svg></div>
+          <h4 data-i18n="feat4">تقارير PDF</h4>
+          <p data-i18n="feat4P">يومي/أسبوعي/شهري/سنوي مع رسوم ومقارنة.</p>
+        </div>
+        <div class="card">
+          <div class="card-icon"><svg viewBox="0 0 24 24"><circle cx="9" cy="8" r="4"/><path d="M2 22a7 7 0 0 1 14 0"/></svg></div>
+          <h4 data-i18n="feat5">مستخدمون معزولون</h4>
+          <p data-i18n="feat5P">كل مستخدم له قاعدة بياناته المستقلة.</p>
+        </div>
+        <div class="card">
+          <div class="card-icon"><svg viewBox="0 0 24 24"><rect x="4" y="8" width="16" height="12" rx="2"/></svg></div>
+          <h4 data-i18n="feat6">بوتات تلجرام</h4>
+          <p data-i18n="feat6P">عدد لا نهائي من البوتات بأوامر كاملة.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- PROS/CONS -->
+    <section class="section" id="proscons">
+      <div class="section-header">
+        <div class="section-icon"><svg viewBox="0 0 24 24"><path d="M12 2v20M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg></div>
+        <h2 class="section-title" data-i18n="prosconsTitle">الإيجابيات والسلبيات</h2>
+      </div>
+
+      <div class="pros-cons">
+        <div class="pros-box">
+          <h4>
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M20 6L9 17l-5-5"/></svg>
+            <span data-i18n="prosTitle">الإيجابيات</span>
+          </h4>
+          <ul>
+            <li data-i18n="pros1">مجاني بالكامل — بدون اشتراكات</li>
+            <li data-i18n="pros2">خصوصية مطلقة — البيانات على جهازك</li>
+            <li data-i18n="pros3">لا يحتاج GPU — يعمل على CPU فقط</li>
+            <li data-i18n="pros4">دعم عربي حقيقي — واجهة وتقارير</li>
+            <li data-i18n="pros5">متعدد المستخدمين مع عزل كامل</li>
+            <li data-i18n="pros6">بوتات تلجرام متعددة</li>
+            <li data-i18n="pros7">21 صلاحية دقيقة لكل مستخدم</li>
+            <li data-i18n="pros8">تقارير PDF بالعربية + رسوم</li>
+          </ul>
+        </div>
+        <div class="cons-box">
+          <h4>
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M18 6L6 18M6 6l12 12"/></svg>
+            <span data-i18n="consTitle">السلبيات</span>
+          </h4>
+          <ul>
+            <li data-i18n="cons1">يتطلب إعداداً يدوياً أولياً</li>
+            <li data-i18n="cons2">YOLOv8n أقل دقة من النماذج الكبيرة</li>
+            <li data-i18n="cons3">يعمل محلياً فقط بدون إعداد شبكة</li>
+            <li data-i18n="cons4">يحتاج جهازاً يعمل 24/7</li>
+            <li data-i18n="cons5">لا يدعم التعرف على الوجوه</li>
+            <li data-i18n="cons6">لا يقرأ لوحات السيارات</li>
+            <li data-i18n="cons7">يحتاج كاميرا وإضاءة معقولة</li>
+            <li data-i18n="cons8">حد أقصى 3 كاميرات افتراضياً</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <!-- UI CONTROL -->
+    <section class="section" id="ui">
+      <div class="section-header">
+        <div class="section-icon"><svg viewBox="0 0 24 24"><rect x="2" y="3" width="20" height="14" rx="2"/><line x1="8" y1="21" x2="16" y2="21"/></svg></div>
+        <h2 class="section-title" data-i18n="uiTitle">واجهة التحكم الكاملة</h2>
+      </div>
+      <p class="section-lead" data-i18n="uiLead">ثمانية أقسام رئيسية في التطبيق.</p>
+
+      <div class="ui-grid">
+        <div class="ui-card">
+          <div class="ui-card-head">
+            <svg viewBox="0 0 24 24"><path d="M3 12l9-9 9 9M5 10v10h14V10"/></svg>
+            <span data-i18n="uiHome">1. الرئيسية</span>
+          </div>
+          <div class="ui-card-body">
+            <p data-i18n="uiHomeP">لوحة تحكم شاملة:</p>
+            <ul>
+              <li data-i18n="uiHomeL1">4 بطاقات إحصائية</li>
+              <li data-i18n="uiHomeL2">3 رسوم بيانية</li>
+              <li data-i18n="uiHomeL3">بطاقات الكاميرات المباشرة</li>
+              <li data-i18n="uiHomeL4">أزرار الفلاش والصوت</li>
+            </ul>
+          </div>
+        </div>
+        <div class="ui-card">
+          <div class="ui-card-head">
+            <svg viewBox="0 0 24 24"><rect x="2" y="6" width="14" height="12" rx="2"/><path d="M16 10l6-4v12l-6-4"/></svg>
+            <span data-i18n="uiCams">2. الكاميرات</span>
+          </div>
+          <div class="ui-card-body">
+            <p data-i18n="uiCamsP">إدارة كاملة:</p>
+            <ul>
+              <li data-i18n="uiCamsL1">إضافة كاميرا</li>
+              <li data-i18n="uiCamsL2">تشغيل/إيقاف</li>
+              <li data-i18n="uiCamsL3">حذف</li>
+              <li data-i18n="uiCamsL4">عرض الحالة</li>
+            </ul>
+          </div>
+        </div>
+        <div class="ui-card">
+          <div class="ui-card-head">
+            <svg viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="16" rx="2"/></svg>
+            <span data-i18n="uiEvents">3. سجل الحركة</span>
+          </div>
+          <div class="ui-card-body">
+            <p data-i18n="uiEventsP">سجل كامل:</p>
+            <ul>
+              <li data-i18n="uiEventsL1">Pagination</li>
+              <li data-i18n="uiEventsL2">تصفية متقدمة</li>
+              <li data-i18n="uiEventsL3">عرض بحجم كامل</li>
+              <li data-i18n="uiEventsL4">حذف</li>
+            </ul>
+          </div>
+        </div>
+        <div class="ui-card">
+          <div class="ui-card-head">
+            <svg viewBox="0 0 24 24"><path d="M4 20V8M10 20V4M16 20v-8M22 20H2"/></svg>
+            <span data-i18n="uiReports">4. التقارير</span>
+          </div>
+          <div class="ui-card-body">
+            <p data-i18n="uiReportsP">توليد تقارير:</p>
+            <ul>
+              <li data-i18n="uiReportsL1">يومي/أسبوعي/شهري/سنوي</li>
+              <li data-i18n="uiReportsL2">PDF فوري</li>
+              <li data-i18n="uiReportsL3">ملخص مرئي</li>
+              <li data-i18n="uiReportsL4">إرسال تلجرام</li>
+            </ul>
+          </div>
+        </div>
+        <div class="ui-card">
+          <div class="ui-card-head">
+            <svg viewBox="0 0 24 24"><circle cx="9" cy="8" r="4"/><path d="M2 22a7 7 0 0 1 14 0"/></svg>
+            <span data-i18n="uiUsers">5. المستخدمون</span>
+          </div>
+          <div class="ui-card-body">
+            <p data-i18n="uiUsersP">إدارة المستخدمين:</p>
+            <ul>
+              <li data-i18n="uiUsersL1">إنشاء مستخدم</li>
+              <li data-i18n="uiUsersL2">21 صلاحية</li>
+              <li data-i18n="uiUsersL3">تعطيل/تفعيل/حذف</li>
+              <li data-i18n="uiUsersL4">طلبات التسجيل</li>
+            </ul>
+          </div>
+        </div>
+        <div class="ui-card">
+          <div class="ui-card-head">
+            <svg viewBox="0 0 24 24"><rect x="4" y="8" width="16" height="12" rx="2"/></svg>
+            <span data-i18n="uiBots">6. البوتات</span>
+          </div>
+          <div class="ui-card-body">
+            <p data-i18n="uiBotsP">إدارة البوتات:</p>
+            <ul>
+              <li data-i18n="uiBotsL1">إضافة بوت</li>
+              <li data-i18n="uiBotsL2">عدد لا نهائي</li>
+              <li data-i18n="uiBotsL3">حذف/تعطيل</li>
+              <li data-i18n="uiBotsL4">/stats /last /photo /report</li>
+            </ul>
+          </div>
+        </div>
+        <div class="ui-card">
+          <div class="ui-card-head">
+            <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"/><path d="M19 12a7 7 0 0 0-.1-1.2l2-1.5-2-3.5-2.4 1a7 7 0 0 0-2-1.2L14 3h-4l-.5 2.6a7 7 0 0 0-2 1.2l-2.4-1-2 3.5 2 1.5A7 7 0 0 0 5 12"/></svg>
+            <span data-i18n="uiSettings">7. الإعدادات</span>
+          </div>
+          <div class="ui-card-body">
+            <p data-i18n="uiSettingsP">تحكم كامل:</p>
+            <ul>
+              <li data-i18n="uiSettingsL1">عام</li>
+              <li data-i18n="uiSettingsL2">الذكاء الاصطناعي</li>
+              <li data-i18n="uiSettingsL3">التسجيل</li>
+              <li data-i18n="uiSettingsL4">الجدولة والصوت</li>
+            </ul>
+          </div>
+        </div>
+        <div class="ui-card">
+          <div class="ui-card-head">
+            <svg viewBox="0 0 24 24"><path d="M4 4h12a4 4 0 0 1 4 4v12H8a4 4 0 0 0-4 4V4z"/></svg>
+            <span data-i18n="uiGuide">8. الدليل</span>
+          </div>
+          <div class="ui-card-body">
+            <p data-i18n="uiGuideP">دليل مدمج:</p>
+            <ul>
+              <li data-i18n="uiGuideL1">شرح الأقسام</li>
+              <li data-i18n="uiGuideL2">أوامر البوت</li>
+              <li data-i18n="uiGuideL3">التثبيت</li>
+              <li data-i18n="uiGuideL4">الأمان</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- REPORTS -->
+    <section class="section" id="reports">
+      <div class="section-header">
+        <div class="section-icon"><svg viewBox="0 0 24 24"><path d="M4 20V8M10 20V4M16 20v-8M22 20H2"/></svg></div>
+        <h2 class="section-title" data-i18n="reportsTitle">التقارير والإشعارات</h2>
+      </div>
+      <p class="section-lead" data-i18n="reportsLead">تقارير احترافية تلقائية أو حسب الطلب.</p>
+
+      <div class="cards-grid four">
+        <div class="card">
+          <div class="card-icon"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg></div>
+          <h4 data-i18n="rep1">يومي</h4>
+          <p data-i18n="rep1P">مقارنة اليوم بالأمس.</p>
+        </div>
+        <div class="card">
+          <div class="card-icon"><svg viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="16" rx="2"/></svg></div>
+          <h4 data-i18n="rep2">أسبوعي</h4>
+          <p data-i18n="rep2P">الأكثر طلباً — مع مقارنة الأسبوع السابق.</p>
+        </div>
+        <div class="card">
+          <div class="card-icon"><svg viewBox="0 0 24 24"><path d="M8 2v4M16 2v4M3 10h18"/></svg></div>
+          <h4 data-i18n="rep3">شهري</h4>
+          <p data-i18n="rep3P">نشاط الشهر كاملاً.</p>
+        </div>
+        <div class="card">
+          <div class="card-icon"><svg viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="2"/></svg></div>
+          <h4 data-i18n="rep4">سنوي</h4>
+          <p data-i18n="rep4P">إحصاءات السنة كاملة.</p>
+        </div>
+      </div>
+
+      <h3 data-i18n="telegramAlertsTitle">إشعارات تلجرام الفورية</h3>
+      <div class="callout ok">
+        <strong data-i18n="tgAlerts1">البوت يمكنه:</strong>
+        <ul style="margin-top:10px">
+          <li data-i18n="tgAlertsL1">إرسال صورة + بيانات أي حدث: /last أو /photo 42</li>
+          <li data-i18n="tgAlertsL2">إرسال تقرير كامل: /report daily</li>
+          <li data-i18n="tgAlertsL3">إحصاءات سريعة: /stats</li>
+          <li data-i18n="tgAlertsL4">حالة الكاميرات: /cameras</li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- ============ DOWNLOAD / APP ============ -->
+    <section class="section" id="app">
+      <div class="section-header">
+        <div class="section-icon"><svg viewBox="0 0 24 24"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg></div>
+        <h2 class="section-title" data-i18n="appTitle">تحميل التطبيق</h2>
+      </div>
+      <p class="section-lead" data-i18n="appLead">نظام كامل جاهز للتحميل والتشغيل مباشرة — بدون الحاجة إلى Python أو تثبيت أي شيء.</p>
+
+      <!-- BIG DOWNLOAD CARD -->
+      <div style="display:flex;justify-content:center;margin:36px 0;">
+        <div class="download-card" style="max-width:580px;width:100%;padding:44px 32px;">
+          <div class="dl-icon" style="width:88px;height:88px;margin:0 auto 20px;">
+            <svg viewBox="0 0 24 24" style="width:44px;height:44px;">
+              <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
+              <polyline points="7 10 12 15 17 10"/>
+              <line x1="12" y1="15" x2="12" y2="3"/>
+            </svg>
+          </div>
+          <h4 data-i18n="dlZipTitle" style="font-size:20px;margin-bottom:10px;">مجلد المشروع كاملاً (ZIP)</h4>
+          <p data-i18n="dlZipDesc" style="font-size:14px;margin-bottom:14px;color:var(--text-soft)">
+            يحتوي على التطبيق + المكتبات + النموذج + الخطوط
+          </p>
+          <span style="display:inline-block;font-size:12px;padding:5px 14px;margin-bottom:20px;background:var(--bg-soft);color:var(--muted);border-radius:6px;font-weight:700;">~450 MB</span>
+
+          <!-- ⬇️ Google Drive download link -->
+          <a href="https://drive.google.com/uc?export=download&id=1CtaJwI_3-cQ1rUzO-4yrUTFfo5D870g7"
+             target="_blank" rel="noopener"
+             class="download-btn"
+             style="font-size:15px;padding:15px 32px;">
+            <svg viewBox="0 0 24 24" style="width:20px;height:20px;">
+              <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
+              <polyline points="7 10 12 15 17 10"/>
+              <line x1="12" y1="15" x2="12" y2="3"/>
+            </svg>
+            <span data-i18n="dlZipBtn">تحميل من Google Drive</span>
+          </a>
+
+          <p style="font-size:11.5px;color:var(--muted);margin-top:14px;line-height:1.6;">
+            <span data-i18n="dlGdNote">إذا ظهرت رسالة تحذير من Google، اضغط على "Download anyway" لبدء التحميل.</span>
+          </p>
+        </div>
+      </div>
+
+      <!-- ZIP CONTENTS -->
+      <div class="download-info">
+        <h5 data-i18n="dlContentsTitle">ماذا يحتوي ملف ZIP؟</h5>
+        <ul>
+          <li data-i18n="dlC1">SmartVisionAI.exe — التطبيق النهائي</li>
+          <li data-i18n="dlC2">_internal/ — المكتبات والنموذج والخطوط</li>
+          <li data-i18n="dlC3">models/yolov8n.onnx — نموذج الكشف</li>
+          <li data-i18n="dlC4">fonts/arial.ttf + arialbd.ttf — الخطوط العربية</li>
+          <li data-i18n="dlC5">config.json + global_config.json — الإعدادات</li>
+          <li data-i18n="dlC6">قاعدة البيانات الفارغة جاهزة للاستخدام</li>
+        </ul>
+      </div>
+
+      <!-- WARNING -->
+      <div class="download-note">
+        <strong data-i18n="dlNoteTitle">⚠️ مهم جداً:</strong>
+        <span data-i18n="dlNoteText">بعد التحميل، فك ضغط ZIP في أي مجلد، ثم شغّل SmartVisionAI.exe من داخله. لا تنسخ EXE وحده — يحتاج مجلد _internal المجاور. إذا ظهر تحذير من Windows Defender، أضف المجلد للاستثناءات.</span>
+      </div>
+
+      <!-- STEPS -->
+      <h3 data-i18n="appHowTitle" style="margin-top:32px">كيف تشغّل التطبيق بعد التحميل؟</h3>
+      <div class="steps">
+        <div class="step">
+          <div class="step-num">1</div>
+          <div class="step-body">
+            <strong data-i18n="appHow1">تحميل ZIP</strong>
+            <p data-i18n="appHow1P">اضغط زر "تحميل من Google Drive" وانتظر انتهاء التحميل (~450 MB).</p>
+          </div>
+        </div>
+        <div class="step">
+          <div class="step-num">2</div>
+          <div class="step-body">
+            <strong data-i18n="appHow2">فك الضغط</strong>
+            <p data-i18n="appHow2P">افتح ZIP وفك الضغط في مجلد مثل <span class="mono">C:\SmartVisionAI\</span>.</p>
+          </div>
+        </div>
+        <div class="step">
+          <div class="step-num">3</div>
+          <div class="step-body">
+            <strong data-i18n="appHow3">تشغيل EXE</strong>
+            <p data-i18n="appHow3P">انقر مزدوجاً على <span class="mono">SmartVisionAI.exe</span> — ستفتح نافذة سوداء صغيرة.</p>
+          </div>
+        </div>
+        <div class="step">
+          <div class="step-num">4</div>
+          <div class="step-body">
+            <strong data-i18n="appHow4">فتح المتصفح</strong>
+            <p data-i18n="appHow4P">افتح <span class="mono">http://127.0.0.1:5000</span> في أي متصفح.</p>
+          </div>
+        </div>
+        <div class="step">
+          <div class="step-num">5</div>
+          <div class="step-body">
+            <strong data-i18n="appHow5">تسجيل أول مستخدم</strong>
+            <p data-i18n="appHow5P">اضغط "حساب جديد" — أول مستخدم يصبح admin تلقائياً.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="callout warn">
+        <strong data-i18n="appWarn">مهم:</strong>
+        <span data-i18n="appWarnP">إذا ظهر خطأ "VCRUNTIME140.dll not found" — ثبّت Visual C++ Redistributable من: aka.ms/vs/17/release/vc_redist.x64.exe</span>
+      </div>
+    </section>
+
+    <!-- COPYRIGHT -->
+    <section class="section" id="copyright">
+      <div class="section-header">
+        <div class="section-icon"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M15 9.4a3.6 3.6 0 1 1 0 5.2"/></svg></div>
+        <h2 class="section-title" data-i18n="copyrightTitle">حقوق المشروع</h2>
+      </div>
+
+      <div class="copyright-notice">
+        <div class="crown">©</div>
+        <h3 data-i18n="crTitle">حقوق المشروع كاملة</h3>
+        <p data-i18n="crSub">جميع الحقوق الفكرية والتقنية لهذا المشروع محفوظة لـ</p>
+        <p style="font-size:26px;font-weight:900;color:var(--primary);margin:16px 0;letter-spacing:1px" data-i18n="crName">تركي تقني</p>
+        <p data-i18n="crRole">المطور والمصمم والمهندس الوحيد للنظام</p>
+        <div class="rights" data-i18n="crRights">© 2026 تركي تقني — جميع الحقوق محفوظة</div>
+        <p class="no-copy" data-i18n="crNoCopy">لا يجوز نسخ أو إعادة نشر أو تعديل أو بيع هذا المشروع بدون إذن كتابي صريح.</p>
+      </div>
+    </section>
+
+    <!-- FOOTER -->
+    <footer class="footer">
+      <div class="copyright-line">
+        <strong data-i18n="footerBrand">تركي تقني</strong> — SmartVisionAI
+      </div>
+      <p data-i18n="footerTag">نظام مراقبة ذكي محلي · خصوصية كاملة · بدون اشتراكات سحابية</p>
+      <div class="rights-line" data-i18n="footerRights">© 2026 تركي تقني — جميع الحقوق محفوظة</div>
+      <p class="tech-line" data-i18n="footerTech">بُني بـ Python · Flask · YOLOv8n ONNX · SQLite · ReportLab</p>
+    </footer>
+  </main>
+</div>
+
+<script>
+/* ============ INTRO ============ */
+const INTRO = {
+  ar: ["عطر فمك بذكر الله", "استغفر الله", "الحمد لله", "صلّ على محمد"],
+  en: ["Perfume your mouth with the remembrance of Allah", "Ask Allah for forgiveness", "Praise be to Allah", "Send blessings upon Muhammad"]
+};
+let LANG = "ar";
+let introPhrases = INTRO.ar;
+
+(function playIntro(){
+  const overlay = document.getElementById("introOverlay");
+  const phraseEl = document.getElementById("introPhrase");
+  const dots = document.querySelectorAll(".intro-dot");
+  let idx = 0;
+  const FADE_IN = 150, VISIBLE = 900, FADE_OUT = 200;
+  function showPhrase(i){
+    if (i >= introPhrases.length){
+      overlay.classList.add("fade-out");
+      setTimeout(() => { if (overlay.parentNode) overlay.remove(); }, 600);
+      return;
+    }
+    phraseEl.textContent = introPhrases[i];
+    phraseEl.classList.remove("fade");
+    void phraseEl.offsetWidth;
+    phraseEl.classList.add("show");
+    dots.forEach((d, j) => d.classList.toggle("active", j === i));
+    setTimeout(() => {
+      phraseEl.classList.remove("show");
+      phraseEl.classList.add("fade");
+      setTimeout(() => showPhrase(i + 1), FADE_OUT);
+    }, FADE_IN + VISIBLE);
+  }
+  setTimeout(() => showPhrase(0), 100);
+})();
+
+/* ============ I18N ============ */
+const I18N = {
+  ar: {
+    brand: "تركي تقني", btnDiscover: "تعرف على المشروع", btnDownload: "تحميل التطبيق",
+    navStart: "البداية", navOverview: "نظرة عامة", navGoal: "الهدف",
+    navReason: "لماذا بُني؟", navTech: "الشرح التقني", navHow: "طريقة العمل",
+    navFeatures: "الميزات", navProsCons: "الإيجابيات والسلبيات",
+    navUse: "الاستخدام", navUI: "واجهة التحكم", navReports: "التقارير والإشعارات",
+    navApp: "تحميل التطبيق", navEnd: "الخاتمة", navCopyright: "حقوق المشروع",
+    heroBadge: "نظام مراقبة ذكي محلي",
+    heroTitle: "SmartVisionAI — رؤية ذكية بالذكاء الاصطناعي",
+    heroSub: "تطبيق Windows متكامل يعمل محلياً بدون كرت رسوميات، يكتشف الأشخاص والسيارات بالذكاء الاصطناعي، ويحفظ الأحداث مع تقارير PDF احترافية، وبوتات تلجرام متعددة، ومستخدمين معزولين تماماً.",
+    statCams: "كاميرات كحد أقصى", statPerms: "صلاحية", statCpu: "بدون GPU", statExe: "جاهز للتشغيل",
+    overviewTitle: "نظرة عامة",
+    overviewLead: "ما هو النظام، ما الذي يقدمه، وكيف يختلف عن الحلول التجارية.",
+    whatIs: "ما هو SmartVisionAI؟",
+    whatIsP: "SmartVisionAI هو تطبيق مراقبة ذكي محلي يعمل على أجهزة Windows ذات المواصفات الضعيفة باستخدام المعالج فقط. يستقبل بثاً من كاميرات IP عبر RTSP أو تطبيقات الجوال عبر HTTP، ويشغّل نموذج YOLOv8n بصيغة ONNX، ثم يحفظ لقطة احترافية معلَّقة لكل حدث في SQLite، ويولّد تقارير PDF بالعربية.",
+    layersTitle: "الطبقات الأربع",
+    layer1: "الاستقبال", layer1P: "كاميرات IP عبر RTSP، أو تطبيقات الجوال عبر HTTP، أو كاميرا ويب، أو ملف فيديو.",
+    layer2: "الذكاء الاصطناعي", layer2P: "YOLOv8n ONNX عبر ONNX Runtime مع تتبع خفيف لمنع التكرار.",
+    layer3: "التخزين", layer3P: "SQLite للأحداث والمستخدمين، وملفات JPG/MP4 للوسائط، وPDF للتقارير.",
+    layer4: "العرض", layer4P: "واجهة ويب متجاوبة مع دعم العربية والإنجليزية، وبوتات تلجرام بأوامر فورية.",
+    goalTitle: "الهدف", goalLead: "ما الذي يهدف إليه المشروع وما القيم التي يقدمها.",
+    goal1: "استقلالية كاملة عن السحابة", goal1P: "كل البيانات تُخزَّن على جهازك. لا تُرسَل صورة واحدة لأي خادم خارجي.",
+    goal2: "بدون اشتراكات شهرية", goal2P: "الحلول التجارية تفرض اشتراكات سحابية. هنا: صفر تكاليف تشغيل.",
+    goal3: "يعمل على أجهزة ضعيفة", goal3P: "لا يحتاج كرت رسوميات. YOLOv8n ONNX مُحسَّن ليعمل على CPU.",
+    goal4: "متعدد المستخدمين معزول", goal4P: "كل مستخدم له قاعدة بياناته وإعداداته وكاميراته. لا تسريب.",
+    reasonTitle: "لماذا بُني هذا النظام؟", reasonLead: "القصة وراء المشروع.",
+    reason1: "تكلفة عالية", reason1P: "Hikvision وأمثالها تفرض رسوماً سنوية.",
+    reason2: "خصوصية مهددة", reason2P: "الفيديوهات تُرسَل لخوادم بعيدة.",
+    reason3: "معقدة الإعداد", reason3P: "معظم الحلول تحتاج فنيين متخصصين.",
+    reason4: "قليلة التخصيص", reason4P: "لا يمكنك تعديل الواجهة بحرية.",
+    howTitle: "طريقة العمل", howLead: "كيف يتحول الفيديو إلى حدث محفوظ.",
+    how1: "الاتصال بالكاميرا", how1P: "فتح RTSP/HTTP/Webcam عبر OpenCV مع إعادة اتصال تلقائية.",
+    how2: "قراءة الإطارات", how2P: "حلقة قراءة مستمرة تحفظ الإطار للبث والكشف.",
+    how3: "الاستدلال", how3P: "تصغير الإطار، تشغيل YOLOv8n، فلترة الفئات، ثم NMS.",
+    how4: "التتبع ومنع التكرار", how4P: "تتبع IoU يمنع حفظ نفس الهدف مرتين.",
+    how5: "إنشاء اللقطة", how5P: "إطار + كاميرا + تاريخ + مربعات + عدادات.",
+    how6: "الحفظ والعرض", how6P: "الصورة تُحفظ، ويُضاف صف في SQLite، وتظهر في الواجهة.",
+    featuresTitle: "الميزات", featuresLead: "ما يميز SmartVisionAI.",
+    feat1: "كشف ذكي", feat1P: "YOLOv8n ONNX يكتشف الفئات المهمة بمربعات دقيقة.",
+    feat2: "منع تكرار", feat2P: "متتبع IoU يحفظ صورة واحدة فقط لكل حدث.",
+    feat3: "لقطات احترافية", feat3P: "إطار + كاميرا + تاريخ + مربعات + عدادات.",
+    feat4: "تقارير PDF", feat4P: "يومي/أسبوعي/شهري/سنوي مع رسوم ومقارنة.",
+    feat5: "مستخدمون معزولون", feat5P: "كل مستخدم له قاعدة بياناته المستقلة.",
+    feat6: "بوتات تلجرام", feat6P: "عدد لا نهائي من البوتات بأوامر كاملة.",
+    prosconsTitle: "الإيجابيات والسلبيات",
+    prosTitle: "الإيجابيات", consTitle: "السلبيات",
+    pros1: "مجاني بالكامل — بدون اشتراكات",
+    pros2: "خصوصية مطلقة — البيانات على جهازك",
+    pros3: "لا يحتاج GPU — يعمل على CPU فقط",
+    pros4: "دعم عربي حقيقي — واجهة وتقارير",
+    pros5: "متعدد المستخدمين مع عزل كامل",
+    pros6: "بوتات تلجرام متعددة",
+    pros7: "21 صلاحية دقيقة لكل مستخدم",
+    pros8: "تقارير PDF بالعربية + رسوم",
+    cons1: "يتطلب إعداداً يدوياً أولياً",
+    cons2: "YOLOv8n أقل دقة من النماذج الكبيرة",
+    cons3: "يعمل محلياً فقط بدون إعداد شبكة",
+    cons4: "يحتاج جهازاً يعمل 24/7",
+    cons5: "لا يدعم التعرف على الوجوه",
+    cons6: "لا يقرأ لوحات السيارات",
+    cons7: "يحتاج كاميرا وإضاءة معقولة",
+    cons8: "حد أقصى 3 كاميرات افتراضياً",
+    uiTitle: "واجهة التحكم الكاملة", uiLead: "ثمانية أقسام رئيسية في التطبيق.",
+    uiHome: "1. الرئيسية", uiHomeP: "لوحة تحكم شاملة:",
+    uiHomeL1: "4 بطاقات إحصائية", uiHomeL2: "3 رسوم بيانية",
+    uiHomeL3: "بطاقات الكاميرات المباشرة", uiHomeL4: "أزرار الفلاش والصوت",
+    uiCams: "2. الكاميرات", uiCamsP: "إدارة كاملة:",
+    uiCamsL1: "إضافة كاميرا", uiCamsL2: "تشغيل/إيقاف",
+    uiCamsL3: "حذف", uiCamsL4: "عرض الحالة",
+    uiEvents: "3. سجل الحركة", uiEventsP: "سجل كامل:",
+    uiEventsL1: "Pagination", uiEventsL2: "تصفية متقدمة",
+    uiEventsL3: "عرض بحجم كامل", uiEventsL4: "حذف",
+    uiReports: "4. التقارير", uiReportsP: "توليد تقارير:",
+    uiReportsL1: "يومي/أسبوعي/شهري/سنوي", uiReportsL2: "PDF فوري",
+    uiReportsL3: "ملخص مرئي", uiReportsL4: "إرسال تلجرام",
+    uiUsers: "5. المستخدمون", uiUsersP: "إدارة المستخدمين:",
+    uiUsersL1: "إنشاء مستخدم", uiUsersL2: "21 صلاحية",
+    uiUsersL3: "تعطيل/تفعيل/حذف", uiUsersL4: "طلبات التسجيل",
+    uiBots: "6. البوتات", uiBotsP: "إدارة البوتات:",
+    uiBotsL1: "إضافة بوت", uiBotsL2: "عدد لا نهائي",
+    uiBotsL3: "حذف/تعطيل", uiBotsL4: "/stats /last /photo /report",
+    uiSettings: "7. الإعدادات", uiSettingsP: "تحكم كامل:",
+    uiSettingsL1: "عام", uiSettingsL2: "الذكاء الاصطناعي",
+    uiSettingsL3: "التسجيل", uiSettingsL4: "الجدولة والصوت",
+    uiGuide: "8. الدليل", uiGuideP: "دليل مدمج:",
+    uiGuideL1: "شرح الأقسام", uiGuideL2: "أوامر البوت",
+    uiGuideL3: "التثبيت", uiGuideL4: "الأمان",
+    reportsTitle: "التقارير والإشعارات",
+    reportsLead: "تقارير احترافية تلقائية أو حسب الطلب.",
+    rep1: "يومي", rep1P: "مقارنة اليوم بالأمس.",
+    rep2: "أسبوعي", rep2P: "الأكثر طلباً — مع مقارنة الأسبوع السابق.",
+    rep3: "شهري", rep3P: "نشاط الشهر كاملاً.",
+    rep4: "سنوي", rep4P: "إحصاءات السنة كاملة.",
+    telegramAlertsTitle: "إشعارات تلجرام الفورية",
+    tgAlerts1: "البوت يمكنه:",
+    tgAlertsL1: "إرسال صورة + بيانات أي حدث: /last أو /photo 42",
+    tgAlertsL2: "إرسال تقرير كامل: /report daily",
+    tgAlertsL3: "إحصاءات سريعة: /stats",
+    tgAlertsL4: "حالة الكاميرات: /cameras",
+    appTitle: "تحميل التطبيق",
+    appLead: "نظام كامل جاهز للتحميل والتشغيل مباشرة — بدون الحاجة إلى Python أو تثبيت أي شيء.",
+    dlZipTitle: "مجلد المشروع كاملاً (ZIP)",
+    dlZipDesc: "يحتوي على التطبيق + المكتبات + النموذج + الخطوط",
+    dlZipBtn: "تحميل من Google Drive",
+    dlGdNote: "إذا ظهرت رسالة تحذير من Google، اضغط على \"Download anyway\" لبدء التحميل.",
+    dlContentsTitle: "ماذا يحتوي ملف ZIP؟",
+    dlC1: "SmartVisionAI.exe — التطبيق النهائي",
+    dlC2: "_internal/ — المكتبات والنموذج والخطوط",
+    dlC3: "models/yolov8n.onnx — نموذج الكشف",
+    dlC4: "fonts/arial.ttf + arialbd.ttf — الخطوط العربية",
+    dlC5: "config.json + global_config.json — الإعدادات",
+    dlC6: "قاعدة البيانات الفارغة جاهزة للاستخدام",
+    dlNoteTitle: "⚠️ مهم جداً:",
+    dlNoteText: "بعد التحميل، فك ضغط ZIP في أي مجلد، ثم شغّل SmartVisionAI.exe من داخله. لا تنسخ EXE وحده — يحتاج مجلد _internal المجاور. إذا ظهر تحذير من Windows Defender، أضف المجلد للاستثناءات.",
+    appHowTitle: "كيف تشغّل التطبيق بعد التحميل؟",
+    appHow1: "تحميل ZIP", appHow1P: "اضغط زر \"تحميل من Google Drive\" وانتظر انتهاء التحميل (~450 MB).",
+    appHow2: "فك الضغط", appHow2P: "افتح ZIP وفك الضغط في مجلد مثل C:\\SmartVisionAI\\.",
+    appHow3: "تشغيل EXE", appHow3P: "انقر مزدوجاً على SmartVisionAI.exe — ستفتح نافذة سوداء صغيرة.",
+    appHow4: "فتح المتصفح", appHow4P: "افتح http://127.0.0.1:5000 في أي متصفح.",
+    appHow5: "تسجيل أول مستخدم", appHow5P: "اضغط \"حساب جديد\" — أول مستخدم يصبح admin تلقائياً.",
+    appWarn: "مهم:", appWarnP: "إذا ظهر خطأ \"VCRUNTIME140.dll not found\" — ثبّت Visual C++ Redistributable من: aka.ms/vs/17/release/vc_redist.x64.exe",
+    copyrightTitle: "حقوق المشروع",
+    crTitle: "حقوق المشروع كاملة",
+    crSub: "جميع الحقوق الفكرية والتقنية لهذا المشروع محفوظة لـ",
+    crName: "تركي تقني",
+    crRole: "المطور والمصمم والمهندس الوحيد للنظام",
+    crRights: "© 2026 تركي تقني — جميع الحقوق محفوظة",
+    crNoCopy: "لا يجوز نسخ أو إعادة نشر أو تعديل أو بيع هذا المشروع بدون إذن كتابي.",
+    footerBrand: "تركي تقني",
+    footerTag: "نظام مراقبة ذكي محلي · خصوصية كاملة · بدون اشتراكات سحابية",
+    footerRights: "© 2026 تركي تقني — جميع الحقوق محفوظة",
+    footerTech: "بُني بـ Python · Flask · YOLOv8n ONNX · SQLite · ReportLab",
+  },
+  en: {
+    brand: "Turki Tech", btnDiscover: "Discover", btnDownload: "Download App",
+    navStart: "Start", navOverview: "Overview", navGoal: "Goal",
+    navReason: "Why Built?", navTech: "Technical", navHow: "How It Works",
+    navFeatures: "Features", navProsCons: "Pros & Cons",
+    navUse: "Usage", navUI: "Control Interface", navReports: "Reports & Alerts",
+    navApp: "Download App", navEnd: "Conclusion", navCopyright: "Copyright",
+    heroBadge: "Local Smart Surveillance System",
+    heroTitle: "SmartVisionAI — Smart Vision with AI",
+    heroSub: "A complete Windows application running locally without a GPU. Detects persons and vehicles with AI, saves events with professional PDF reports, multiple Telegram bots, and fully isolated users.",
+    statCams: "Max Cameras", statPerms: "Permissions", statCpu: "No GPU", statExe: "Ready to Run",
+    overviewTitle: "Overview",
+    overviewLead: "What the system is, what it delivers, and how it differs from commercial solutions.",
+    whatIs: "What is SmartVisionAI?",
+    whatIsP: "SmartVisionAI is a local smart surveillance application running on low-spec Windows machines using CPU only. It ingests streams from IP cameras via RTSP or mobile apps via HTTP, runs YOLOv8n ONNX model, saves an annotated professional snapshot for each event in SQLite, and generates PDF reports in Arabic.",
+    layersTitle: "The Four Layers",
+    layer1: "Ingestion", layer1P: "IP cameras via RTSP, mobile apps via HTTP, webcam, or video file.",
+    layer2: "AI Detection", layer2P: "YOLOv8n ONNX via ONNX Runtime with lightweight tracker.",
+    layer3: "Storage", layer3P: "SQLite for events and users, JPG/MP4 for media, PDF for reports.",
+    layer4: "Presentation", layer4P: "Responsive web UI with Arabic/English support, and Telegram bots.",
+    goalTitle: "Goal", goalLead: "What the project aims to achieve.",
+    goal1: "Full Cloud Independence", goal1P: "All data is stored on your device. Not a single image is sent to any external server.",
+    goal2: "No Monthly Subscriptions", goal2P: "Commercial solutions charge cloud subscriptions. Here: zero operational costs.",
+    goal3: "Runs on Weak Devices", goal3P: "No GPU needed. YOLOv8n ONNX is optimized for CPU.",
+    goal4: "Isolated Multi-User", goal4P: "Each user has their own database, settings, and cameras. No data leakage.",
+    reasonTitle: "Why Was This System Built?", reasonLead: "The story behind the project.",
+    reason1: "High Cost", reason1P: "Hikvision and similar charge annual fees.",
+    reason2: "Privacy at Risk", reason2P: "Videos are sent to remote servers.",
+    reason3: "Complex Setup", reason3P: "Most solutions require specialized technicians.",
+    reason4: "Limited Customization", reason4P: "You can't freely modify the interface.",
+    howTitle: "How It Works", howLead: "How video turns into a saved event.",
+    how1: "Connect to Camera", how1P: "Open RTSP/HTTP/Webcam via OpenCV with auto-reconnect.",
+    how2: "Read Frames", how2P: "Continuous read loop saves frames for stream and detection.",
+    how3: "Inference", how3P: "Resize, run YOLOv8n, filter classes, then NMS.",
+    how4: "Track & Dedup", how4P: "IoU tracker prevents saving the same target twice.",
+    how5: "Create Snapshot", how5P: "Frame + camera + date + boxes + counters.",
+    how6: "Save & Display", how6P: "Image saved, row added to SQLite, appears in UI.",
+    featuresTitle: "Features", featuresLead: "What sets SmartVisionAI apart.",
+    feat1: "Smart Detection", feat1P: "YOLOv8n ONNX detects relevant classes with accurate boxes.",
+    feat2: "Duplicate Prevention", feat2P: "IoU tracker saves one image per event.",
+    feat3: "Professional Snapshots", feat3P: "Frame + camera + date + boxes + counters.",
+    feat4: "PDF Reports", feat4P: "Daily/weekly/monthly/yearly with charts and comparison.",
+    feat5: "Isolated Users", feat5P: "Each user has their own independent database.",
+    feat6: "Telegram Bots", feat6P: "Unlimited bots with full commands.",
+    prosconsTitle: "Pros and Cons",
+    prosTitle: "Pros", consTitle: "Cons",
+    pros1: "Completely free — no subscriptions",
+    pros2: "Absolute privacy — data on your device",
+    pros3: "No GPU needed — CPU only",
+    pros4: "Real Arabic support — UI and reports",
+    pros5: "Isolated multi-user",
+    pros6: "Multiple Telegram bots",
+    pros7: "21 fine-grained permissions per user",
+    pros8: "Arabic PDF reports + charts",
+    cons1: "Requires initial manual setup",
+    cons2: "YOLOv8n less accurate than larger models",
+    cons3: "Works locally only without network setup",
+    cons4: "Needs a device running 24/7",
+    cons5: "No face recognition",
+    cons6: "No license plate reading",
+    cons7: "Needs reasonable camera and lighting",
+    cons8: "Max 3 cameras by default",
+    uiTitle: "Full Control Interface", uiLead: "Eight main sections in the app.",
+    uiHome: "1. Home", uiHomeP: "Comprehensive dashboard:",
+    uiHomeL1: "4 stat cards", uiHomeL2: "3 charts",
+    uiHomeL3: "Live camera cards", uiHomeL4: "Flash and audio buttons",
+    uiCams: "2. Cameras", uiCamsP: "Full management:",
+    uiCamsL1: "Add camera", uiCamsL2: "Start/stop",
+    uiCamsL3: "Delete", uiCamsL4: "Show status",
+    uiEvents: "3. Events Log", uiEventsP: "Complete log:",
+    uiEventsL1: "Pagination", uiEventsL2: "Advanced filter",
+    uiEventsL3: "Full-size view", uiEventsL4: "Delete",
+    uiReports: "4. Reports", uiReportsP: "Generate reports:",
+    uiReportsL1: "Daily/weekly/monthly/yearly", uiReportsL2: "Instant PDF",
+    uiReportsL3: "Visual summary", uiReportsL4: "Send to Telegram",
+    uiUsers: "5. Users", uiUsersP: "User management:",
+    uiUsersL1: "Create user", uiUsersL2: "21 permissions",
+    uiUsersL3: "Disable/enable/delete", uiUsersL4: "Pending requests",
+    uiBots: "6. Bots", uiBotsP: "Bot management:",
+    uiBotsL1: "Add bot", uiBotsL2: "Unlimited",
+    uiBotsL3: "Delete/disable", uiBotsL4: "/stats /last /photo /report",
+    uiSettings: "7. Settings", uiSettingsP: "Full control:",
+    uiSettingsL1: "General", uiSettingsL2: "AI",
+    uiSettingsL3: "Recording", uiSettingsL4: "Schedule & audio",
+    uiGuide: "8. Guide", uiGuideP: "Built-in guide:",
+    uiGuideL1: "Section explanations", uiGuideL2: "Bot commands",
+    uiGuideL3: "Installation", uiGuideL4: "Security",
+    reportsTitle: "Reports & Alerts",
+    reportsLead: "Professional automatic or on-demand reports.",
+    rep1: "Daily", rep1P: "Compare today with yesterday.",
+    rep2: "Weekly", rep2P: "Most requested — with previous week comparison.",
+    rep3: "Monthly", rep3P: "Full month activity.",
+    rep4: "Yearly", rep4P: "Full year statistics.",
+    telegramAlertsTitle: "Instant Telegram Alerts",
+    tgAlerts1: "The bot can:",
+    tgAlertsL1: "Send image + data of any event: /last or /photo 42",
+    tgAlertsL2: "Send full report: /report daily",
+    tgAlertsL3: "Quick stats: /stats",
+    tgAlertsL4: "Camera status: /cameras",
+    appTitle: "Download Application",
+    appLead: "Complete system ready to download and run — no Python or installation needed.",
+    dlZipTitle: "Complete Project Folder (ZIP)",
+    dlZipDesc: "Contains the app + libraries + model + fonts",
+    dlZipBtn: "Download from Google Drive",
+    dlGdNote: "If Google shows a warning, click \"Download anyway\" to start.",
+    dlContentsTitle: "What's in the ZIP file?",
+    dlC1: "SmartVisionAI.exe — final application",
+    dlC2: "_internal/ — libraries, model, fonts",
+    dlC3: "models/yolov8n.onnx — detection model",
+    dlC4: "fonts/arial.ttf + arialbd.ttf — Arabic fonts",
+    dlC5: "config.json + global_config.json — settings",
+    dlC6: "Empty database ready for use",
+    dlNoteTitle: "⚠️ Important:",
+    dlNoteText: "After downloading, unzip the ZIP in any folder, then run SmartVisionAI.exe from inside. Don't copy EXE alone — it needs _internal folder. If Windows Defender warns, add the folder to exclusions.",
+    appHowTitle: "How to run after download?",
+    appHow1: "Download ZIP", appHow1P: "Click \"Download from Google Drive\" and wait for completion (~450 MB).",
+    appHow2: "Unzip", appHow2P: "Open ZIP and extract to a folder like C:\\SmartVisionAI\\.",
+    appHow3: "Run EXE", appHow3P: "Double-click SmartVisionAI.exe — a small black window opens.",
+    appHow4: "Open Browser", appHow4P: "Open http://127.0.0.1:5000 in any browser.",
+    appHow5: "Register First User", appHow5P: "Click \"Register\" — first user becomes admin automatically.",
+    appWarn: "Important:", appWarnP: "If you get \"VCRUNTIME140.dll not found\" — install Visual C++ Redistributable from: aka.ms/vs/17/release/vc_redist.x64.exe",
+    copyrightTitle: "Project Rights",
+    crTitle: "Full Project Rights",
+    crSub: "All intellectual and technical rights of this project are reserved for",
+    crName: "Turki Tech",
+    crRole: "The sole developer, designer, and engineer of the system",
+    crRights: "© 2026 Turki Tech — All Rights Reserved",
+    crNoCopy: "Copying, republishing, modifying, or selling this project without written permission is not allowed.",
+    footerBrand: "Turki Tech",
+    footerTag: "Local smart surveillance system · Full privacy · No cloud subscriptions",
+    footerRights: "© 2026 Turki Tech — All Rights Reserved",
+    footerTech: "Built with Python · Flask · YOLOv8n ONNX · SQLite · ReportLab",
+  }
+};
+
+function applyLang(l){
+  LANG = l;
+  introPhrases = INTRO[l];
+  document.documentElement.lang = l;
+  document.documentElement.dir = l === "ar" ? "rtl" : "ltr";
+  document.getElementById("langBtn").textContent = l === "ar" ? "EN" : "ع";
+  try { localStorage.setItem("svdoc_lang", l); } catch(e){}
+  const dict = I18N[l];
+  document.querySelectorAll("[data-i18n]").forEach(el => {
+    const key = el.dataset.i18n;
+    if (dict[key] !== undefined) el.textContent = dict[key];
+  });
+}
+
+/* ============ THEME ============ */
+function applyTheme(th){
+  document.documentElement.setAttribute("data-theme", th);
+  document.getElementById("themeBtn").textContent = th === "dark" ? "☀" : "☾";
+  try { localStorage.setItem("svdoc_theme", th); } catch(e){}
+}
+document.getElementById("themeBtn").addEventListener("click", () => {
+  const cur = document.documentElement.getAttribute("data-theme");
+  applyTheme(cur === "dark" ? "light" : "dark");
+});
+
+/* ============ LANG ============ */
+document.getElementById("langBtn").addEventListener("click", () => {
+  applyLang(LANG === "ar" ? "en" : "ar");
+});
+
+/* ============ NAV ============ */
+const navItems = document.querySelectorAll(".nav-item");
+const sections = document.querySelectorAll(".section");
+
+navItems.forEach(btn => {
+  btn.addEventListener("click", () => {
+    const target = document.getElementById(btn.dataset.target);
+    if (target) target.scrollIntoView({behavior: "smooth", block: "start"});
+  });
+});
+
+window.addEventListener("scroll", () => {
+  let current = "";
+  sections.forEach(sec => {
+    if (window.scrollY >= sec.offsetTop - 120) current = sec.id;
+  });
+  navItems.forEach(b => b.classList.toggle("active", b.dataset.target === current));
+});
+
+/* ============ INIT ============ */
+(function init(){
+  let theme = "light", lang = "ar";
+  try {
+    theme = localStorage.getItem("svdoc_theme") || "light";
+    lang = localStorage.getItem("svdoc_lang") || "ar";
+  } catch(e){}
+  applyTheme(theme);
+  applyLang(lang);
+})();
+</script>
+</body>
+</html>
