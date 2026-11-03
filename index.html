@@ -240,9 +240,6 @@ button{cursor:pointer;font-family:inherit;border:none;background:none;
 .code-block pre{padding:16px 18px;overflow-x:auto;
   font-family:"Consolas","Fira Code",monospace;font-size:12.5px;
   line-height:1.65;color:var(--text);margin:0}
-.copy-btn{background:var(--primary);color:#FFFFFF;padding:3px 10px;
-  border-radius:5px;font-size:10px;font-weight:700}
-.copy-btn:hover{background:var(--primary-hover)}
 
 /* TABLE */
 .table-wrap{overflow-x:auto;border-radius:10px;border:1px solid var(--border);margin:14px 0}
@@ -340,7 +337,6 @@ tr:hover td{background:var(--bg-soft)}
   display:inline-block;min-width:280px}
 .footer .tech-line{font-size:11px;opacity:0.75;margin-top:12px}
 
-/* SCROLLBAR */
 ::-webkit-scrollbar{width:9px;height:9px}
 ::-webkit-scrollbar-track{background:var(--bg-soft)}
 ::-webkit-scrollbar-thumb{background:var(--panel-alt);border-radius:4px;
@@ -792,7 +788,7 @@ tr:hover td{background:var(--bg-soft)}
             <tr><td>YOLOv8n</td><td>-</td><td data-i18n="stackYolo">أخف نسخة (6MB)، 80 فئة COCO</td></tr>
             <tr><td>SQLite</td><td>مدمج</td><td data-i18n="stackSqlite">قاعدة بيانات بلا خادم، ملف واحد</td></tr>
             <tr><td>ReportLab</td><td>4.1+</td><td data-i18n="stackReport">توليد PDF برمجياً</td></tr>
-            <tr><td>Matplotlib</td><td>3.8+</td><td data-i18n="stackMpl">رسوم بيانية للتقارير (Agg backend)</td></tr>
+            <tr><td>Matplotlib</td><td>3.8+</td><td data-i18n="stackMpl">رسوم بيانية للتقارير</td></tr>
             <tr><td>arabic_reshaper + bidi</td><td>-</td><td data-i18n="stackAr">تشكيل الحروف العربية</td></tr>
             <tr><td>Requests</td><td>2.31+</td><td data-i18n="stackReq">التواصل مع Telegram API</td></tr>
             <tr><td>PyInstaller</td><td>6.0+</td><td data-i18n="stackPy">تحويل المشروع إلى EXE مستقل</td></tr>
@@ -812,7 +808,7 @@ tr:hover td{background:var(--bg-soft)}
       </ul>
     </section>
 
-    <!-- UI CONTROL -->
+    <!-- UI -->
     <section class="section" id="ui">
       <div class="section-header">
         <div class="section-icon"><svg viewBox="0 0 24 24"><rect x="2" y="3" width="20" height="14" rx="2"/><line x1="8" y1="21" x2="16" y2="21"/></svg></div>
@@ -913,7 +909,7 @@ tr:hover td{background:var(--bg-soft)}
         </div>
         <div class="ui-card">
           <div class="ui-card-head">
-            <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"/><path d="M19 12a7 7 0 0 0-.1-1.2l2-1.5-2-3.5-2.4 1a7 7 0 0 0-2-1.2L14 3h-4l-.5 2.6a7 7 0 0 0-2 1.2l-2.4-1-2 3.5 2 1.5A7 7 0 0 0 5 12"/></svg>
+            <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"/></svg>
             <span data-i18n="uiSettings">7. الإعدادات</span>
           </div>
           <div class="ui-card-body">
@@ -996,16 +992,16 @@ tr:hover td{background:var(--bg-soft)}
         <div class="section-icon"><svg viewBox="0 0 24 24"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg></div>
         <h2 class="section-title" data-i18n="appTitle">تحميل التطبيق</h2>
       </div>
-      <p class="section-lead" data-i18n="appLead">اختر تحميل المشروع كاملاً أو ملف EXE مباشرة.</p>
+      <p class="section-lead" data-i18n="appLead">اختر تحميل المشروع كاملاً أو ملف التطبيق المباشر.</p>
 
-      <!-- TWO CARDS -->
+      <!-- TWO CARDS SIDE BY SIDE -->
       <div class="download-grid">
         <!-- ZIP card -->
         <div class="download-card primary">
           <div class="dl-icon primary">
             <svg viewBox="0 0 24 24"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
           </div>
-          <h4 data-i18n="dlZipTitle">مجلد المشروع كاملاً</h4>
+          <h4 data-i18n="dlZipTitle">مجلد المشروع كاملاً (ZIP)</h4>
           <p data-i18n="dlZipDesc">يحتوي على التطبيق + المكتبات + النموذج + الخطوط</p>
           <span class="meta">~450 MB</span>
           <a href="https://drive.google.com/file/d/1CtaJwI_3-cQ1rUzO-4yrUTFfo5D870g7/view"
@@ -1014,32 +1010,34 @@ tr:hover td{background:var(--bg-soft)}
             <svg viewBox="0 0 24 24"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
             <span data-i18n="dlZipBtn">تحميل من Google Drive</span>
           </a>
+          <p style="font-size:11.5px;color:var(--muted);margin-top:12px;line-height:1.6;">
+            <span data-i18n="dlGdNote">إذا ظهرت رسالة تحذير من Google، اضغط "Download anyway" لبدء التحميل.</span>
+          </p>
         </div>
 
         <!-- EXE card -->
         <div class="download-card secondary">
           <div class="dl-icon secondary">
-            <svg viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M9 9l6 6M15 9l-6 6"/></svg>
+            <svg viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="2" fill="none"/><path d="M8 8l8 8M16 8l-8 8"/></svg>
           </div>
-          <h4 data-i18n="dlExeTitle">ملف EXE فقط</h4>
-          <p data-i18n="dlExeDesc">للمطورين — يحتاج مجلد _internal بجانبه</p>
+          <h4 data-i18n="dlExeTitle">ملف التطبيق المباشر (EXE)</h4>
+          <p data-i18n="dlExeDesc">ملف SmartVisionAI.exe فقط — جاهز للتشغيل</p>
           <span class="meta">~2 MB</span>
-          <!-- ⬇️ ضع رابط EXE هنا عند رفعه منفصلاً، أو اتركه يشير للـ ZIP -->
           <a href="https://drive.google.com/file/d/1CtaJwI_3-cQ1rUzO-4yrUTFfo5D870g7/view"
              target="_blank" rel="noopener"
              class="download-btn secondary">
             <svg viewBox="0 0 24 24"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
-            <span data-i18n="dlExeBtn">تحميل من Google Drive</span>
+            <span data-i18n="dlExeBtn">تحميل مباشر</span>
           </a>
-          <p style="font-size:11px;color:var(--muted);margin-top:10px" data-i18n="dlExeNote">
-            (EXE موجود داخل المجلد — أو ارفعه منفصلاً وحدّث الرابط)
+          <p style="font-size:11.5px;color:var(--muted);margin-top:12px;line-height:1.6;">
+            <span data-i18n="dlExeNote">ملف EXE فقط — يحتاج مجلد _internal المجاور للعمل</span>
           </p>
         </div>
       </div>
 
-      <!-- ZIP CONTENTS -->
+      <!-- CONTENTS -->
       <div class="download-info">
-        <h5 data-i18n="dlContentsTitle">ماذا يحتوي المجلد؟</h5>
+        <h5 data-i18n="dlContentsTitle">ماذا يحتوي المجلد الكامل؟</h5>
         <ul>
           <li data-i18n="dlC1">SmartVisionAI.exe — التطبيق النهائي</li>
           <li data-i18n="dlC2">_internal/ — المكتبات والنموذج والخطوط</li>
@@ -1053,17 +1051,17 @@ tr:hover td{background:var(--bg-soft)}
       <!-- WARNING -->
       <div class="download-note">
         <strong data-i18n="dlNoteTitle">⚠️ مهم جداً:</strong>
-        <span data-i18n="dlNoteText">بعد التحميل، فك ضغط ZIP في أي مجلد، ثم شغّل SmartVisionAI.exe من داخله. لا تنسخ EXE وحده — يحتاج مجلد _internal المجاور. إذا ظهر تحذير من Google أو Windows Defender، اضغط "Download anyway" أو أضف للاستثناءات.</span>
+        <span data-i18n="dlNoteText">ملف EXE وحده لا يكفي — يحتاج مجلد _internal المجاور. لذلك نوصي بتحميل المجلد الكامل (ZIP) دائماً. إذا ظهر تحذير من Windows Defender، أضف المجلد للاستثناءات.</span>
       </div>
 
       <!-- STEPS -->
-      <h3 data-i18n="appHowTitle" style="margin-top:32px">كيف تشغّل التطبيق بعد التحميل؟</h3>
+      <h3 data-i18n="appHowTitle" style="margin-top:32px">كيف تشغّل التطبيق؟</h3>
       <div class="steps">
         <div class="step">
           <div class="step-num">1</div>
           <div class="step-body">
-            <strong data-i18n="appHow1">تحميل</strong>
-            <p data-i18n="appHow1P">اضغط زر التحميل وانتظر انتهاء التحميل (~450 MB).</p>
+            <strong data-i18n="appHow1">تحميل المجلد الكامل (الأفضل)</strong>
+            <p data-i18n="appHow1P">اضغط "تحميل من Google Drive" في بطاقة ZIP وانتظر التحميل (~450 MB).</p>
           </div>
         </div>
         <div class="step">
@@ -1077,7 +1075,7 @@ tr:hover td{background:var(--bg-soft)}
           <div class="step-num">3</div>
           <div class="step-body">
             <strong data-i18n="appHow3">تشغيل EXE</strong>
-            <p data-i18n="appHow3P">انقر مزدوجاً على <span class="mono">SmartVisionAI.exe</span> — ستفتح نافذة سوداء صغيرة.</p>
+            <p data-i18n="appHow3P">انقر مزدوجاً على <span class="mono">SmartVisionAI.exe</span> داخل المجلد.</p>
           </div>
         </div>
         <div class="step">
@@ -1286,15 +1284,16 @@ const I18N = {
     exportTitle:"تصدير البيانات",
     exportP:"من تبويب التقارير يمكنك تصدير كل الأحداث كملف CSV جاهز لفتحه في Excel.",
     appTitle:"تحميل التطبيق",
-    appLead:"اختر تحميل المشروع كاملاً أو ملف EXE مباشرة.",
-    dlZipTitle:"مجلد المشروع كاملاً",
+    appLead:"اختر تحميل المشروع كاملاً أو ملف التطبيق المباشر.",
+    dlZipTitle:"مجلد المشروع كاملاً (ZIP)",
     dlZipDesc:"يحتوي على التطبيق + المكتبات + النموذج + الخطوط",
     dlZipBtn:"تحميل من Google Drive",
-    dlExeTitle:"ملف EXE فقط",
-    dlExeDesc:"للمطورين — يحتاج مجلد _internal بجانبه",
-    dlExeBtn:"تحميل من Google Drive",
-    dlExeNote:"(EXE موجود داخل المجلد — أو ارفعه منفصلاً وحدّث الرابط)",
-    dlContentsTitle:"ماذا يحتوي المجلد؟",
+    dlGdNote:"إذا ظهرت رسالة تحذير من Google، اضغط \"Download anyway\" لبدء التحميل.",
+    dlExeTitle:"ملف التطبيق المباشر (EXE)",
+    dlExeDesc:"ملف SmartVisionAI.exe فقط — جاهز للتشغيل",
+    dlExeBtn:"تحميل مباشر",
+    dlExeNote:"ملف EXE فقط — يحتاج مجلد _internal المجاور للعمل",
+    dlContentsTitle:"ماذا يحتوي المجلد الكامل؟",
     dlC1:"SmartVisionAI.exe — التطبيق النهائي",
     dlC2:"_internal/ — المكتبات والنموذج والخطوط",
     dlC3:"models/yolov8n.onnx — نموذج الكشف",
@@ -1302,11 +1301,11 @@ const I18N = {
     dlC5:"config.json + global_config.json — الإعدادات",
     dlC6:"قاعدة البيانات الفارغة جاهزة للاستخدام",
     dlNoteTitle:"⚠️ مهم جداً:",
-    dlNoteText:"بعد التحميل، فك ضغط ZIP في أي مجلد، ثم شغّل SmartVisionAI.exe من داخله. لا تنسخ EXE وحده — يحتاج مجلد _internal المجاور. إذا ظهر تحذير من Google أو Windows Defender، اضغط \"Download anyway\" أو أضف للاستثناءات.",
-    appHowTitle:"كيف تشغّل التطبيق بعد التحميل؟",
-    appHow1:"تحميل", appHow1P:"اضغط زر التحميل وانتظر انتهاء التحميل (~450 MB).",
+    dlNoteText:"ملف EXE وحده لا يكفي — يحتاج مجلد _internal المجاور. لذلك نوصي بتحميل المجلد الكامل (ZIP) دائماً. إذا ظهر تحذير من Windows Defender، أضف المجلد للاستثناءات.",
+    appHowTitle:"كيف تشغّل التطبيق؟",
+    appHow1:"تحميل المجلد الكامل (الأفضل)", appHow1P:"اضغط \"تحميل من Google Drive\" في بطاقة ZIP وانتظر التحميل (~450 MB).",
     appHow2:"فك الضغط", appHow2P:"افتح ZIP وفك الضغط في مجلد مثل C:\\SmartVisionAI\\.",
-    appHow3:"تشغيل EXE", appHow3P:"انقر مزدوجاً على SmartVisionAI.exe — ستفتح نافذة سوداء صغيرة.",
+    appHow3:"تشغيل EXE", appHow3P:"انقر مزدوجاً على SmartVisionAI.exe داخل المجلد.",
     appHow4:"فتح المتصفح", appHow4P:"افتح http://127.0.0.1:5000 في أي متصفح.",
     appHow5:"تسجيل أول مستخدم", appHow5P:"اضغط \"حساب جديد\" — أول مستخدم يصبح admin تلقائياً.",
     appWarn:"مهم:",
@@ -1335,7 +1334,7 @@ const I18N = {
     heroTitle:"SmartVisionAI — Smart Vision with AI",
     heroSub:"A complete Windows application running locally without a GPU. Detects persons and vehicles with AI, saves events with professional PDF reports, multiple Telegram bots, and fully isolated users.",
     statCams:"Max Cameras", statPerms:"Permissions", statCpu:"No GPU", statExe:"Ready to Run",
-    overviewTitle:"Overview", overviewLead:"What the system is, what it delivers, and how it differs.",
+    overviewTitle:"Overview", overviewLead:"What the system is, what it delivers.",
     whatIs:"What is SmartVisionAI?",
     whatIsP:"SmartVisionAI is a local smart surveillance application running on low-spec Windows machines using CPU only. It ingests streams from IP cameras via RTSP or mobile apps via HTTP, runs YOLOv8n ONNX model, saves an annotated professional snapshot for each event in SQLite, and generates PDF reports in Arabic.",
     layersTitle:"The Four Layers",
@@ -1441,15 +1440,16 @@ const I18N = {
     exportTitle:"Data Export",
     exportP:"From the Reports tab you can export all events as a CSV file.",
     appTitle:"Download Application",
-    appLead:"Choose to download the full project or the EXE file directly.",
-    dlZipTitle:"Complete Project Folder",
+    appLead:"Choose to download the full project or the app file directly.",
+    dlZipTitle:"Complete Project Folder (ZIP)",
     dlZipDesc:"Contains the app + libraries + model + fonts",
     dlZipBtn:"Download from Google Drive",
-    dlExeTitle:"EXE File Only",
-    dlExeDesc:"For developers — needs _internal folder next to it",
-    dlExeBtn:"Download from Google Drive",
-    dlExeNote:"(EXE is inside the folder — or upload it separately and update the link)",
-    dlContentsTitle:"What's in the folder?",
+    dlGdNote:"If Google shows a warning, click \"Download anyway\" to start.",
+    dlExeTitle:"Direct Application File (EXE)",
+    dlExeDesc:"SmartVisionAI.exe only — ready to run",
+    dlExeBtn:"Direct Download",
+    dlExeNote:"EXE only — needs _internal folder next to it",
+    dlContentsTitle:"What's in the complete folder?",
     dlC1:"SmartVisionAI.exe — final application",
     dlC2:"_internal/ — libraries, model, fonts",
     dlC3:"models/yolov8n.onnx — detection model",
@@ -1457,11 +1457,11 @@ const I18N = {
     dlC5:"config.json + global_config.json — settings",
     dlC6:"Empty database ready for use",
     dlNoteTitle:"⚠️ Important:",
-    dlNoteText:"After downloading, unzip the ZIP in any folder, then run SmartVisionAI.exe from inside. Don't copy EXE alone — it needs _internal folder. If Google or Windows Defender warns, click \"Download anyway\" or add to exclusions.",
-    appHowTitle:"How to run after download?",
-    appHow1:"Download", appHow1P:"Click download and wait for completion (~450 MB).",
+    dlNoteText:"EXE alone is not enough — it needs _internal folder next to it. We recommend downloading the full ZIP. If Windows Defender warns, add the folder to exclusions.",
+    appHowTitle:"How to run the application?",
+    appHow1:"Download Full Folder (Best)", appHow1P:"Click \"Download from Google Drive\" on the ZIP card and wait (~450 MB).",
     appHow2:"Unzip", appHow2P:"Open ZIP and extract to a folder like C:\\SmartVisionAI\\.",
-    appHow3:"Run EXE", appHow3P:"Double-click SmartVisionAI.exe — a small black window opens.",
+    appHow3:"Run EXE", appHow3P:"Double-click SmartVisionAI.exe inside the folder.",
     appHow4:"Open Browser", appHow4P:"Open http://127.0.0.1:5000 in any browser.",
     appHow5:"Register First User", appHow5P:"Click \"Register\" — first user becomes admin automatically.",
     appWarn:"Important:",
@@ -1494,7 +1494,6 @@ function applyLang(l){
   });
 }
 
-/* ============ THEME ============ */
 function applyTheme(th){
   document.documentElement.setAttribute("data-theme", th);
   document.getElementById("themeBtn").textContent = th === "dark" ? "☀" : "☾";
@@ -1505,12 +1504,10 @@ document.getElementById("themeBtn").addEventListener("click", () => {
   applyTheme(cur === "dark" ? "light" : "dark");
 });
 
-/* ============ LANG ============ */
 document.getElementById("langBtn").addEventListener("click", () => {
   applyLang(LANG === "ar" ? "en" : "ar");
 });
 
-/* ============ NAV ============ */
 const navItems = document.querySelectorAll(".nav-item");
 const sections = document.querySelectorAll(".section");
 
@@ -1529,7 +1526,6 @@ window.addEventListener("scroll", () => {
   navItems.forEach(b => b.classList.toggle("active", b.dataset.target === current));
 });
 
-/* ============ INIT ============ */
 (function init(){
   let theme = "light", lang = "ar";
   try {
