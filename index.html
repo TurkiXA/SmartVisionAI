@@ -1,0 +1,1437 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl" data-theme="light">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>SmartVisionAI — نظام المراقبة الذكي</title>
+<style>
+/* ============ COLOR SYSTEM ============ */
+:root[data-theme="light"]{
+  --bg:#EEEEEE;
+  --bg-soft:#F5F5F5;
+  --panel:#FFFFFF;
+  --panel-alt:#CBCBCB;
+  --sidebar:#CBCBCB;
+  --primary:#777C6D;
+  --primary-hover:#5a5e51;
+  --accent:#B7B89F;
+  --accent-hover:#a3a48d;
+  --text:#3d4036;
+  --text-soft:#5a5e51;
+  --muted:#777C6D;
+  --border:rgba(119,124,109,0.2);
+  --shadow:0 4px 16px rgba(119,124,109,0.12);
+  --code-bg:#F0F0F0;
+  --code-border:#CBCBCB;
+}
+:root[data-theme="dark"]{
+  --bg:#3d4036;
+  --bg-soft:#4a4d42;
+  --panel:#5a5e51;
+  --panel-alt:#4a4d42;
+  --sidebar:#4a4d42;
+  --primary:#B7B89F;
+  --primary-hover:#CBCBCB;
+  --accent:#CBCBCB;
+  --accent-hover:#EEEEEE;
+  --text:#EEEEEE;
+  --text-soft:#CBCBCB;
+  --muted:#B7B89F;
+  --border:rgba(238,238,238,0.15);
+  --shadow:0 4px 20px rgba(0,0,0,0.3);
+  --code-bg:#4a4d42;
+  --code-border:rgba(238,238,238,0.2);
+}
+
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{
+  font-family:"Segoe UI","Tahoma",system-ui,sans-serif;
+  background:var(--bg);color:var(--text);
+  line-height:1.75;-webkit-font-smoothing:antialiased;
+  min-height:100vh;
+}
+a{color:var(--primary);text-decoration:none}
+a:hover{text-decoration:underline}
+button{cursor:pointer;font-family:inherit;border:none;background:none;color:inherit;font-size:inherit}
+
+/* ============ INTRO OVERLAY ============ */
+#introOverlay{
+  position:fixed;inset:0;z-index:99999;
+  background:linear-gradient(135deg,#1a1c17 0%,#2a2c24 50%,#1a1c17 100%);
+  display:flex;align-items:center;justify-content:center;
+  flex-direction:column;gap:32px;
+  transition:opacity 1.2s ease;
+}
+#introOverlay.fade-out{opacity:0;pointer-events:none}
+.intro-phrase{
+  font-size:clamp(28px, 5vw, 56px);
+  font-weight:700;
+  color:#EEEEEE;
+  text-align:center;
+  padding:0 24px;
+  opacity:0;
+  transform:translateY(20px);
+  transition:opacity 0.9s ease, transform 0.9s ease;
+  text-shadow:0 0 40px rgba(183,184,159,0.4);
+  max-width:900px;
+  line-height:1.5;
+}
+.intro-phrase.show{
+  opacity:1;
+  transform:translateY(0);
+}
+.intro-phrase.fade{
+  opacity:0;
+  transform:translateY(-20px);
+}
+.intro-dots{
+  display:flex;gap:12px;position:absolute;bottom:48px;
+}
+.intro-dot{
+  width:10px;height:10px;border-radius:50%;
+  background:rgba(183,184,159,0.3);
+  transition:all 0.4s ease;
+}
+.intro-dot.active{
+  background:#B7B89F;
+  box-shadow:0 0 16px rgba(183,184,159,0.8);
+  transform:scale(1.3);
+}
+.intro-decoration{
+  position:absolute;
+  width:300px;height:300px;border-radius:50%;
+  border:1px solid rgba(183,184,159,0.15);
+  pointer-events:none;
+  animation:rotate 20s linear infinite;
+}
+.intro-decoration::before{
+  content:"";position:absolute;inset:20px;border-radius:50%;
+  border:1px solid rgba(183,184,159,0.1);
+}
+@keyframes rotate{
+  from{transform:rotate(0deg)}
+  to{transform:rotate(360deg)}
+}
+
+/* ============ HEADER ============ */
+.top-header{
+  position:sticky;top:0;z-index:100;
+  background:var(--panel);
+  border-bottom:1px solid var(--border);
+  padding:14px 28px;
+  display:flex;align-items:center;justify-content:space-between;
+  gap:16px;flex-wrap:wrap;
+  box-shadow:var(--shadow);
+}
+.logo{
+  display:flex;align-items:center;gap:12px;
+  font-weight:800;font-size:19px;
+  color:var(--primary);
+}
+.logo-mark{
+  width:38px;height:38px;border-radius:10px;
+  background:linear-gradient(135deg,var(--primary) 0%,var(--accent) 100%);
+  display:flex;align-items:center;justify-content:center;
+  color:#FFFFFF;font-size:16px;font-weight:900;
+  box-shadow:0 3px 10px rgba(119,124,109,0.25);
+}
+.logo-text{
+  display:flex;flex-direction:column;line-height:1.2;
+}
+.logo-text strong{font-size:17px}
+.logo-text small{font-size:11px;font-weight:500;color:var(--muted);margin-top:2px}
+.header-actions{
+  display:flex;gap:10px;align-items:center;flex-wrap:wrap;
+}
+.btn-discover{
+  background:linear-gradient(135deg,var(--primary) 0%,var(--accent) 100%);
+  color:#FFFFFF;
+  padding:10px 20px;border-radius:10px;
+  font-weight:700;font-size:13px;
+  display:inline-flex;align-items:center;gap:8px;
+  transition:all 0.2s ease;
+  box-shadow:0 3px 12px rgba(119,124,109,0.3);
+}
+.btn-discover:hover{
+  transform:translateY(-2px);
+  box-shadow:0 6px 20px rgba(119,124,109,0.4);
+  text-decoration:none;
+}
+.btn-discover svg{width:16px;height:16px;stroke:currentColor;fill:none;stroke-width:2.5}
+.icon-btn{
+  width:40px;height:40px;border-radius:10px;
+  background:var(--bg-soft);border:1px solid var(--border);
+  color:var(--text);display:flex;align-items:center;justify-content:center;
+  transition:all 0.2s ease;font-size:14px;font-weight:700;
+}
+.icon-btn:hover{background:var(--accent);color:var(--primary);border-color:var(--accent)}
+
+/* ============ LAYOUT ============ */
+.layout{display:flex;min-height:calc(100vh - 67px)}
+.sidebar{
+  width:260px;flex-shrink:0;
+  background:var(--sidebar);
+  border-left:1px solid var(--border);
+  padding:24px 14px;
+  position:sticky;top:67px;
+  height:calc(100vh - 67px);
+  overflow-y:auto;
+}
+[dir="ltr"] .sidebar{border-left:none;border-right:1px solid var(--border)}
+.sidebar-section{
+  font-size:10px;font-weight:800;
+  color:var(--muted);text-transform:uppercase;
+  letter-spacing:0.8px;
+  padding:16px 14px 8px;
+}
+.nav-item{
+  display:flex;align-items:center;gap:11px;
+  padding:11px 14px;border-radius:9px;
+  font-size:13px;color:var(--text-soft);
+  transition:all 0.15s ease;width:100%;
+  text-align:start;margin-bottom:2px;
+}
+.nav-item:hover{background:var(--panel-alt);color:var(--text)}
+.nav-item.active{background:var(--primary);color:#FFFFFF;font-weight:700}
+.nav-item svg{
+  width:17px;height:17px;
+  stroke:currentColor;fill:none;stroke-width:2;
+  flex-shrink:0;
+}
+.main{
+  flex:1;padding:36px 44px;
+  max-width:1100px;min-width:0;
+}
+
+@media(max-width:900px){
+  .sidebar{display:none}
+  .main{padding:20px 16px}
+  .top-header{padding:12px 16px}
+  .btn-discover{padding:8px 14px;font-size:12px}
+}
+
+/* ============ HERO ============ */
+.hero{
+  background:linear-gradient(135deg,var(--panel) 0%,var(--bg-soft) 100%);
+  border-radius:20px;padding:48px 40px;
+  margin-bottom:44px;
+  border:1px solid var(--border);
+  box-shadow:var(--shadow);
+  position:relative;overflow:hidden;
+}
+.hero::before{
+  content:"";position:absolute;
+  top:-30%;left:-10%;
+  width:400px;height:400px;border-radius:50%;
+  background:radial-gradient(circle,var(--accent) 0%,transparent 70%);
+  opacity:0.15;pointer-events:none;
+}
+.hero::after{
+  content:"";position:absolute;
+  bottom:-40%;right:-15%;
+  width:350px;height:350px;border-radius:50%;
+  background:radial-gradient(circle,var(--primary) 0%,transparent 70%);
+  opacity:0.1;pointer-events:none;
+}
+.hero-content{position:relative;z-index:1}
+.hero-badge{
+  display:inline-flex;align-items:center;gap:6px;
+  background:var(--accent);
+  color:var(--primary);
+  padding:5px 14px;border-radius:20px;
+  font-size:11px;font-weight:700;
+  margin-bottom:16px;
+  letter-spacing:0.5px;
+}
+.hero h1{
+  font-size:clamp(28px,4vw,42px);
+  font-weight:800;
+  color:var(--primary);
+  margin-bottom:14px;
+  line-height:1.25;
+}
+.hero-subtitle{
+  font-size:15px;color:var(--text-soft);
+  margin-bottom:28px;
+  max-width:640px;
+  line-height:1.8;
+}
+.hero-stats{
+  display:flex;gap:14px;flex-wrap:wrap;
+}
+.hero-stat{
+  background:var(--panel);
+  padding:14px 22px;border-radius:12px;
+  border:1px solid var(--border);
+  min-width:130px;
+}
+.hero-stat .num{
+  font-size:24px;font-weight:800;
+  color:var(--primary);line-height:1;
+}
+.hero-stat .lbl{
+  font-size:11px;color:var(--muted);
+  font-weight:600;margin-top:5px;
+}
+
+/* ============ SECTIONS ============ */
+.section{
+  margin-bottom:64px;
+  scroll-margin-top:90px;
+}
+.section-header{
+  display:flex;align-items:center;gap:14px;
+  margin-bottom:22px;
+}
+.section-icon{
+  width:44px;height:44px;border-radius:12px;
+  background:linear-gradient(135deg,var(--primary) 0%,var(--accent) 100%);
+  display:flex;align-items:center;justify-content:center;
+  color:#FFFFFF;flex-shrink:0;
+}
+.section-icon svg{
+  width:22px;height:22px;
+  stroke:currentColor;fill:none;stroke-width:2;
+}
+.section-title{
+  font-size:26px;font-weight:800;
+  color:var(--primary);margin:0;
+}
+.section-lead{
+  font-size:15px;color:var(--text-soft);
+  margin-bottom:20px;max-width:750px;
+}
+.section h3{
+  font-size:18px;font-weight:700;
+  color:var(--primary);
+  margin:28px 0 12px;
+}
+.section h4{
+  font-size:14px;font-weight:700;
+  color:var(--accent-hover);
+  margin:20px 0 10px;
+}
+.section p{
+  color:var(--text-soft);
+  margin-bottom:14px;
+  font-size:14.5px;
+}
+.section ul,.section ol{
+  padding-inline-start:26px;
+  margin:10px 0 18px;
+  color:var(--text-soft);
+  font-size:14.5px;
+}
+.section li{margin-bottom:8px}
+
+/* ============ CARDS ============ */
+.cards-grid{
+  display:grid;gap:16px;
+  grid-template-columns:repeat(3,1fr);
+  margin:18px 0;
+}
+.cards-grid.two{grid-template-columns:repeat(2,1fr)}
+.cards-grid.four{grid-template-columns:repeat(4,1fr)}
+@media(max-width:900px){
+  .cards-grid,.cards-grid.three,.cards-grid.four{grid-template-columns:repeat(2,1fr)}
+}
+@media(max-width:600px){
+  .cards-grid,.cards-grid.two,.cards-grid.three,.cards-grid.four{grid-template-columns:1fr}
+}
+.card{
+  background:var(--panel);
+  border:1px solid var(--border);
+  border-radius:14px;
+  padding:20px;
+  box-shadow:var(--shadow);
+  transition:all 0.2s ease;
+}
+.card:hover{
+  transform:translateY(-3px);
+  border-color:var(--accent);
+  box-shadow:0 8px 24px rgba(119,124,109,0.18);
+}
+.card-icon{
+  width:36px;height:36px;border-radius:9px;
+  background:var(--bg-soft);
+  display:flex;align-items:center;justify-content:center;
+  margin-bottom:12px;
+}
+.card-icon svg{
+  width:20px;height:20px;
+  stroke:var(--primary);fill:none;stroke-width:2;
+}
+.card h4{
+  font-size:14px;font-weight:700;
+  color:var(--primary);
+  margin:0 0 6px;
+}
+.card p{
+  font-size:13px;color:var(--text-soft);
+  margin:0;line-height:1.7;
+}
+
+/* ============ CODE BLOCK ============ */
+.code-block{
+  background:var(--code-bg);
+  border:1px solid var(--code-border);
+  border-radius:10px;
+  margin:14px 0;
+  overflow:hidden;
+  direction:ltr;text-align:left;
+}
+.code-header{
+  display:flex;align-items:center;justify-content:space-between;
+  padding:9px 16px;
+  background:var(--panel-alt);
+  border-bottom:1px solid var(--code-border);
+  font-size:11px;font-weight:700;
+  color:var(--text-soft);
+  letter-spacing:0.3px;
+}
+.code-block pre{
+  padding:16px 18px;
+  overflow-x:auto;
+  font-family:"Consolas","Fira Code",monospace;
+  font-size:12.5px;line-height:1.65;
+  color:var(--text);
+  margin:0;
+}
+.copy-btn{
+  background:var(--primary);
+  color:#FFFFFF;
+  padding:3px 10px;border-radius:5px;
+  font-size:10px;font-weight:700;
+}
+.copy-btn:hover{background:var(--primary-hover)}
+
+/* ============ TABLE ============ */
+.table-wrap{
+  overflow-x:auto;
+  border-radius:10px;
+  border:1px solid var(--border);
+  margin:14px 0;
+}
+table{
+  width:100%;border-collapse:collapse;
+  font-size:13px;
+}
+th,td{
+  padding:12px 14px;
+  text-align:start;
+  border-bottom:1px solid var(--border);
+}
+th{
+  background:var(--panel-alt);
+  font-weight:700;font-size:11.5px;
+  text-transform:uppercase;
+  letter-spacing:0.5px;
+  color:var(--text-soft);
+}
+tr:last-child td{border-bottom:none}
+tr:hover td{background:var(--bg-soft)}
+
+/* ============ STEPS ============ */
+.steps{
+  display:flex;flex-direction:column;
+  gap:14px;margin:18px 0;
+}
+.step{
+  display:flex;gap:16px;align-items:flex-start;
+  background:var(--panel);
+  border:1px solid var(--border);
+  border-radius:12px;
+  padding:16px 18px;
+}
+.step-num{
+  width:34px;height:34px;border-radius:50%;
+  background:var(--primary);
+  color:#FFFFFF;
+  display:flex;align-items:center;justify-content:center;
+  font-weight:800;font-size:14px;
+  flex-shrink:0;
+}
+.step-body{flex:1}
+.step-body strong{
+  display:block;margin-bottom:4px;
+  color:var(--text);font-size:14px;
+}
+.step-body p{
+  font-size:13px;margin:0;
+  color:var(--text-soft);
+}
+
+/* ============ CALLOUT ============ */
+.callout{
+  border-radius:11px;
+  padding:15px 18px;
+  margin:16px 0;
+  font-size:13.5px;
+  border-inline-start:4px solid var(--primary);
+  background:var(--bg-soft);
+  color:var(--text-soft);
+}
+.callout strong{color:var(--text)}
+.callout.warn{
+  border-color:#c47a2b;
+  background:rgba(196,122,43,0.08);
+}
+.callout.ok{
+  border-color:#5a8a4d;
+  background:rgba(90,138,77,0.08);
+}
+.callout.danger{
+  border-color:#a8433c;
+  background:rgba(168,67,60,0.08);
+}
+.callout code{
+  background:var(--panel-alt);
+  padding:2px 6px;border-radius:4px;
+  font-family:monospace;font-size:12px;
+  color:var(--primary);
+}
+
+/* ============ BADGE ============ */
+.badge{
+  display:inline-flex;align-items:center;gap:4px;
+  padding:2px 9px;border-radius:12px;
+  font-size:10.5px;font-weight:700;
+}
+.badge.green{background:rgba(90,138,77,0.15);color:#5a8a4d}
+.badge.red{background:rgba(168,67,60,0.15);color:#a8433c}
+.badge.orange{background:rgba(196,122,43,0.15);color:#c47a2b}
+.badge.blue{background:rgba(119,124,109,0.15);color:var(--primary)}
+
+/* ============ FOOTER ============ */
+.footer{
+  padding:32px;
+  text-align:center;
+  color:var(--muted);
+  font-size:12.5px;
+  border-top:1px solid var(--border);
+  margin-top:60px;
+  line-height:1.8;
+}
+.footer strong{color:var(--primary)}
+
+/* ============ SCROLLBAR ============ */
+::-webkit-scrollbar{width:9px;height:9px}
+::-webkit-scrollbar-track{background:var(--bg-soft)}
+::-webkit-scrollbar-thumb{
+  background:var(--panel-alt);
+  border-radius:4px;
+  border:2px solid var(--bg-soft);
+}
+::-webkit-scrollbar-thumb:hover{background:var(--primary)}
+
+/* ============ TYPOGRAPHY HELPERS ============ */
+.mono{
+  font-family:"Consolas","Fira Code",monospace;
+  background:var(--panel-alt);
+  padding:2px 7px;border-radius:4px;
+  font-size:12.5px;
+  color:var(--primary);
+}
+.muted{color:var(--muted)}
+.highlight{
+  background:linear-gradient(120deg,transparent 0%,var(--accent) 50%,transparent 100%);
+  background-size:0% 100%;
+  background-repeat:no-repeat;
+  transition:background-size 0.6s;
+  padding:0 3px;
+}
+.highlight:hover{background-size:100% 100%}
+</style>
+</head>
+<body>
+
+<!-- ============ INTRO OVERLAY ============ -->
+<div id="introOverlay">
+  <div class="intro-decoration"></div>
+  <div class="intro-phrase" id="introPhrase">عطر فمك بذكر الله</div>
+  <div class="intro-dots" id="introDots">
+    <div class="intro-dot active"></div>
+    <div class="intro-dot"></div>
+    <div class="intro-dot"></div>
+    <div class="intro-dot"></div>
+    <div class="intro-dot"></div>
+  </div>
+</div>
+
+<!-- ============ HEADER ============ -->
+<header class="top-header">
+  <div class="logo">
+    <div class="logo-mark">S</div>
+    <div class="logo-text">
+      <strong>تركي تقني</strong>
+      <small>SmartVisionAI</small>
+    </div>
+  </div>
+  <div class="header-actions">
+    <a href="#overview" class="btn-discover">
+      <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M12 8v4M12 16h.01"/></svg>
+      تعرف على المشروع
+    </a>
+    <button class="icon-btn" id="themeBtn" title="تبديل المظهر">☾</button>
+  </div>
+</header>
+
+<!-- ============ LAYOUT ============ -->
+<div class="layout">
+  <aside class="sidebar">
+    <div class="sidebar-section">البداية</div>
+    <button class="nav-item active" data-target="overview">
+      <svg viewBox="0 0 24 24"><path d="M3 12l9-9 9 9M5 10v10h14V10"/></svg>
+      <span>نظرة عامة</span>
+    </button>
+    <button class="nav-item" data-target="goal">
+      <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="4"/></svg>
+      <span>الهدف</span>
+    </button>
+    <button class="nav-item" data-target="name">
+      <svg viewBox="0 0 24 24"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+      <span>سبب التسمية</span>
+    </button>
+    <button class="nav-item" data-target="reason">
+      <svg viewBox="0 0 24 24"><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"/><path d="M12 17h.01"/><circle cx="12" cy="12" r="10"/></svg>
+      <span>لماذا بُني؟</span>
+    </button>
+
+    <div class="sidebar-section">الشرح التقني</div>
+    <button class="nav-item" data-target="how">
+      <svg viewBox="0 0 24 24"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></svg>
+      <span>طريقة العمل</span>
+    </button>
+    <button class="nav-item" data-target="features">
+      <svg viewBox="0 0 24 24"><path d="M12 2l3 7h7l-5.5 4.5 2 7.5L12 17l-6.5 4 2-7.5L2 9h7z"/></svg>
+      <span>الميزات</span>
+    </button>
+    <button class="nav-item" data-target="architecture">
+      <svg viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/></svg>
+      <span>المعمارية</span>
+    </button>
+    <button class="nav-item" data-target="stack">
+      <svg viewBox="0 0 24 24"><polyline points="4 14 12 18 20 14"/><polyline points="4 10 12 14 20 10"/><polyline points="4 6 12 10 20 6"/><line x1="12" y1="2" x2="12" y2="22"/></svg>
+      <span>التقنيات</span>
+    </button>
+
+    <div class="sidebar-section">التشغيل</div>
+    <button class="nav-item" data-target="install">
+      <svg viewBox="0 0 24 24"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+      <span>التثبيت</span>
+    </button>
+    <button class="nav-item" data-target="config">
+      <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"/><path d="M19 12a7 7 0 0 0-.1-1.2l2-1.5-2-3.5-2.4 1a7 7 0 0 0-2-1.2L14 3h-4l-.5 2.6a7 7 0 0 0-2 1.2l-2.4-1-2 3.5 2 1.5A7 7 0 0 0 5 12c0 .4 0 .8.1 1.2l-2 1.5 2 3.5 2.4-1a7 7 0 0 0 2 1.2L10 21h4l.5-2.6a7 7 0 0 0 2-1.2l2.4 1 2-3.5-2-1.5c.1-.4.1-.8.1-1.2z"/></svg>
+      <span>الإعدادات</span>
+    </button>
+    <button class="nav-item" data-target="exe">
+      <svg viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M9 9l6 6M15 9l-6 6"/></svg>
+      <span>التحويل إلى EXE</span>
+    </button>
+
+    <div class="sidebar-section">الخاتمة</div>
+    <button class="nav-item" data-target="security">
+      <svg viewBox="0 0 24 24"><path d="M12 2l8 4v6c0 5-3.5 9-8 10-4.5-1-8-5-8-10V6z"/></svg>
+      <span>الأمان</span>
+    </button>
+    <button class="nav-item" data-target="faq">
+      <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"/><path d="M12 17h.01"/></svg>
+      <span>الأسئلة الشائعة</span>
+    </button>
+  </aside>
+
+  <main class="main">
+
+    <!-- ============ HERO ============ -->
+    <section class="hero">
+      <div class="hero-content">
+        <span class="hero-badge">نظام مراقبة ذكي محلي</span>
+        <h1>SmartVisionAI — رؤية ذكية بالذكاء الاصطناعي</h1>
+        <p class="hero-subtitle">
+          نظام مراقبة متكامل يعمل محلياً على Windows بدون كرت رسوميات،
+          يكتشف الأشخاص والسيارات بالذكاء الاصطناعي، ويحفظ الأحداث مع تقارير PDF احترافية،
+          وبوتات تلجرام متعددة، ومستخدمين معزولين تماماً — كل ذلك بدون اشتراكات سحابية.
+        </p>
+        <div class="hero-stats">
+          <div class="hero-stat"><div class="num">3</div><div class="lbl">كاميرات كحد أقصى</div></div>
+          <div class="hero-stat"><div class="num">21</div><div class="lbl">صلاحية</div></div>
+          <div class="hero-stat"><div class="num">CPU</div><div class="lbl">بدون GPU</div></div>
+          <div class="hero-stat"><div class="num">0</div><div class="lbl">اشتراكات شهرية</div></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ OVERVIEW ============ -->
+    <section class="section" id="overview">
+      <div class="section-header">
+        <div class="section-icon">
+          <svg viewBox="0 0 24 24"><path d="M3 12l9-9 9 9M5 10v10h14V10"/></svg>
+        </div>
+        <h2 class="section-title">نظرة عامة</h2>
+      </div>
+      <p class="section-lead">
+        ما هو النظام، ما الذي يقدمه، وكيف يختلف عن الحلول التجارية.
+      </p>
+
+      <h3>ما هو SmartVisionAI؟</h3>
+      <p>
+        SmartVisionAI هو <strong>نظام مراقبة ذكي محلي (On-Premise)</strong> يعمل على أجهزة Windows
+        ذات المواصفات الضعيفة باستخدام المعالج فقط (CPU) دون الحاجة إلى كرت رسوميات.
+        يستقبل بثاً من كاميرات IP عبر بروتوكول <span class="mono">RTSP</span> أو من تطبيقات الجوال
+        عبر <span class="mono">HTTP</span>، ويشغّل نموذج YOLOv8n بصيغة ONNX لاكتشاف الأشخاص
+        والسيارات، ثم يحفظ لقطة احترافية معلَّقة لكل حدث في قاعدة بيانات SQLite، ويولّد تقارير PDF
+        بالعربية مع رسوم بيانية وإحصائيات مقارنة.
+      </p>
+
+      <h3>الطبقات الأربع</h3>
+      <div class="cards-grid four">
+        <div class="card">
+          <div class="card-icon"><svg viewBox="0 0 24 24"><rect x="2" y="6" width="14" height="12" rx="2"/><path d="M16 10l6-4v12l-6-4"/></svg></div>
+          <h4>الاستقبال</h4>
+          <p>كاميرات IP عبر RTSP، أو تطبيقات الجوال عبر HTTP، أو كاميرا ويب، أو ملف فيديو.</p>
+        </div>
+        <div class="card">
+          <div class="card-icon"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"/><path d="M12 1v6M12 17v6M4.2 4.2l4.2 4.2M15.6 15.6l4.2 4.2M1 12h6M17 12h6"/></svg></div>
+          <h4>الذكاء الاصطناعي</h4>
+          <p>YOLOv8n ONNX عبر ONNX Runtime مع تتبع خفيف (IoU Tracker) لمنع التكرار.</p>
+        </div>
+        <div class="card">
+          <div class="card-icon"><svg viewBox="0 0 24 24"><ellipse cx="12" cy="5" rx="9" ry="3"/><path d="M3 5v14a9 3 0 0 0 18 0V5"/><path d="M3 12a9 3 0 0 0 18 0"/></svg></div>
+          <h4>التخزين</h4>
+          <p>SQLite للأحداث والمستخدمين، وملفات JPG/MP4 للوسائط، وPDF للتقارير.</p>
+        </div>
+        <div class="card">
+          <div class="card-icon"><svg viewBox="0 0 24 24"><rect x="2" y="3" width="20" height="14" rx="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg></div>
+          <h4>العرض</h4>
+          <p>واجهة ويب متجاوبة مع دعم العربية والإنجليزية، وبوتات تلجرام بأوامر فورية.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ GOAL ============ -->
+    <section class="section" id="goal">
+      <div class="section-header">
+        <div class="section-icon">
+          <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="4"/></svg>
+        </div>
+        <h2 class="section-title">الهدف</h2>
+      </div>
+      <p class="section-lead">
+        ما الذي يهدف إليه المشروع وما القيم التي يقدمها.
+      </p>
+
+      <h3>الأهداف الرئيسية</h3>
+      <div class="cards-grid two">
+        <div class="card">
+          <div class="card-icon"><svg viewBox="0 0 24 24"><path d="M12 2l3 7h7l-5.5 4.5 2 7.5L12 17l-6.5 4 2-7.5L2 9h7z"/></svg></div>
+          <h4>استقلالية كاملة عن السحابة</h4>
+          <p>كل البيانات (الصور، الفيديوهات، السجلات) تُخزَّن على جهازك. لا تُرسَل صورة واحدة لأي خادم خارجي.</p>
+        </div>
+        <div class="card">
+          <div class="card-icon"><svg viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><path d="M14 2v6h6"/></svg></div>
+          <h4>بدون اشتراكات شهرية</h4>
+          <p>الحلول التجارية تفرض اشتراكات سحابية قد تصل إلى مئات الريالات شهرياً. هنا: صفر تكاليف تشغيل بعد التثبيت.</p>
+        </div>
+        <div class="card">
+          <div class="card-icon"><svg viewBox="0 0 24 24"><rect x="2" y="3" width="20" height="14" rx="2"/><line x1="8" y1="21" x2="16" y2="21"/></svg></div>
+          <h4>يعمل على أجهزة ضعيفة</h4>
+          <p>لا يحتاج كرت رسوميات أو جهازاً بمواصفات عالية. نموذج YOLOv8n ONNX مُحسَّن ليعمل على CPU.</p>
+        </div>
+        <div class="card">
+          <div class="card-icon"><svg viewBox="0 0 24 24"><circle cx="9" cy="8" r="4"/><path d="M2 22a7 7 0 0 1 14 0M17 6a4 4 0 0 1 0 8M22 22a6 6 0 0 0-5-5.9"/></svg></div>
+          <h4>متعدد المستخدمين معزول</h4>
+          <p>كل مستخدم له قاعدة بياناته الخاصة وإعداداته وكاميراته. لا تسريب للبيانات بين المستخدمين.</p>
+        </div>
+        <div class="card">
+          <div class="card-icon"><svg viewBox="0 0 24 24"><path d="M4 4h12a4 4 0 0 1 4 4v12H8a4 4 0 0 0-4 4V4z"/></svg></div>
+          <h4>توثيق كامل + دعم عربي</h4>
+          <p>تقارير PDF بالعربية، واجهة بلغتين، دليل تشغيل شامل، وتحديثات مستمرة.</p>
+        </div>
+        <div class="card">
+          <div class="card-icon"><svg viewBox="0 0 24 24"><path d="M12 2l8 4v6c0 5-3.5 9-8 10-4.5-1-8-5-8-10V6z"/></svg></div>
+          <h4>مفتوح المصدر للتعلّم</h4>
+          <p>المشروع فرصة عملية لتعلّم Computer Vision، Flask، SQLite، ONNX، وتطوير Full-Stack.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ NAME ============ -->
+    <section class="section" id="name">
+      <div class="section-header">
+        <div class="section-icon">
+          <svg viewBox="0 0 24 24"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+        </div>
+        <h2 class="section-title">سبب التسمية</h2>
+      </div>
+      <p class="section-lead">
+        لماذا اخترنا اسم SmartVisionAI وما الذي يعنيه كل جزء منه.
+      </p>
+
+      <h3>تفكيك الاسم</h3>
+      <div class="cards-grid three">
+        <div class="card">
+          <div class="card-icon"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg></div>
+          <h4>Smart — ذكي</h4>
+          <p>يشير إلى قدرة النظام على اتخاذ قرارات تلقائية (متى يحفظ؟ متى يتجاهل؟ من يعرض؟).</p>
+        </div>
+        <div class="card">
+          <div class="card-icon"><svg viewBox="0 0 24 24"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg></div>
+          <h4>Vision — رؤية</h4>
+          <p>يشير إلى Computer Vision: قدرة الآلة على فهم محتوى الصور والفيديو.</p>
+        </div>
+        <div class="card">
+          <div class="card-icon"><svg viewBox="0 0 24 24"><rect x="4" y="4" width="16" height="16" rx="2"/><rect x="9" y="9" width="6" height="6"/><path d="M9 2v2M15 2v2M9 20v2M15 20v2M2 9h2M2 15h2M20 9h2M20 15h2"/></svg></div>
+          <h4>AI — ذكاء اصطناعي</h4>
+          <p>النموذج YOLOv8n الذي يكتشف الأشخاص والسيارات تلقائياً دون قواعد يدوية.</p>
+        </div>
+      </div>
+
+      <h3>لماذا هذا الاسم تحديداً؟</h3>
+      <ul>
+        <li><strong>مباشر وواضح:</strong> من اسمه يفهم المستخدم فوراً أنه نظام رؤية ذكي.</li>
+        <li><strong>قابل للتوسع:</strong> يمكن إضافة "Pro" أو "Cloud" أو "Edge" لاحقاً.</li>
+        <li><strong>نطاق .com متاح كفكرة:</strong> اسم قصير يناسب التسويق.</li>
+        <li><strong>يعبّر عن الجوهر:</strong> لا "Eye" ولا "Cam" فقط — بل "Vision" الذي يشمل التحليل والفهم.</li>
+      </ul>
+    </section>
+
+    <!-- ============ REASON ============ -->
+    <section class="section" id="reason">
+      <div class="section-header">
+        <div class="section-icon">
+          <svg viewBox="0 0 24 24"><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"/><path d="M12 17h.01"/><circle cx="12" cy="12" r="10"/></svg>
+        </div>
+        <h2 class="section-title">لماذا بُني هذا النظام؟</h2>
+      </div>
+      <p class="section-lead">
+        القصة وراء المشروع، وما الذي دفَعَنا لبنائه بدلاً من استخدام حلول جاهزة.
+      </p>
+
+      <h3>المشاكل في الحلول الموجودة</h3>
+      <div class="cards-grid two">
+        <div class="card">
+          <div class="card-icon"><svg viewBox="0 0 24 24"><path d="M12 1v22M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg></div>
+          <h4>تكلفة عالية</h4>
+          <p>Hikvision وأمثالها تفرض رسوماً سنوية، وNest وRing تفرض اشتراكات شهرية للتصوير.</p>
+        </div>
+        <div class="card">
+          <div class="card-icon"><svg viewBox="0 0 24 24"><path d="M18 10h-1.26A8 8 0 1 0 9 20h9a5 5 0 0 0 0-10z"/></svg></div>
+          <h4>خصوصية مهددة</h4>
+          <p>الفيديوهات تُرسَل لخوادم بعيدة، وقد تُستخدم في تدريب نماذج أو تُباع لجهات أخرى.</p>
+        </div>
+        <div class="card">
+          <div class="card-icon"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg></div>
+          <h4>معقدة الإعداد</h4>
+          <p>معظم الحلول تحتاج فنيين متخصصين، وتطبيقاتها صعبة الاستخدام.</p>
+        </div>
+        <div class="card">
+          <div class="card-icon"><svg viewBox="0 0 24 24"><rect x="2" y="2" width="20" height="20" rx="2"/><path d="M8 2v20M2 8h20"/></svg></div>
+          <h4>قليلة التخصيص</h4>
+          <p>لا يمكنك تعديل الواجهة، ولا إضافة بوت تلجرام، ولا إنشاء مستخدمين بصلاحيات مختلفة.</p>
+        </div>
+      </div>
+
+      <h3>لماذا SmartVisionAI بديل أفضل</h3>
+      <ol>
+        <li><strong>مجاني بالكامل:</strong> لا اشتراكات، لا رسوم خفية، لا حاجة للاتصال بالإنترنت.</li>
+        <li><strong>خصوصية مطلقة:</strong> كل صورة تُحلَّل على جهازك، ولا تخرج أبداً.</li>
+        <li><strong>يعمل على أي جهاز:</strong> CPU فقط، بدون GPU.</li>
+        <li><strong>قابل للتعديل:</strong> مفتوح المصدر بالكامل، عدّل ما تشاء.</li>
+        <li><strong>دعم عربي حقيقي:</strong> واجهة وتقارير عربية (وليس مجرد ترجمة آلية).</li>
+        <li><strong>بوت تلجرام مدمج:</strong> تحكم من جوالك بدون فتح الموقع.</li>
+      </ol>
+
+      <div class="callout ok">
+        <strong>الفكرة الجوهرية:</strong> لا تحتاج شركة بمليون ريال لتراقب منزلك — يكفي جهاز كمبيوتر قديم يعمل بدون توقف، ونموذج YOLO صغير.
+      </div>
+    </section>
+
+    <!-- ============ HOW IT WORKS ============ -->
+    <section class="section" id="how">
+      <div class="section-header">
+        <div class="section-icon">
+          <svg viewBox="0 0 24 24"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></svg>
+        </div>
+        <h2 class="section-title">طريقة العمل</h2>
+      </div>
+      <p class="section-lead">
+        كيف يتحول الفيديو من الكاميرا إلى حدث محفوظ في قاعدة البيانات، خطوة بخطوة.
+      </p>
+
+      <h3>التدفق الكامل</h3>
+      <div class="steps">
+        <div class="step">
+          <div class="step-num">1</div>
+          <div class="step-body">
+            <strong>الاتصال بالكاميرا</strong>
+            <p>CameraWorker يفتح RTSP/HTTP/Webcam عبر OpenCV. عند الانقطاع، يعيد الاتصال تلقائياً بعد 5 ثوان (قابل للتعديل).</p>
+          </div>
+        </div>
+        <div class="step">
+          <div class="step-num">2</div>
+          <div class="step-body">
+            <strong>قراءة الإطارات</strong>
+            <p>حلقة قراءة مستمرة تحفظ الإطار في الذاكرة (محمي بقفل) للبث المباشر، وتعيد استخدامه للكشف.</p>
+          </div>
+        </div>
+        <div class="step">
+          <div class="step-num">3</div>
+          <div class="step-body">
+            <strong>معالجة مسبقة + استدلال</strong>
+            <p>كل <span class="mono">inference_interval</span> ثانية: تصغير الإطار إلى 416×416، تشغيل YOLOv8n، استخراج المربعات، فلترة الفئات المسموحة (شخص/سيارة)، ثم NMS لإزالة التداخلات.</p>
+          </div>
+        </div>
+        <div class="step">
+          <div class="step-num">4</div>
+          <div class="step-body">
+            <strong>التتبع ومنع التكرار</strong>
+            <p>SimpleTracker يطابق كل كشف جديد مع مسار قائم بـ IoU. المسار الذي لا يُحدَّث لمدة <span class="mono">tracker_max_age</span> ثانية يُحذف. كل مسار يُحفظ مرة واحدة فقط.</p>
+          </div>
+        </div>
+        <div class="step">
+          <div class="step-num">5</div>
+          <div class="step-body">
+            <strong>إنشاء اللقطة الاحترافية</strong>
+            <p>عند حدث جديد: annotate_snapshot يرسم شريطاً علوياً بالاسم والكاميرا والتاريخ، مربعات الكشف بزوايا بارزة، وتسميات بنسبة الثقة، وشريطاً سفلياً بالعدادات.</p>
+          </div>
+        </div>
+        <div class="step">
+          <div class="step-num">6</div>
+          <div class="step-body">
+            <strong>الحفظ في قاعدة البيانات</strong>
+            <p>الصورة تُحفظ في <span class="mono">database/users/{id}/imges/</span>، ويُضاف صف في جدول <span class="mono">events</span> مع الطابع الزمني ونسبة الثقة ومسار الصورة.</p>
+          </div>
+        </div>
+        <div class="step">
+          <div class="step-num">7</div>
+          <div class="step-body">
+            <strong>العرض والإشعار</strong>
+            <p>الواجهة تعرض الأحداث مباشرة (مع Pagination)، الرسوم البيانية تتحدث كل 30 ثانية، والبوت يرسل إشعاراً فورياً عند الطلب أو تلقائياً.</p>
+          </div>
+        </div>
+      </div>
+
+      <h3>دورة حياة الحدث</h3>
+      <div class="callout">
+        <strong>لاحظ:</strong> النظام <u>لا يحفظ إطاراً واحداً لكل شخص يراه</u> — بل صورة واحدة فقط عند ظهور هدف جديد. إن بقي الشخص 30 ثانية أمام الكاميرا، ستُسجَّل صورة واحدة فقط. هذا يوفّر مساحة ضخمة على القرص.
+      </div>
+
+      <h3>إدارة الخيوط (Threads)</h3>
+      <table class="table-wrap">
+        <thead><tr><th>الخيط</th><th>الوظيفة</th></tr></thead>
+        <tbody>
+          <tr><td>خيط رئيسي (Flask)</td><td>يخدم طلبات HTTP من المتصفح والبوت</td></tr>
+          <tr><td>خيط لكل كاميرا</td><td>يقرأ الفيديو ويشغّل الكشف — عزل كامل بين الكاميرات</td></tr>
+          <tr><td>خيط لكل مستخدم</td><td>يُشغَّل عند الدخول ويُغلق عند الخروج</td></tr>
+          <tr><td>خيط لكل بوت تلجرام</td><td>يستقبل أوامر البوت ويرد عليها</td></tr>
+          <tr><td>خيط الجدولة</td><td>يرسل تقارير PDF تلقائياً حسب الجدول</td></tr>
+        </tbody>
+      </table>
+    </section>
+
+    <!-- ============ FEATURES ============ -->
+    <section class="section" id="features">
+      <div class="section-header">
+        <div class="section-icon">
+          <svg viewBox="0 0 24 24"><path d="M12 2l3 7h7l-5.5 4.5 2 7.5L12 17l-6.5 4 2-7.5L2 9h7z"/></svg>
+        </div>
+        <h2 class="section-title">الميزات</h2>
+      </div>
+      <p class="section-lead">
+        ما يميز SmartVisionAI عن الحلول التقليدية.
+      </p>
+
+      <div class="cards-grid two">
+        <div class="card">
+          <div class="card-icon"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"/><path d="M12 1v6M12 17v6M4.2 4.2l4.2 4.2M15.6 15.6l4.2 4.2M1 12h6M17 12h6"/></svg></div>
+          <h4>كشف ذكي للأشخاص والسيارات</h4>
+          <p>YOLOv8n ONNX يكتشف الفئات المهمة فقط مع مربعات دقيقة ونسب ثقة.</p>
+        </div>
+        <div class="card">
+          <div class="card-icon"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M8 12l3 3 5-6"/></svg></div>
+          <h4>منع تكرار الأحداث</h4>
+          <p>متتبع IoU خفيف يعطي كل هدف معرّفاً فريداً ويحفظ صورة واحدة فقط لكل حدث.</p>
+        </div>
+        <div class="card">
+          <div class="card-icon"><svg viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M9 9h6v6H9z"/></svg></div>
+          <h4>لقطات احترافية معلَّقة</h4>
+          <p>إطار + اسم الكاميرا + تاريخ + مربعات + عدادات — جاهزة للمشاركة مباشرة.</p>
+        </div>
+        <div class="card">
+          <div class="card-icon"><svg viewBox="0 0 24 24"><path d="M4 20V8M10 20V4M16 20v-8M22 20H2"/></svg></div>
+          <h4>تقارير PDF بالعربية</h4>
+          <p>يومي/أسبوعي/شهري/سنوي مع رسوم بيانية ومقارنة بالفترة السابقة.</p>
+        </div>
+        <div class="card">
+          <div class="card-icon"><svg viewBox="0 0 24 24"><circle cx="9" cy="8" r="4"/><path d="M2 22a7 7 0 0 1 14 0M17 6a4 4 0 0 1 0 8M22 22a6 6 0 0 0-5-5.9"/></svg></div>
+          <h4>مستخدمون معزولون</h4>
+          <p>كل مستخدم له قاعدة بياناته وكاميراته وإعداداته. لا تسريب بين المستخدمين.</p>
+        </div>
+        <div class="card">
+          <div class="card-icon"><svg viewBox="0 0 24 24"><rect x="4" y="8" width="16" height="12" rx="2"/><circle cx="9" cy="14" r="1.5"/><circle cx="15" cy="14" r="1.5"/><path d="M12 8V4"/></svg></div>
+          <h4>بوتات تلجرام متعددة</h4>
+          <p>أضف عدداً لا نهائياً من البوتات. كل بوت يدعم /stats، /last، /photo، /report.</p>
+        </div>
+        <div class="card">
+          <div class="card-icon"><svg viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="16" rx="2"/><circle cx="12" cy="10" r="2"/><path d="M7 20v-4a5 5 0 0 1 10 0v4"/></svg></div>
+          <h4>21 صلاحية دقيقة</h4>
+          <p>تحكم كامل بمن يستطيع إضافة كاميرا، حذف حدث، إرسال تلجرام، أو تغيير الإعدادات.</p>
+        </div>
+        <div class="card">
+          <div class="card-icon"><svg viewBox="0 0 24 24"><path d="M18 10h-1.26A8 8 0 1 0 9 20h9a5 5 0 0 0 0-10z"/></svg></div>
+          <h4>يعمل بلا إنترنت</h4>
+          <p>النظام محلي 100%. الإنترنت مطلوب فقط إذا أردت إرسال تقارير تلجرام.</p>
+        </div>
+        <div class="card">
+          <div class="card-icon"><svg viewBox="0 0 24 24"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg></div>
+          <h4>تحقق تلقائي من المكتبات</h4>
+          <p>عند كل تشغيل يفحص 10 مكتبات، ويصنّف أي فشل إلى: مكتبة / شبكة / نظام.</p>
+        </div>
+        <div class="card">
+          <div class="card-icon"><svg viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M9 9l6 6M15 9l-6 6"/></svg></div>
+          <h4>التحويل إلى EXE</h4>
+          <p>جاهز لـ PyInstaller مع دعم sys._MEIPASS — يعمل كتطبيق Windows مستقل.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ ARCHITECTURE ============ -->
+    <section class="section" id="architecture">
+      <div class="section-header">
+        <div class="section-icon">
+          <svg viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/></svg>
+        </div>
+        <h2 class="section-title">المعمارية وهيكل الملفات</h2>
+      </div>
+      <p class="section-lead">
+        كيف يُنظَّم المشروع على القرص، وكيف تتوزع مسؤوليات الملفات.
+      </p>
+
+      <h3>هيكل الملفات</h3>
+      <div class="code-block">
+        <div class="code-header"><span>SmartVisionAI/</span><button class="copy-btn">نسخ</button></div>
+        <pre>SmartVisionAI/
+├── app.py                  # المحرك الرئيسي (Flask + YOLO + Auth + Bots)
+├── invhead.py              # توليد تقارير PDF + الرسوم البيانية
+├── index.html              # واجهة المستخدم (SPA)
+├── requirements.txt
+├── SmartVisionAI.spec      # ملف بناء EXE
+├── smartvision.db          # المستخدمون والجلسات (مشترك)
+├── global_config.json      # إعدادات عامة (التسجيل، عدد الكاميرات)
+├── smartvision.log         # سجلات التشغيل
+├── .secret                 # مفتاح تشفير الجلسات
+├── models/
+│   └── yolov8n.onnx        # النموذج
+├── fonts/
+│   ├── arial.ttf
+│   └── arialbd.ttf
+├── database/
+│   └── users/
+│       ├── 1/              # مستخدم 1 (عزل كامل)
+│       │   ├── user.db
+│       │   ├── config.json
+│       │   ├── cameras.json
+│       │   ├── imges/{persons,vehicles}/
+│       │   ├── recoding/{persons,vehicles}/
+│       │   └── reports/
+│       └── 2/              # مستخدم 2 (عزل كامل)
+│           └── ...
+└── reports/</pre>
+      </div>
+
+      <h3>المسؤوليات</h3>
+      <table class="table-wrap">
+        <thead><tr><th>الملف</th><th>المسؤولية</th></tr></thead>
+        <tbody>
+          <tr><td><span class="mono">app.py</span></td><td>كل شيء: الخادم، YOLO، التتبع، الكاميرات، المصادقة، البوتات، الجدولة</td></tr>
+          <tr><td><span class="mono">invhead.py</span></td><td>توليد PDF + الرسوم + مقارنة الفترات + إرسال تلجرام</td></tr>
+          <tr><td><span class="mono">index.html</span></td><td>واجهة SPA — HTML + CSS + JavaScript</td></tr>
+          <tr><td><span class="mono">models/yolov8n.onnx</span></td><td>نموذج الكشف</td></tr>
+          <tr><td><span class="mono">database/users/{id}/user.db</span></td><td>أحداث مستخدم واحد فقط</td></tr>
+        </tbody>
+      </table>
+    </section>
+
+    <!-- ============ STACK ============ -->
+    <section class="section" id="stack">
+      <div class="section-header">
+        <div class="section-icon">
+          <svg viewBox="0 0 24 24"><polyline points="4 14 12 18 20 14"/><polyline points="4 10 12 14 20 10"/><polyline points="4 6 12 10 20 6"/><line x1="12" y1="2" x2="12" y2="22"/></svg>
+        </div>
+        <h2 class="section-title">التقنيات المستخدمة</h2>
+      </div>
+      <p class="section-lead">
+        كل مكتبة، لماذا اخترناها، وما البديل الذي رفضناه.
+      </p>
+
+      <div class="table-wrap">
+        <table>
+          <thead><tr><th>التقنية</th><th>الإصدار</th><th>لماذا؟</th></tr></thead>
+          <tbody>
+            <tr><td><strong>Python</strong></td><td>3.10+</td><td>لغة سريعة التطوير، مكتبات CV/AI وفيرة</td></tr>
+            <tr><td><strong>Flask</strong></td><td>3.0+</td><td>أخف من Django، أنسب لتطبيق محلي، سهل التوسيع</td></tr>
+            <tr><td><strong>OpenCV</strong></td><td>4.9+</td><td>معالجة صور وفيديو + قراءة RTSP/HTTP</td></tr>
+            <tr><td><strong>ONNX Runtime</strong></td><td>1.17+</td><td>تشغيل النموذج على CPU بكفاءة عالية</td></tr>
+            <tr><td><strong>YOLOv8n</strong></td><td>-</td><td>أخف نسخة (n = nano) — 6MB فقط، 80 فئة COCO</td></tr>
+            <tr><td><strong>SQLite</strong></td><td>مدمج</td><td>قاعدة بيانات بلا خادم، ملف واحد، مثالية لتطبيق محلي</td></tr>
+            <tr><td><strong>ReportLab</strong></td><td>4.1+</td><td>توليد PDF برمجياً بدون متصفح</td></tr>
+            <tr><td><strong>Matplotlib</strong></td><td>3.8+</td><td>رسوم بيانية للتقارير (Agg backend)</td></tr>
+            <tr><td><strong>arabic_reshaper + bidi</strong></td><td>-</td><td>تشكيل الحروف العربية في PDF</td></tr>
+            <tr><td><strong>Requests</strong></td><td>2.31+</td><td>التواصل مع Telegram Bot API</td></tr>
+            <tr><td><strong>PyInstaller</strong></td><td>6.0+</td><td>تحويل إلى EXE مستقل</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <h3>بدائل رُفضت ولماذا</h3>
+      <ul>
+        <li><strong>YOLOv5/v8m أو v8l:</strong> أدق لكن أبطأ 3-5× على CPU. v8n يكفي للمراقبة.</li>
+        <li><strong>TensorFlow:</strong> أثقل وأبطأ من ONNX Runtime على CPU.</li>
+        <li><strong>PyTorch:</strong> يحتاج 2GB+ في الذاكرة، ONNX أخف بكثير.</li>
+        <li><strong>PostgreSQL:</strong> يحتاج خدمة خلفية دائمة. SQLite يعمل بدون أي خادم.</li>
+        <li><strong>React/Vue:</strong> حزمة 200KB+ وحجم بناء كبير. HTML خام كفيل وأسرع.</li>
+        <li><strong>Django:</strong> "batteries included" لكن يفرض بنية معقدة على تطبيق محلي.</li>
+      </ul>
+    </section>
+
+    <!-- ============ INSTALL ============ -->
+    <section class="section" id="install">
+      <div class="section-header">
+        <div class="section-icon">
+          <svg viewBox="0 0 24 24"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+        </div>
+        <h2 class="section-title">التثبيت</h2>
+      </div>
+      <p class="section-lead">
+        من الصفر إلى تشغيل النظام في 6 خطوات.
+      </p>
+
+      <div class="steps">
+        <div class="step">
+          <div class="step-num">1</div>
+          <div class="step-body">
+            <strong>ثبّت Python 3.10+</strong>
+            <p>حمّل من python.org. <u>مهم جداً:</u> أثناء التثبيت فعّل خيار "Add Python to PATH".</p>
+            <div class="code-block"><div class="code-header"><span>PowerShell</span><button class="copy-btn">نسخ</button></div>
+              <pre>python --version</pre></div>
+          </div>
+        </div>
+        <div class="step">
+          <div class="step-num">2</div>
+          <div class="step-body">
+            <strong>أنشئ بيئة افتراضية</strong>
+            <div class="code-block"><div class="code-header"><span>PowerShell</span><button class="copy-btn">نسخ</button></div>
+              <pre>cd C:\Users\turki\Desktop\SmartVisionAI
+python -m venv .venv
+.\.venv\Scripts\Activate.ps1</pre></div>
+            <p>إذا رفض PowerShell التنفيذ، شغّل: <span class="mono">Set-ExecutionPolicy -Scope CurrentUser RemoteSigned</span></p>
+          </div>
+        </div>
+        <div class="step">
+          <div class="step-num">3</div>
+          <div class="step-body">
+            <strong>ثبّت المكتبات</strong>
+            <div class="code-block"><div class="code-header"><span>PowerShell</span><button class="copy-btn">نسخ</button></div>
+              <pre>pip install -r requirements.txt</pre></div>
+          </div>
+        </div>
+        <div class="step">
+          <div class="step-num">4</div>
+          <div class="step-body">
+            <strong>جهّز النموذج والخطوط</strong>
+            <p>ضع <span class="mono">yolov8n.onnx</span> في مجلد <span class="mono">models/</span>، وانسخ <span class="mono">arial.ttf</span> و<span class="mono">arialbd.ttf</span> إلى <span class="mono">fonts/</span>.</p>
+          </div>
+        </div>
+        <div class="step">
+          <div class="step-num">5</div>
+          <div class="step-body">
+            <strong>شغّل الخادم</strong>
+            <div class="code-block"><div class="code-header"><span>PowerShell</span><button class="copy-btn">نسخ</button></div>
+              <pre>python app.py</pre></div>
+            <p>سترى 10 أسطر تحقق المكتبات، ثم <span class="mono">Listening on http://0.0.0.0:5000</span>.</p>
+          </div>
+        </div>
+        <div class="step">
+          <div class="step-num">6</div>
+          <div class="step-body">
+            <strong>افتح واجهة الويب</strong>
+            <p>افتح <span class="mono">http://127.0.0.1:5000</span>، اضغط "حساب جديد"، وأنشئ مستخدمك الأول — سيصبح admin تلقائياً.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ CONFIG ============ -->
+    <section class="section" id="config">
+      <div class="section-header">
+        <div class="section-icon">
+          <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"/><path d="M19 12a7 7 0 0 0-.1-1.2l2-1.5-2-3.5-2.4 1a7 7 0 0 0-2-1.2L14 3h-4l-.5 2.6a7 7 0 0 0-2 1.2l-2.4-1-2 3.5 2 1.5A7 7 0 0 0 5 12c0 .4 0 .8.1 1.2l-2 1.5 2 3.5 2.4-1a7 7 0 0 0 2 1.2L10 21h4l.5-2.6a7 7 0 0 0 2-1.2l2.4 1 2-3.5-2-1.5c.1-.4.1-.8.1-1.2z"/></svg>
+        </div>
+        <h2 class="section-title">الإعدادات</h2>
+      </div>
+      <p class="section-lead">
+        كل ما يمكن ضبطه من الواجهة أو من ملفات JSON.
+      </p>
+
+      <h3>الإعدادات العامة</h3>
+      <p class="muted">في <span class="mono">global_config.json</span> (مشتركة لكل المستخدمين):</p>
+      <div class="table-wrap">
+        <table>
+          <thead><tr><th>المفتاح</th><th>الافتراضي</th><th>الوصف</th></tr></thead>
+          <tbody>
+            <tr><td><span class="mono">port</span></td><td>5000</td><td>منفذ الخادم</td></tr>
+            <tr><td><span class="mono">max_cameras_per_user</span></td><td>3</td><td>الحد الأقصى للكاميرات لكل مستخدم</td></tr>
+            <tr><td><span class="mono">registration.enabled</span></td><td>true</td><td>السماح بتسجيل مستخدمين جدد</td></tr>
+            <tr><td><span class="mono">registration.require_terminal_code</span></td><td>true</td><td>طلب رمز تحقق من الترمينال</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <h3>إعدادات كل مستخدم</h3>
+      <p class="muted">في <span class="mono">database/users/{id}/config.json</span> (منفصلة لكل مستخدم):</p>
+      <div class="table-wrap">
+        <table>
+          <thead><tr><th>المفتاح</th><th>الافتراضي</th><th>الوصف</th></tr></thead>
+          <tbody>
+            <tr><td><span class="mono">confidence_threshold</span></td><td>0.30</td><td>حد الثقة الأدنى للكشف</td></tr>
+            <tr><td><span class="mono">inference_interval</span></td><td>0.10</td><td>فاصل الاستدلال (ث) — أقل = أسرع وأثقل</td></tr>
+            <tr><td><span class="mono">process_width / height</span></td><td>416</td><td>دقة المعالجة قبل YOLO</td></tr>
+            <tr><td><span class="mono">tracker_iou</span></td><td>0.30</td><td>عتبة مطابقة المسار</td></tr>
+            <tr><td><span class="mono">tracker_max_age</span></td><td>1.5</td><td>عمر المسار قبل حذفه (ث)</td></tr>
+            <tr><td><span class="mono">max_stream_fps</span></td><td>30</td><td>أقصى FPS للبث المباشر</td></tr>
+            <tr><td><span class="mono">jpeg_quality</span></td><td>50</td><td>جودة JPEG للبث</td></tr>
+            <tr><td><span class="mono">snapshot_quality</span></td><td>92</td><td>جودة اللقطات المحفوظة</td></tr>
+            <tr><td><span class="mono">recording.mode</span></td><td>image</td><td>صورة أو فيديو عند الحركة</td></tr>
+            <tr><td><span class="mono">recording.video_duration</span></td><td>10</td><td>مدة الفيديو (ث)</td></tr>
+            <tr><td><span class="mono">schedule.enabled</span></td><td>false</td><td>تفعيل جدولة العمل</td></tr>
+            <tr><td><span class="mono">flash.auto_on</span></td><td>false</td><td>تشغيل الفلاش تلقائياً</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="callout warn">
+        <strong>ملاحظة:</strong> تغيير <span class="mono">process_width</span> و<span class="mono">process_height</span> يحتاج إعادة تشغيل الخادم. باقي الإعدادات تُطبَّق فوراً على الكاميرات الجديدة أو التي تُعاد.
+      </div>
+    </section>
+
+    <!-- ============ EXE ============ -->
+    <section class="section" id="exe">
+      <div class="section-header">
+        <div class="section-icon">
+          <svg viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M9 9l6 6M15 9l-6 6"/></svg>
+        </div>
+        <h2 class="section-title">التحويل إلى EXE</h2>
+      </div>
+      <p class="section-lead">
+        تحويل المشروع إلى تطبيق Windows مستقل بدون Python.
+      </p>
+
+      <h3>الخطوات</h3>
+      <div class="code-block">
+        <div class="code-header"><span>PowerShell</span><button class="copy-btn">نسخ</button></div>
+        <pre># 1. فعّل البيئة
+cd C:\Users\turki\Desktop\SmartVisionAI
+.\.venv\Scripts\Activate.ps1
+
+# 2. ثبّت PyInstaller
+pip install pyinstaller
+
+# 3. تأكد من الخطوط
+New-Item -ItemType Directory -Force -Path fonts
+Copy-Item "C:\Windows\Fonts\arial.ttf"   "fonts\arial.ttf" -Force
+Copy-Item "C:\Windows\Fonts\arialbd.ttf" "fonts\arialbd.ttf" -Force
+
+# 4. البناء
+pyinstaller SmartVisionAI.spec --clean --noconfirm
+
+# 5. التشغيل
+cd dist\SmartVisionAI
+.\SmartVisionAI.exe</pre>
+      </div>
+
+      <h3>ما ينتج عن البناء</h3>
+      <ul>
+        <li>مجلد <span class="mono">dist/SmartVisionAI/</span> هو التطبيق النهائي — انسخه كاملاً.</li>
+        <li>الحجم المتوقع: <strong>400–600 ميجا</strong>.</li>
+        <li>لا يحتاج Python على الجهاز الهدف.</li>
+        <li>على الأجهزة الأخرى: ثبّت <a href="https://aka.ms/vs/17/release/vc_redist.x64.exe">VC++ Redistributable</a> أولاً.</li>
+      </ul>
+
+      <div class="callout danger">
+        <strong>تحذير:</strong> لا تنسخ <span class="mono">SmartVisionAI.exe</span> وحده — يحتاج مجلد <span class="mono">_internal/</span> المجاور. انسخ المجلد كاملاً.
+      </div>
+    </section>
+
+    <!-- ============ SECURITY ============ -->
+    <section class="section" id="security">
+      <div class="section-header">
+        <div class="section-icon">
+          <svg viewBox="0 0 24 24"><path d="M12 2l8 4v6c0 5-3.5 9-8 10-4.5-1-8-5-8-10V6z"/></svg>
+        </div>
+        <h2 class="section-title">الأمان</h2>
+      </div>
+      <p class="section-lead">
+        كيف يحمي النظام بياناتك وبيانات المستخدمين.
+      </p>
+
+      <ul>
+        <li><strong>تشفير كلمات المرور:</strong> PBKDF2-HMAC-SHA256 مع 200,000 تكرار وملح عشوائي — لا تُخزَّن كلمة المرور الأصلية أبداً.</li>
+        <li><strong>جلسات آمنة:</strong> توكن عشوائي 32 بايت، كوكي httponly + samesite، انتهاء بعد 30 يوماً.</li>
+        <li><strong>مفتاح سري:</strong> يُنشأ تلقائياً في <span class="mono">.secret</span> لتوقيع الجلسات.</li>
+        <li><strong>مصادقة API:</strong> كل نقطة نهاية محمية بصلاحية محددة — لا وصول غير مصرح.</li>
+        <li><strong>منع Path Traversal:</strong> التحقق من أن مسار الصورة داخل المجلدات المسموحة فقط.</li>
+        <li><strong>إخفاء التوكنات:</strong> <span class="mono">GET /api/config</span> لا يعيد توكنات البوتات.</li>
+        <li><strong>حماية آخر مدير:</strong> لا يمكن حذف آخر حساب admin نشط.</li>
+        <li><strong>عزل البيانات:</strong> كل مستخدم يرى فقط بياناته — لا تسريب.</li>
+        <li><strong>الخادم محلي:</strong> يعمل على <span class="mono">0.0.0.0:5000</span> افتراضياً — يمكن تقييده على <span class="mono">127.0.0.1</span> في <span class="mono">app.py</span>.</li>
+      </ul>
+    </section>
+
+    <!-- ============ FAQ ============ -->
+    <section class="section" id="faq">
+      <div class="section-header">
+        <div class="section-icon">
+          <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"/><path d="M12 17h.01"/></svg>
+        </div>
+        <h2 class="section-title">الأسئلة الشائعة</h2>
+      </div>
+
+      <h3>هل يعمل على جهاز ضعيف؟</h3>
+      <p>نعم. النظام مصمم لأجهزة CPU فقط بدون GPU. الحد الأدنى المُختبر: 4GB RAM، معالج i3 جيل 8 أو أعلى. الأداء يُضبط من الإعدادات (دقة معالجة أصغر = سرعة أعلى).</p>
+
+      <h3>هل يحتاج إنترنت؟</h3>
+      <p>لا. يعمل بشكل كامل بدون إنترنت. الإنترنت مطلوب فقط في حالتين: تحميل المكتبات عند التثبيت (مرة واحدة)، وإرسال تقارير تلجرام.</p>
+
+      <h3>كم عدد الكاميرات المدعومة؟</h3>
+      <p>افتراضياً 3 كاميرات لكل مستخدم (قابل للتعديل في <span class="mono">global_config.json</span>). العملي: كاميرا واحدة لكل نواة CPU تقريباً.</p>
+
+      <h3>هل يحفظ صورة لكل إطار؟</h3>
+      <p>لا. بفضل Object Tracking، يُحفظ صورة واحدة فقط لكل حدث جديد. لو بقي الشخص 30 ثانية أمام الكاميرا، تُسجَّل صورة واحدة.</p>
+
+      <h3>ما دقة كشف النظام؟</h3>
+      <p>لا يوجد رقم ثابت "دقة" — يعتمد على: جودة الكاميرا، الإضاءة، زاوية التصوير، المسافة. النموذج (YOLOv8n) هو الأنسب لمراقبة قريبة ومتوسطة، وليس للتحليل من مسافات بعيدة جداً.</p>
+
+      <h3>هل يدعم عدة مستخدمين؟</h3>
+      <p>نعم. كل مستخدم له قاعدة بياناته وإعداداته وكاميراته. لا يرى المستخدم بيانات الآخرين. أول مستخدم يصبح admin تلقائياً، ويمكنه إنشاء مستخدمين آخرين بصلاحيات محددة.</p>
+
+      <h3>هل يمكنني بيع هذا النظام؟</h3>
+      <p>النظام مبني على مكتبات مفتوحة المصدر (Flask, OpenCV, YOLOv8). يمكنك استخدامه تجارياً مع مراعاة تراخيص كل مكتبة. أنصح بمراجعة تراخيص: Ultralytics YOLO (AGPL-3.0) لها قيود تجارية.</p>
+
+      <h3>ما الفرق بينه وبين Hikvision/Nest؟</h3>
+      <p>Hikvision/Nest: جاهز لكن مكلف، سحابي، محدود التخصيص. SmartVisionAI: مجاني، محلي، خصوصية كاملة، قابل للتعديل بالكامل، يعمل على أي جهاز، لكن يتطلب إعداداً يدوياً.</p>
+    </section>
+
+    <footer class="footer">
+      <p><strong>تركي تقني</strong> — SmartVisionAI</p>
+      <p>نظام مراقبة ذكي محلي · بدون اشتراكات · بدون سحابة · خصوصية كاملة</p>
+      <p style="margin-top:12px;font-size:11px;opacity:0.7">
+        بُني بـ Python · Flask · YOLOv8n ONNX · SQLite · ReportLab · وقهوة كثيرة
+      </p>
+    </footer>
+  </main>
+</div>
+
+<script>
+/* ============ INTRO SEQUENCE ============ */
+const introPhrases = [
+  "عطر فمك بذكر الله",
+  "استغفر الله",
+  "الحمد لله",
+  "صلّ على محمد",
+  "لا إله إلا الله"
+];
+
+(function playIntro(){
+  const overlay = document.getElementById("introOverlay");
+  const phraseEl = document.getElementById("introPhrase");
+  const dots = document.querySelectorAll(".intro-dot");
+  let idx = 0;
+
+  function showPhrase(i){
+    if (i >= introPhrases.length){
+      overlay.classList.add("fade-out");
+      setTimeout(() => overlay.remove(), 1200);
+      return;
+    }
+    phraseEl.textContent = introPhrases[i];
+    phraseEl.classList.remove("fade");
+    phraseEl.classList.add("show");
+    dots.forEach((d, j) => d.classList.toggle("active", j === i));
+
+    setTimeout(() => {
+      phraseEl.classList.remove("show");
+      phraseEl.classList.add("fade");
+      setTimeout(() => showPhrase(i + 1), 400);
+    }, 2200);
+  }
+
+  // Start
+  setTimeout(() => showPhrase(0), 400);
+})();
+
+/* ============ THEME TOGGLE ============ */
+function applyTheme(th){
+  document.documentElement.setAttribute("data-theme", th);
+  document.getElementById("themeBtn").textContent = th === "dark" ? "☀" : "☾";
+  try { localStorage.setItem("svdoc_theme", th); } catch(e){}
+}
+document.getElementById("themeBtn").addEventListener("click", () => {
+  const cur = document.documentElement.getAttribute("data-theme");
+  applyTheme(cur === "dark" ? "light" : "dark");
+});
+
+/* ============ NAV ============ */
+const navItems = document.querySelectorAll(".nav-item");
+const sections = document.querySelectorAll(".section");
+
+navItems.forEach(btn => {
+  btn.addEventListener("click", () => {
+    const target = document.getElementById(btn.dataset.target);
+    if (target) target.scrollIntoView({behavior: "smooth", block: "start"});
+  });
+});
+
+// Active on scroll
+window.addEventListener("scroll", () => {
+  let current = "";
+  sections.forEach(sec => {
+    if (window.scrollY >= sec.offsetTop - 120) current = sec.id;
+  });
+  navItems.forEach(b => b.classList.toggle("active", b.dataset.target === current));
+});
+
+/* ============ COPY CODE ============ */
+document.querySelectorAll(".copy-btn").forEach(btn => {
+  btn.addEventListener("click", () => {
+    const pre = btn.closest(".code-block").querySelector("pre");
+    if (!pre) return;
+    navigator.clipboard.writeText(pre.textContent).then(() => {
+      const old = btn.textContent;
+      btn.textContent = "تم النسخ";
+      setTimeout(() => btn.textContent = old, 1500);
+    });
+  });
+});
+
+/* ============ SMOOTH ANCHOR ============ */
+document.querySelectorAll('a[href^="#"]').forEach(a => {
+  a.addEventListener("click", e => {
+    const id = a.getAttribute("href").slice(1);
+    const el = document.getElementById(id);
+    if (el){
+      e.preventDefault();
+      el.scrollIntoView({behavior: "smooth", block: "start"});
+    }
+  });
+});
+
+/* ============ INIT ============ */
+(function init(){
+  let theme = "light";
+  try { theme = localStorage.getItem("svdoc_theme") || "light"; } catch(e){}
+  applyTheme(theme);
+})();
+</script>
+</body>
+</html>
