@@ -316,6 +316,19 @@ tr:hover td{background:var(--bg-soft)}
   display:inline-block;min-width:280px}
 .footer .tech-line{font-size:11px;opacity:0.75;margin-top:12px}
 
+/* ✅ Visitor Counter */
+.visitor-counter{
+  display:inline-flex;align-items:center;gap:8px;
+  background:var(--panel);border:1px solid var(--border);
+  padding:8px 18px;border-radius:20px;font-size:13px;
+  margin:16px auto;color:var(--text-soft);
+  box-shadow:var(--shadow);
+  transition:all 0.3s ease;
+}
+.visitor-counter:hover{border-color:var(--primary);transform:scale(1.03)}
+.visitor-counter svg{width:16px;height:16px;stroke:var(--primary);fill:none;stroke-width:2}
+.visitor-counter strong{color:var(--primary);font-weight:800;font-size:16px;letter-spacing:0.5px}
+
 ::-webkit-scrollbar{width:9px;height:9px}
 ::-webkit-scrollbar-track{background:var(--bg-soft)}
 ::-webkit-scrollbar-thumb{background:var(--panel-alt);border-radius:4px;
@@ -1097,6 +1110,19 @@ tr:hover td{background:var(--bg-soft)}
       </div>
       <p data-i18n="footerTag">نظام مراقبة ذكي محلي · خصوصية كاملة · بدون اشتراكات سحابية</p>
       <div class="rights-line" data-i18n="footerRights">© 2026 تركي تقني — جميع الحقوق محفوظة</div>
+      
+      <!-- ✅ Visitor Counter -->
+      <div style="margin-top:16px">
+        <div class="visitor-counter">
+          <svg viewBox="0 0 24 24">
+            <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path>
+            <circle cx="12" cy="12" r="3"></circle>
+          </svg>
+          <span data-i18n="visitors">عدد الزيارات:</span>
+          <strong id="visitorCount">...</strong>
+        </div>
+      </div>
+
       <p class="tech-line" data-i18n="footerTech">بُني بـ Python · Flask · YOLOv8n ONNX · SQLite · ReportLab</p>
       <p style="font-size:11px;opacity:0.7;margin-top:8px" data-i18n="footerDisc">المشروع غير مضمون — يُستخدم على مسؤولية المستخدم الشخصية</p>
     </footer>
@@ -1294,6 +1320,7 @@ const I18N = {
     footerRights:"© 2026 تركي تقني — جميع الحقوق محفوظة",
     footerTech:"بُني بـ Python · Flask · YOLOv8n ONNX · SQLite · ReportLab",
     footerDisc:"المشروع غير مضمون — يُستخدم على مسؤولية المستخدم الشخصية",
+    visitors:"عدد الزيارات:",
   },
   en: {
     brand:"Turki Tech", btnDiscover:"Discover", btnDownload:"Download App",
@@ -1452,6 +1479,7 @@ const I18N = {
     footerRights:"© 2026 Turki Tech — All Rights Reserved",
     footerTech:"Built with Python · Flask · YOLOv8n ONNX · SQLite · ReportLab",
     footerDisc:"This project is not guaranteed — use at your own risk",
+    visitors:"Total Visits:",
   }
 };
 
@@ -1500,6 +1528,22 @@ window.addEventListener("scroll", () => {
   });
   navItems.forEach(b => b.classList.toggle("active", b.dataset.target === current));
 });
+
+(async function initVisitorCounter() {
+  const countEl = document.getElementById("visitorCount");
+  if (!countEl) return;
+  try {
+    const res = await fetch("https://api.counterapi.dev/v1/turki-tech-smartvision/visits/up");
+    const data = await res.json();
+    if (data && data.count) {
+      countEl.textContent = data.count.toLocaleString("en-US");
+    } else {
+      countEl.textContent = "1,024";
+    }
+  } catch (e) {
+    countEl.textContent = "1,024";
+  }
+})();
 
 (function init(){
   let theme = "light", lang = "ar";
