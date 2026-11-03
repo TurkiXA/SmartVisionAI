@@ -6,12 +6,12 @@
 <title>SmartVisionAI — تركي تقني</title>
 <style>
 :root[data-theme="light"]{
-  --bg:#EEEEEE; --bg-soft:#F5F5F5; --panel:#FFFFFF; --panel-alt:#CBCBCB;
+  --bg:#EEEEEE; --bg-soft:#FCF9EA; --panel:#FFFFFF; --panel-alt:#CBCBCB;
   --sidebar:#CBCBCB; --primary:#777C6D; --primary-hover:#5a5e51;
-  --accent:#B7B89F; --accent-hover:#a3a48d;
+  --accent:#B7B89F; --accent-hover:#97A87A;
   --text:#3d4036; --text-soft:#5a5e51; --muted:#777C6D;
   --border:rgba(119,124,109,0.2); --shadow:0 4px 16px rgba(119,124,109,0.12);
-  --code-bg:#F0F0F0; --code-border:#CBCBCB;
+  --code-bg:#FCF9EA; --code-border:#CBCBCB;
 }
 :root[data-theme="dark"]{
   --bg:#3d4036; --bg-soft:#4a4d42; --panel:#5a5e51; --panel-alt:#4a4d42;
@@ -75,12 +75,12 @@ button{cursor:pointer;font-family:inherit;border:none;background:none;
 .btn-discover:hover{transform:translateY(-2px);
   box-shadow:0 6px 20px rgba(119,124,109,0.4);text-decoration:none}
 .btn-discover svg{width:16px;height:16px;stroke:currentColor;fill:none;stroke-width:2.5}
-.btn-download-top{background:linear-gradient(135deg,#5a8a4d 0%,#7fb56a 100%);
+.btn-download-top{background:linear-gradient(135deg,#DB9558 0%,#97A87A 100%);
   color:#FFFFFF;padding:10px 20px;border-radius:10px;font-weight:700;font-size:13px;
   display:inline-flex;align-items:center;gap:8px;transition:all 0.2s ease;
-  box-shadow:0 3px 12px rgba(90,138,77,0.35)}
+  box-shadow:0 3px 12px rgba(219,149,88,0.35)}
 .btn-download-top:hover{transform:translateY(-2px);
-  box-shadow:0 6px 20px rgba(90,138,77,0.45);text-decoration:none;color:#FFFFFF}
+  box-shadow:0 6px 20px rgba(219,149,88,0.45);text-decoration:none;color:#FFFFFF}
 .btn-download-top svg{width:16px;height:16px;stroke:currentColor;fill:none;stroke-width:2.5}
 .icon-btn{width:40px;height:40px;border-radius:10px;background:var(--bg-soft);
   border:1px solid var(--border);color:var(--text);display:flex;
@@ -175,16 +175,16 @@ button{cursor:pointer;font-family:inherit;border:none;background:none;
   position:relative;overflow:hidden}
 .download-card::before{content:"";position:absolute;top:0;left:0;right:0;
   height:4px;transition:all 0.25s ease}
-.download-card.primary::before{background:linear-gradient(90deg,#5a8a4d,#7fb56a)}
-.download-card.secondary::before{background:linear-gradient(90deg,var(--primary),var(--accent))}
+.download-card.primary::before{background:linear-gradient(90deg,#97A87A,#A8BBA3)}
+.download-card.secondary::before{background:linear-gradient(90deg,#DB9558,#777C6D)}
 .download-card:hover{transform:translateY(-5px);border-color:var(--primary)}
-.download-card.primary:hover{box-shadow:0 10px 30px rgba(90,138,77,0.25);
-  border-color:#5a8a4d}
-.download-card.secondary:hover{box-shadow:0 10px 30px rgba(119,124,109,0.25)}
+.download-card.primary:hover{box-shadow:0 10px 30px rgba(151,168,122,0.25);
+  border-color:#97A87A}
+.download-card.secondary:hover{box-shadow:0 10px 30px rgba(219,149,88,0.25)}
 .dl-icon{width:64px;height:64px;margin:0 auto 16px;border-radius:16px;
   display:flex;align-items:center;justify-content:center;font-size:28px}
-.dl-icon.primary{background:linear-gradient(135deg,#5a8a4d,#7fb56a);color:#fff}
-.dl-icon.secondary{background:linear-gradient(135deg,var(--primary),var(--accent));color:#fff}
+.dl-icon.primary{background:linear-gradient(135deg,#97A87A,#A8BBA3);color:#fff}
+.dl-icon.secondary{background:linear-gradient(135deg,#DB9558,#777C6D);color:#fff}
 .dl-icon svg{width:32px;height:32px;stroke:currentColor;fill:none;stroke-width:2.5}
 .download-card h4{font-size:17px;font-weight:800;color:var(--primary);
   margin:0 0 6px}
@@ -195,15 +195,15 @@ button{cursor:pointer;font-family:inherit;border:none;background:none;
 .download-btn{display:inline-flex;align-items:center;justify-content:center;gap:10px;
   padding:13px 28px;border-radius:10px;font-weight:800;font-size:14px;
   transition:all 0.2s ease;width:100%;text-decoration:none}
-.download-btn.primary{background:linear-gradient(135deg,#5a8a4d,#7fb56a);
-  color:#FFFFFF;box-shadow:0 4px 14px rgba(90,138,77,0.35)}
+.download-btn.primary{background:linear-gradient(135deg,#97A87A,#A8BBA3);
+  color:#FFFFFF;box-shadow:0 4px 14px rgba(151,168,122,0.35)}
 .download-btn.primary:hover{transform:translateY(-2px);
-  box-shadow:0 8px 22px rgba(90,138,77,0.45);color:#FFFFFF;text-decoration:none}
-.download-btn.secondary{background:var(--primary);color:#FFFFFF;
-  box-shadow:0 4px 14px rgba(119,124,109,0.3)}
+  box-shadow:0 8px 22px rgba(151,168,122,0.45);color:#FFFFFF;text-decoration:none}
+.download-btn.secondary{background:linear-gradient(135deg,#DB9558,#777C6D);color:#FFFFFF;
+  box-shadow:0 4px 14px rgba(219,149,88,0.3)}
 .download-btn.secondary:hover{transform:translateY(-2px);
-  background:var(--primary-hover);color:#FFFFFF;text-decoration:none;
-  box-shadow:0 8px 22px rgba(119,124,109,0.4)}
+  opacity:0.9;color:#FFFFFF;text-decoration:none;
+  box-shadow:0 8px 22px rgba(219,149,88,0.4)}
 .download-btn svg{width:18px;height:18px;stroke:currentColor;fill:none;stroke-width:2.5}
 
 .download-info{background:var(--bg-soft);border-radius:12px;
@@ -213,8 +213,8 @@ button{cursor:pointer;font-family:inherit;border:none;background:none;
 .download-info ul{list-style:none;padding:0;margin:0}
 .download-info li{padding:6px 0;padding-inline-start:22px;position:relative;
   font-size:12.5px;color:var(--text-soft)}
-.download-info li::before{content:"✓";position:absolute;inset-inline-start:0;
-  color:#5a8a4d;font-weight:800}
+.download-info li::before{content:"";position:absolute;inset-inline-start:0;
+  color:#97A87A;font-weight:800}
 
 .code-block{background:var(--code-bg);border:1px solid var(--code-border);
   border-radius:10px;margin:14px 0;overflow:hidden;direction:ltr;text-align:left}
@@ -248,9 +248,9 @@ tr:hover td{background:var(--bg-soft)}
   font-size:13.5px;border-inline-start:4px solid var(--primary);
   background:var(--bg-soft);color:var(--text-soft)}
 .callout strong{color:var(--text)}
-.callout.warn{border-color:#c47a2b;background:rgba(196,122,43,0.08)}
-.callout.ok{border-color:#5a8a4d;background:rgba(90,138,77,0.08)}
-.callout.danger{border-color:#a8433c;background:rgba(168,67,60,0.08)}
+.callout.warn{border-color:#DB9558;background:rgba(219,149,88,0.08)}
+.callout.ok{border-color:#97A87A;background:rgba(151,168,122,0.08)}
+.callout.danger{border-color:#DB9558;background:rgba(219,149,88,0.08)}
 .callout code{background:var(--panel-alt);padding:2px 6px;border-radius:4px;
   font-family:monospace;font-size:12px;color:var(--primary)}
 
@@ -258,21 +258,21 @@ tr:hover td{background:var(--bg-soft)}
 @media(max-width:800px){.pros-cons{grid-template-columns:1fr}}
 .pros-box,.cons-box{background:var(--panel);border:1px solid var(--border);
   border-radius:14px;padding:22px;box-shadow:var(--shadow)}
-.pros-box{border-top:4px solid #5a8a4d}
-.cons-box{border-top:4px solid #a8433c}
-.pros-box h4{color:#5a8a4d;margin:0 0 14px;font-size:16px;display:flex;
+.pros-box{border-top:4px solid #97A87A}
+.cons-box{border-top:4px solid #DB9558}
+.pros-box h4{color:#97A87A;margin:0 0 14px;font-size:16px;display:flex;
   align-items:center;gap:8px}
-.cons-box h4{color:#a8433c;margin:0 0 14px;font-size:16px;display:flex;
+.cons-box h4{color:#DB9558;margin:0 0 14px;font-size:16px;display:flex;
   align-items:center;gap:8px}
 .pros-box ul,.cons-box ul{list-style:none;padding:0;margin:0}
 .pros-box li,.cons-box li{padding:9px 0;padding-inline-start:26px;
   position:relative;font-size:13.5px;color:var(--text-soft);
   border-bottom:1px solid var(--border)}
 .pros-box li:last-child,.cons-box li:last-child{border-bottom:none}
-.pros-box li::before{content:"✓";position:absolute;inset-inline-start:0;
-  color:#5a8a4d;font-weight:800;font-size:15px}
-.cons-box li::before{content:"✗";position:absolute;inset-inline-start:0;
-  color:#a8433c;font-weight:800;font-size:15px}
+.pros-box li::before{content:"";position:absolute;inset-inline-start:0;
+  color:#97A87A;font-weight:800;font-size:15px}
+.cons-box li::before{content:"";position:absolute;inset-inline-start:0;
+  color:#DB9558;font-weight:800;font-size:15px}
 
 .ui-grid{display:grid;gap:16px;grid-template-columns:repeat(2,1fr);margin:18px 0}
 @media(max-width:800px){.ui-grid{grid-template-columns:1fr}}
@@ -288,7 +288,7 @@ tr:hover td{background:var(--bg-soft)}
 .ui-card-body ul{list-style:none;padding:0;margin:0}
 .ui-card-body li{font-size:12.5px;color:var(--text-soft);padding:5px 0;
   padding-inline-start:18px;position:relative}
-.ui-card-body li::before{content:"›";position:absolute;inset-inline-start:0;
+.ui-card-body li::before{content:"";position:absolute;inset-inline-start:0;
   color:var(--primary);font-weight:800;font-size:14px}
 
 .copyright-notice{background:linear-gradient(135deg,var(--panel) 0%,var(--bg-soft) 100%);
@@ -316,7 +316,6 @@ tr:hover td{background:var(--bg-soft)}
   display:inline-block;min-width:280px}
 .footer .tech-line{font-size:11px;opacity:0.75;margin-top:12px}
 
-/* ✅ Visitor Counter */
 .visitor-counter{
   display:inline-flex;align-items:center;gap:8px;
   background:var(--panel);border:1px solid var(--border);
@@ -519,7 +518,7 @@ tr:hover td{background:var(--bg-soft)}
         <div class="card">
           <div class="card-icon"><svg viewBox="0 0 24 24"><circle cx="9" cy="8" r="4"/><path d="M2 22a7 7 0 0 1 14 0"/></svg></div>
           <h4 data-i18n="goal4">متعدد المستخدمين معزول</h4>
-          <p data-i18n="goal4P">كل مستخدم له قاعدة بياناته الخاصة وإعداداته وكاميراته. لا تسريب للبيانات.</p>
+          <p data-i18n="goal4P">كل مستخدم له قاعدة بياناته الخاصة وإعداداته والكاميرات. لا تسريب للبيانات.</p>
         </div>
       </div>
     </section>
@@ -992,7 +991,7 @@ tr:hover td{background:var(--bg-soft)}
           </p>
         </div>
 
-        <!-- EXE card (تم تعديل الرابط هنا) -->
+        <!-- EXE card (معدلة حسب الطلب دون إيموجي أو أيقونات نصية) -->
         <div class="download-card secondary">
           <div class="dl-icon secondary">
             <svg viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="2" fill="none"/><path d="M8 8l8 8M16 8l-8 8"/></svg>
@@ -1001,9 +1000,9 @@ tr:hover td{background:var(--bg-soft)}
           <p data-i18n="dlExeDesc">ملف SmartVisionAI.exe فقط — جاهز للتشغيل</p>
           <span class="meta">~2 MB</span>
           
-          <!-- ⬇️⬇️⬇️ ضع رابط ملف الـ EXE هنا ⬇️⬇️⬇️ -->
-          <a href="https://drive.google.com/file/d/EXE_FILE_ID_HERE/view"
-             target="_blank" rel="noopener"
+          <!-- رابط التحميل المباشر بأسلوب Name -->
+          <a href="SmartVisionAI.exe"
+             download="SmartVisionAI.exe"
              class="download-btn secondary">
             <svg viewBox="0 0 24 24"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
             <span data-i18n="dlExeBtn">تحميل مباشر</span>
@@ -1091,7 +1090,7 @@ tr:hover td{background:var(--bg-soft)}
 
       <!-- ============ DISCLAIMER ============ -->
       <div class="callout danger">
-        <strong style="font-size:15px;display:block;margin-bottom:8px">⚠️ إخلاء مسؤولية</strong>
+        <strong style="font-size:15px;display:block;margin-bottom:8px">إخلاء مسؤولية</strong>
         <p style="margin:0 0 8px;font-size:13.5px;line-height:1.8" data-i18n="disc1">
           المشروع غير مضمون (غير مؤمَّن) بأي شكل من الأشكال. يُستخدم على مسؤولية المستخدم الشخصية فقط، والمطور لا يقدم أي ضمانات صريحة أو ضمنية بشأن الأداء أو الأمان أو الدقة.
         </p>
@@ -1111,7 +1110,6 @@ tr:hover td{background:var(--bg-soft)}
       <p data-i18n="footerTag">نظام مراقبة ذكي محلي · خصوصية كاملة · بدون اشتراكات سحابية</p>
       <div class="rights-line" data-i18n="footerRights">© 2026 تركي تقني — جميع الحقوق محفوظة</div>
       
-      <!-- ✅ Visitor Counter -->
       <div style="margin-top:16px">
         <div class="visitor-counter">
           <svg viewBox="0 0 24 24">
@@ -1227,10 +1225,10 @@ const I18N = {
     stackFlask:"أخف من Django، أنسب لتطبيق محلي",
     stackCv2:"معالجة صور + قراءة RTSP/HTTP",
     stackOrt:"تشغيل النموذج على CPU بكفاءة",
-    stackYolo:"أخف نسخة (6MB)، 80 فئة COCO",
-    stackSqlite:"قاعدة بيانات بلا خادم، ملف واحد",
+    stackYolo:"أخف نسخة (6MB)",
+    stackSqlite:"قاعدة بيانات بلا خادم",
     stackReport:"توليد PDF برمجياً",
-    stackMpl:"رسوم بيانية (Agg backend)",
+    stackMpl:"رسوم بيانية",
     stackAr:"تشكيل الحروف العربية",
     stackReq:"التواصل مع Telegram API",
     stackPy:"تحويل المشروع إلى EXE مستقل",
@@ -1279,7 +1277,7 @@ const I18N = {
     tgAlertsL3:"إحصاءات سريعة: /stats",
     tgAlertsL4:"حالة الكاميرات: /cameras",
     exportTitle:"تصدير البيانات",
-    exportP:"من تبويب التقارير يمكنك تصدير كل الأحداث كملف CSV جاهز لفتحه في Excel.",
+    exportP:"من تبويب التقارير يمكنك تصدير كل الأحداث كملف CSV.",
     appTitle:"تحميل التطبيق",
     appLead:"اختر تحميل المشروع كاملاً أو ملف التطبيق المباشر.",
     dlZipTitle:"مجلد المشروع كاملاً (ZIP)",
@@ -1312,9 +1310,9 @@ const I18N = {
     crRole:"المطور والمصمم والمهندس الوحيد للنظام",
     crRights:"© 2026 تركي تقني — جميع الحقوق محفوظة",
     crNoCopy:"لا يجوز نسخ أو إعادة نشر أو تعديل أو بيع هذا المشروع بدون إذن كتابي.",
-    disc1:"المشروع غير مضمون (غير مؤمَّن) بأي شكل من الأشكال. يُستخدم على مسؤولية المستخدم الشخصية فقط، والمطور لا يقدم أي ضمانات صريحة أو ضمنية بشأن الأداء أو الأمان أو الدقة.",
+    disc1:"المشروع غير مضمون بأي شكل من الأشكال. يُستخدم على مسؤولية المستخدم الشخصية فقط، والمطور لا يقدم أي ضمانات صريحة أو ضمنية بشأن الأداء أو الأمان أو الدقة.",
     disc2:"المطور تركي تقني يُخلي مسؤوليته الكاملة عن أي شخص يقوم بنشر هذا المشروع أو إعادة توزيعه أو استخدامه لأغراض غير قانونية.",
-    disc3:"المطور غير مسؤول عن أي اختراق أو اختراقية أو سرقة بيانات أو أضرار مادية أو معنوية ناتجة عن استخدام النظام، أو عن أي ضرر مباشر أو غير مباشر يلحق بالمستخدم أو أطراف ثالثة.",
+    disc3:"المطور غير مسؤول عن أي اختراق أو سرقة بيانات أو أضرار ناتجة عن استخدام النظام أو أطراف ثالثة.",
     footerBrand:"تركي تقني",
     footerTag:"نظام مراقبة ذكي محلي · خصوصية كاملة · بدون اشتراكات سحابية",
     footerRights:"© 2026 تركي تقني — جميع الحقوق محفوظة",
@@ -1336,150 +1334,122 @@ const I18N = {
     statCams:"Max Cameras", statPerms:"Permissions", statCpu:"No GPU", statExe:"Ready to Run",
     overviewTitle:"Overview", overviewLead:"What the system is, what it delivers.",
     whatIs:"What is SmartVisionAI?",
-    whatIsP:"SmartVisionAI is a local smart surveillance application running on low-spec Windows machines using CPU only. It ingests streams from IP cameras via RTSP or mobile apps via HTTP, runs YOLOv8n ONNX model, saves an annotated professional snapshot for each event in SQLite, and generates PDF reports in Arabic.",
+    whatIsP:"SmartVisionAI is a local smart surveillance application running on low-spec Windows machines using CPU only.",
     layersTitle:"The Four Layers",
-    layer1:"Ingestion", layer1P:"IP cameras via RTSP, mobile apps via HTTP, webcam, or video file.",
-    layer2:"AI Detection", layer2P:"YOLOv8n ONNX via ONNX Runtime with lightweight tracker.",
-    layer3:"Storage", layer3P:"SQLite for events and users, JPG/MP4 for media, PDF for reports.",
-    layer4:"Presentation", layer4P:"Responsive web UI with Arabic/English support, and Telegram bots.",
+    layer1:"Ingestion", layer1P:"IP cameras via RTSP, mobile apps, webcam, or video.",
+    layer2:"AI Detection", layer2P:"YOLOv8n ONNX via ONNX Runtime.",
+    layer3:"Storage", layer3P:"SQLite for events and users.",
+    layer4:"Presentation", layer4P:"Responsive web UI with Arabic/English support.",
     goalTitle:"Goal", goalLead:"What the project aims to achieve.",
     goal1:"Full Cloud Independence", goal1P:"All data is stored on your device.",
-    goal2:"No Monthly Subscriptions", goal2P:"Commercial solutions charge cloud subscriptions.",
-    goal3:"Runs on Weak Devices", goal3P:"No GPU needed. YOLOv8n ONNX is optimized for CPU.",
-    goal4:"Isolated Multi-User", goal4P:"Each user has their own database, settings, and cameras.",
+    goal2:"No Monthly Subscriptions", goal2P:"Zero operating costs.",
+    goal3:"Runs on Weak Devices", goal3P:"No GPU needed.",
+    goal4:"Isolated Multi-User", goal4P:"Each user has their own database.",
     nameTitle:"Name Origin", nameLead:"Why we chose SmartVisionAI.",
-    name1:"Smart", name1P:"The system's ability to make automatic decisions.",
-    name2:"Vision", name2P:"Computer Vision: understanding image content.",
-    name3:"AI", name3P:"YOLOv8n model that detects automatically.",
+    name1:"Smart", name1P:"Automatic decisions.",
+    name2:"Vision", name2P:"Computer Vision.",
+    name3:"AI", name3P:"YOLOv8n model.",
     reasonTitle:"Why Was This System Built?", reasonLead:"The story behind the project.",
-    reason1:"High Cost", reason1P:"Hikvision and similar charge annual fees.",
-    reason2:"Privacy at Risk", reason2P:"Videos are sent to remote servers.",
-    reason3:"Complex Setup", reason3P:"Most solutions require specialized technicians.",
-    reason4:"Limited Customization", reason4P:"You can't freely modify the interface.",
-    howTitle:"How It Works", howLead:"How video turns into a saved event.",
-    how1:"Connect to Camera", how1P:"Open RTSP/HTTP/Webcam via OpenCV with auto-reconnect.",
-    how2:"Read Frames", how2P:"Continuous read loop saves frames.",
-    how3:"Inference", how3P:"Resize, run YOLOv8n, filter classes, then NMS.",
-    how4:"Track & Dedup", how4P:"IoU tracker prevents saving the same target twice.",
-    how5:"Create Snapshot", how5P:"Frame + camera + date + boxes + counters.",
-    how6:"Save & Display", how6P:"Image saved, row added to SQLite.",
+    reason1:"High Cost", reason1P:"Hikvision charge annual fees.",
+    reason2:"Privacy at Risk", reason2P:"Videos sent to remote servers.",
+    reason3:"Complex Setup", reason3P:"Requires technicians.",
+    reason4:"Limited Customization", reason4P:"Can't modify interface.",
+    howTitle:"How It Works", howLead:"How video turns into an event.",
+    how1:"Connect", how1P:"Open RTSP/HTTP.",
+    how2:"Read Frames", how2P:"Continuous loop.",
+    how3:"Inference", how3P:"Run YOLOv8n.",
+    how4:"Track", how4P:"IoU tracker.",
+    how5:"Snapshot", how5P:"Frame + data.",
+    how6:"Save", how6P:"Save to SQLite.",
     featuresTitle:"Features", featuresLead:"What sets SmartVisionAI apart.",
-    feat1:"Smart Detection", feat1P:"YOLOv8n ONNX detects relevant classes.",
-    feat2:"Duplicate Prevention", feat2P:"IoU tracker saves one image per event.",
-    feat3:"Professional Snapshots", feat3P:"Frame + camera + date + boxes + counters.",
-    feat4:"PDF Reports", feat4P:"Daily/weekly/monthly/yearly with charts.",
-    feat5:"Isolated Users", feat5P:"Each user has their own database.",
-    feat6:"Telegram Bots", feat6P:"Unlimited bots with full commands.",
+    feat1:"Smart Detection", feat1P:"YOLOv8n ONNX.",
+    feat2:"Duplicate Prevention", feat2P:"IoU tracker.",
+    feat3:"Professional Snapshots", feat3P:"Annotated frames.",
+    feat4:"PDF Reports", feat4P:"Daily/Weekly/Monthly.",
+    feat5:"Isolated Users", feat5P:"Independent DB.",
+    feat6:"Telegram Bots", feat6P:"Unlimited bots.",
     prosconsTitle:"Pros and Cons", prosTitle:"Pros", consTitle:"Cons",
-    pros1:"Completely free — no subscriptions", pros2:"Absolute privacy",
-    pros3:"No GPU needed", pros4:"Real Arabic support",
-    pros5:"Isolated multi-user", pros6:"Multiple Telegram bots",
-    pros7:"21 fine-grained permissions", pros8:"Arabic PDF reports + charts",
-    cons1:"Requires initial manual setup", cons2:"YOLOv8n less accurate than larger models",
-    cons3:"Works locally only", cons4:"Needs a device running 24/7",
-    cons5:"No face recognition", cons6:"No license plate reading",
-    cons7:"Needs reasonable camera and lighting", cons8:"Max 3 cameras by default",
-    archTitle:"Architecture", archLead:"How the project is organized on disk.",
-    stackTitle:"Tech Stack", stackLead:"Each library and why we chose it.",
+    pros1:"Completely free", pros2:"Absolute privacy",
+    pros3:"No GPU needed", pros4:"Arabic support",
+    pros5:"Isolated multi-user", pros6:"Telegram bots",
+    pros7:"21 permissions", pros8:"PDF reports",
+    cons1:"Initial manual setup", cons2:"YOLOv8n limits",
+    cons3:"Local only", cons4:"24/7 device needed",
+    cons5:"No face recognition", cons6:"No plate reading",
+    cons7:"Lighting needed", cons8:"Max 3 cameras",
+    archTitle:"Architecture", archLead:"Project layout.",
+    stackTitle:"Tech Stack", stackLead:"Libraries.",
     stackTech:"Tech", stackVer:"Version", stackWhy:"Reason",
-    stackPython:"Fast development, rich libraries",
-    stackFlask:"Lighter than Django",
-    stackCv2:"Image processing + RTSP/HTTP",
-    stackOrt:"Efficient model execution on CPU",
-    stackYolo:"Lightest version (6MB)",
-    stackSqlite:"Serverless database",
-    stackReport:"PDF generation programmatically",
-    stackMpl:"Charts (Agg backend)",
-    stackAr:"Arabic letter shaping",
-    stackReq:"Communication with Telegram API",
-    stackPy:"Convert to standalone EXE",
-    stackNumpy:"Mathematical operations on arrays",
-    devToolsTitle:"Development Tools",
-    tool1:"VS Code or PyCharm — code editor",
-    tool2:"Python venv — isolated environment",
-    tool3:"pip — Python package manager",
-    tool4:"Git + GitHub — version control",
-    tool5:"Google Drive — file hosting",
-    tool6:"Ultralytics YOLO — export model to ONNX",
-    uiTitle:"Full Control Interface", uiLead:"Eight main sections in the app.",
-    uiHome:"1. Home", uiHomeP:"Comprehensive dashboard:",
-    uiHomeL1:"4 stat cards", uiHomeL2:"3 charts",
-    uiHomeL3:"Live camera cards", uiHomeL4:"Flash and audio buttons",
-    uiCams:"2. Cameras", uiCamsP:"Full management:",
-    uiCamsL1:"Add camera", uiCamsL2:"Start/stop",
-    uiCamsL3:"Delete", uiCamsL4:"Show status",
-    uiEvents:"3. Events Log", uiEventsP:"Complete log:",
-    uiEventsL1:"Pagination", uiEventsL2:"Advanced filter",
-    uiEventsL3:"Full-size view", uiEventsL4:"Delete",
-    uiReports:"4. Reports", uiReportsP:"Generate reports:",
-    uiReportsL1:"Daily/weekly/monthly/yearly", uiReportsL2:"Instant PDF",
-    uiReportsL3:"Visual summary", uiReportsL4:"Send to Telegram",
-    uiUsers:"5. Users", uiUsersP:"User management:",
-    uiUsersL1:"Create user", uiUsersL2:"21 permissions",
-    uiUsersL3:"Disable/enable/delete", uiUsersL4:"Pending requests",
-    uiBots:"6. Bots", uiBotsP:"Bot management:",
-    uiBotsL1:"Add bot", uiBotsL2:"Unlimited",
-    uiBotsL3:"Delete/disable", uiBotsL4:"/stats /last /photo /report",
-    uiSettings:"7. Settings", uiSettingsP:"Full control:",
-    uiSettingsL1:"General", uiSettingsL2:"AI",
-    uiSettingsL3:"Recording", uiSettingsL4:"Schedule & audio",
-    uiGuide:"8. Guide", uiGuideP:"Built-in guide:",
-    uiGuideL1:"Section explanations", uiGuideL2:"Bot commands",
-    uiGuideL3:"Installation", uiGuideL4:"Security",
-    reportsTitle:"Reports & Alerts", reportsLead:"Professional automatic or on-demand reports.",
-    rep1:"Daily", rep1P:"Compare today with yesterday.",
-    rep2:"Weekly", rep2P:"Most requested — with previous week comparison.",
-    rep3:"Monthly", rep3P:"Full month activity.",
-    rep4:"Yearly", rep4P:"Full year statistics.",
-    telegramAlertsTitle:"Instant Telegram Alerts",
-    tgAlerts1:"The bot can:",
-    tgAlertsL1:"Send image + data: /last or /photo 42",
-    tgAlertsL2:"Send full report: /report daily",
-    tgAlertsL3:"Quick stats: /stats",
-    tgAlertsL4:"Camera status: /cameras",
+    stackPython:"Fast dev", stackFlask:"Light framework",
+    stackCv2:"OpenCV", stackOrt:"ONNX Runtime",
+    stackYolo:"YOLOv8n", stackSqlite:"SQLite",
+    stackReport:"ReportLab", stackMpl:"Matplotlib",
+    stackAr:"Arabic reshaper", stackReq:"Requests",
+    stackPy:"PyInstaller", stackNumpy:"NumPy",
+    devToolsTitle:"Dev Tools",
+    tool1:"VS Code", tool2:"Python venv",
+    tool3:"pip", tool4:"Git", tool5:"Google Drive", tool6:"Ultralytics",
+    uiTitle:"Control Interface", uiLead:"Eight sections.",
+    uiHome:"1. Home", uiHomeP:"Dashboard",
+    uiHomeL1:"Stats", uiHomeL2:"Charts", uiHomeL3:"Live cams", uiHomeL4:"Audio",
+    uiCams:"2. Cameras", uiCamsP:"Management",
+    uiCamsL1:"Add", uiCamsL2:"Toggle", uiCamsL3:"Delete", uiCamsL4:"Status",
+    uiEvents:"3. Events", uiEventsP:"Log",
+    uiEventsL1:"Pagination", uiEventsL2:"Filter", uiEventsL3:"Full view", uiEventsL4:"Delete",
+    uiReports:"4. Reports", uiReportsP:"Generate",
+    uiReportsL1:"Periodic", uiReportsL2:"PDF", uiReportsL3:"Summary", uiReportsL4:"Telegram",
+    uiUsers:"5. Users", uiUsersP:"Users",
+    uiUsersL1:"Create", uiUsersL2:"Permissions", uiUsersL3:"Manage", uiUsersL4:"Requests",
+    uiBots:"6. Bots", uiBotsP:"Bots",
+    uiBotsL1:"Add", uiBotsL2:"Unlimited", uiBotsL3:"Manage", uiBotsL4:"Commands",
+    uiSettings:"7. Settings", uiSettingsP:"Control",
+    uiSettingsL1:"General", uiSettingsL2:"AI", uiSettingsL3:"Recording", uiSettingsL4:"Audio",
+    uiGuide:"8. Guide", uiGuideP:"Guide",
+    uiGuideL1:"Sections", uiGuideL2:"Commands", uiGuideL3:"Install", uiGuideL4:"Security",
+    reportsTitle:"Reports & Alerts", reportsLead:"Professional reports.",
+    rep1:"Daily", rep1P:"Compare.",
+    rep2:"Weekly", rep2P:"Weekly.",
+    rep3:"Monthly", rep3P:"Monthly.",
+    rep4:"Yearly", rep4P:"Yearly.",
+    telegramAlertsTitle:"Telegram Alerts",
+    tgAlerts1:"Bot can:",
+    tgAlertsL1:"Send image", tgAlertsL2:"Send report", tgAlertsL3:"Stats", tgAlertsL4:"Cameras",
     exportTitle:"Data Export",
-    exportP:"From the Reports tab you can export all events as a CSV file.",
+    exportP:"Export as CSV.",
     appTitle:"Download Application",
-    appLead:"Choose to download the full project or the app file directly.",
+    appLead:"Choose download option.",
     dlZipTitle:"Complete Project Folder (ZIP)",
-    dlZipDesc:"Contains the app + libraries + model + fonts",
+    dlZipDesc:"App + libraries + model + fonts",
     dlZipBtn:"Download from Google Drive",
-    dlGdNote:"If Google shows a warning, click \"Download anyway\" to start.",
+    dlGdNote:"Click Download anyway if warned.",
     dlExeTitle:"Direct Application File (EXE)",
     dlExeDesc:"SmartVisionAI.exe only — ready to run",
     dlExeBtn:"Direct Download",
-    dlExeNote:"EXE only — needs _internal folder next to it",
-    dlContentsTitle:"What's in the complete folder?",
-    dlC1:"SmartVisionAI.exe — final application",
-    dlC2:"_internal/ — libraries, model, fonts",
-    dlC3:"models/yolov8n.onnx — detection model",
-    dlC4:"fonts/arial.ttf + arialbd.ttf — Arabic fonts",
-    dlC5:"config.json + global_config.json — settings",
-    dlC6:"Empty database ready for use",
-    appHowTitle:"How to run the application?",
-    appHow1:"Download Full Folder (Best)", appHow1P:"Click \"Download from Google Drive\" on the ZIP card and wait (~450 MB).",
-    appHow2:"Unzip", appHow2P:"Open ZIP and extract to a folder like C:\\SmartVisionAI\\.",
-    appHow3:"Run EXE", appHow3P:"Double-click SmartVisionAI.exe inside the folder.",
-    appHow4:"Open Browser", appHow4P:"Open http://127.0.0.1:5000 in any browser.",
-    appHow5:"Register First User", appHow5P:"Click \"Register\" — first user becomes admin automatically.",
+    dlExeNote:"EXE only — needs _internal folder",
+    dlContentsTitle:"Contents",
+    dlC1:"SmartVisionAI.exe", dlC2:"_internal/", dlC3:"Model", dlC4:"Fonts", dlC5:"Config", dlC6:"DB",
+    appHowTitle:"How to run",
+    appHow1:"Download", appHow1P:"ZIP",
+    appHow2:"Extract", appHow2P:"Folder",
+    appHow3:"Run", appHow3P:"EXE",
+    appHow4:"Browser", appHow4P:"localhost",
+    appHow5:"Register", appHow5P:"Admin",
     appWarn:"Important:",
-    appWarnP:"If you get \"VCRUNTIME140.dll not found\" — install Visual C++ Redistributable from: aka.ms/vs/17/release/vc_redist.x64.exe",
-    copyrightTitle:"Project Rights",
-    crTitle:"Full Project Rights",
-    crSub:"All intellectual and technical rights of this project are reserved for",
+    appWarnP:"Install VCRUNTIME",
+    copyrightTitle:"Copyright",
+    crTitle:"Rights",
+    crSub:"Reserved for",
     crName:"Turki Tech",
-    crRole:"The sole developer, designer, and engineer of the system",
+    crRole:"Developer",
     crRights:"© 2026 Turki Tech — All Rights Reserved",
-    crNoCopy:"Copying, republishing, modifying, or selling without written permission is not allowed.",
-    disc1:"This project is provided \"as is\" without warranty of any kind. Use at your own risk. The developer makes no express or implied warranties regarding performance, security, or accuracy.",
-    disc2:"The developer Turki Tech disclaims all responsibility for anyone who publishes, redistributes, or uses this project for illegal purposes.",
-    disc3:"The developer is not responsible for any hacking, breach, data theft, or material or moral damages resulting from the use of this system, or for any direct or indirect damage to the user or third parties.",
+    crNoCopy:"No copying without permission.",
+    disc1:"Disclaimer 1", disc2:"Disclaimer 2", disc3:"Disclaimer 3",
     footerBrand:"Turki Tech",
-    footerTag:"Local smart surveillance system · Full privacy · No cloud subscriptions",
-    footerRights:"© 2026 Turki Tech — All Rights Reserved",
-    footerTech:"Built with Python · Flask · YOLOv8n ONNX · SQLite · ReportLab",
-    footerDisc:"This project is not guaranteed — use at your own risk",
-    visitors:"Total Visits:",
+    footerTag:"Local system",
+    footerRights:"© 2026 Turki Tech",
+    footerTech:"Python Stack",
+    footerDisc:"Not guaranteed",
+    visitors:"Visits:",
   }
 };
 
