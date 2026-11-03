@@ -12,7 +12,6 @@
   --text:#3d4036; --text-soft:#5a5e51; --muted:#777C6D;
   --border:rgba(119,124,109,0.2); --shadow:0 4px 16px rgba(119,124,109,0.12);
   --code-bg:#F0F0F0; --code-border:#CBCBCB;
-  --success:#5a8a4d; --danger:#a8433c;
 }
 :root[data-theme="dark"]{
   --bg:#3d4036; --bg-soft:#4a4d42; --panel:#5a5e51; --panel-alt:#4a4d42;
@@ -21,7 +20,6 @@
   --text:#EEEEEE; --text-soft:#CBCBCB; --muted:#B7B89F;
   --border:rgba(238,238,238,0.15); --shadow:0 4px 20px rgba(0,0,0,0.3);
   --code-bg:#4a4d42; --code-border:rgba(238,238,238,0.2);
-  --success:#A8DC8C; --danger:#E87B6E;
 }
 *{box-sizing:border-box;margin:0;padding:0}
 html{scroll-behavior:smooth}
@@ -175,65 +173,62 @@ button{cursor:pointer;font-family:inherit;border:none;background:none;
 .card h4{font-size:14px;font-weight:700;color:var(--primary);margin:0 0 6px}
 .card p{font-size:13px;color:var(--text-soft);margin:0;line-height:1.7}
 
-/* DOWNLOAD SECTION */
-.download-card{
-  background:var(--panel);border:2px solid var(--border);border-radius:16px;
-  text-align:center;transition:all 0.25s ease;
-  box-shadow:var(--shadow);position:relative;overflow:hidden;
-}
-.download-card::before{
-  content:"";position:absolute;top:0;left:0;right:0;height:4px;
-  background:linear-gradient(90deg,#5a8a4d,#7fb56a);
-  transition:all 0.25s ease;
-}
-.download-card:hover{transform:translateY(-5px);border-color:#5a8a4d;
-  box-shadow:0 12px 32px rgba(90,138,77,0.25)}
-.dl-icon{
-  border-radius:16px;display:flex;align-items:center;justify-content:center;
-  background:linear-gradient(135deg,#5a8a4d,#7fb56a);color:#fff;
-}
-.dl-icon svg{stroke:currentColor;fill:none;stroke-width:2.5}
-.download-btn{
-  display:inline-flex;align-items:center;justify-content:center;gap:10px;
-  padding:13px 28px;border-radius:10px;font-weight:800;
-  transition:all 0.2s ease;width:100%;text-decoration:none;
-  background:linear-gradient(135deg,#5a8a4d,#7fb56a);color:#FFFFFF;
-  box-shadow:0 4px 14px rgba(90,138,77,0.35);
-}
-.download-btn:hover{transform:translateY(-2px);
+/* DOWNLOAD */
+.download-grid{display:grid;gap:20px;grid-template-columns:1fr 1fr;margin:24px 0}
+@media(max-width:700px){.download-grid{grid-template-columns:1fr}}
+.download-card{background:var(--panel);border:2px solid var(--border);
+  border-radius:16px;padding:28px 24px;text-align:center;
+  transition:all 0.25s ease;box-shadow:var(--shadow);
+  position:relative;overflow:hidden}
+.download-card::before{content:"";position:absolute;top:0;left:0;right:0;
+  height:4px;transition:all 0.25s ease}
+.download-card.primary::before{background:linear-gradient(90deg,#5a8a4d,#7fb56a)}
+.download-card.secondary::before{background:linear-gradient(90deg,var(--primary),var(--accent))}
+.download-card:hover{transform:translateY(-5px);border-color:var(--primary)}
+.download-card.primary:hover{box-shadow:0 10px 30px rgba(90,138,77,0.25);
+  border-color:#5a8a4d}
+.download-card.secondary:hover{box-shadow:0 10px 30px rgba(119,124,109,0.25)}
+.dl-icon{width:64px;height:64px;margin:0 auto 16px;border-radius:16px;
+  display:flex;align-items:center;justify-content:center;font-size:28px}
+.dl-icon.primary{background:linear-gradient(135deg,#5a8a4d,#7fb56a);color:#fff}
+.dl-icon.secondary{background:linear-gradient(135deg,var(--primary),var(--accent));color:#fff}
+.dl-icon svg{width:32px;height:32px;stroke:currentColor;fill:none;stroke-width:2.5}
+.download-card h4{font-size:17px;font-weight:800;color:var(--primary);
+  margin:0 0 6px}
+.download-card p{font-size:13px;color:var(--text-soft);margin:0 0 6px;line-height:1.6}
+.download-card .meta{display:inline-block;padding:3px 10px;border-radius:6px;
+  font-size:11px;font-weight:700;margin-bottom:16px;
+  background:var(--bg-soft);color:var(--muted)}
+.download-btn{display:inline-flex;align-items:center;justify-content:center;gap:10px;
+  padding:13px 28px;border-radius:10px;font-weight:800;font-size:14px;
+  transition:all 0.2s ease;width:100%;text-decoration:none}
+.download-btn.primary{background:linear-gradient(135deg,#5a8a4d,#7fb56a);
+  color:#FFFFFF;box-shadow:0 4px 14px rgba(90,138,77,0.35)}
+.download-btn.primary:hover{transform:translateY(-2px);
   box-shadow:0 8px 22px rgba(90,138,77,0.45);color:#FFFFFF;text-decoration:none}
-.download-btn svg{stroke:currentColor;fill:none;stroke-width:2.5}
+.download-btn.secondary{background:var(--primary);color:#FFFFFF;
+  box-shadow:0 4px 14px rgba(119,124,109,0.3)}
+.download-btn.secondary:hover{transform:translateY(-2px);
+  background:var(--primary-hover);color:#FFFFFF;text-decoration:none;
+  box-shadow:0 8px 22px rgba(119,124,109,0.4)}
+.download-btn svg{width:18px;height:18px;stroke:currentColor;fill:none;stroke-width:2.5}
 
-.download-info{
-  background:var(--bg-soft);border-radius:12px;
-  padding:18px 20px;margin-top:20px;
-}
-.download-info h5{
-  font-size:13px;font-weight:800;color:var(--primary);
-  margin:0 0 10px;
-}
-.download-info ul{
-  list-style:none;padding:0;margin:0;
-}
-.download-info li{
-  padding:6px 0;padding-inline-start:22px;position:relative;
-  font-size:12.5px;color:var(--text-soft);
-}
-.download-info li::before{
-  content:"✓";position:absolute;inset-inline-start:0;
-  color:#5a8a4d;font-weight:800;
-}
-
-.download-note{
-  background:rgba(196,122,43,0.1);border:1px solid #c47a2b;
+.download-note{background:rgba(196,122,43,0.1);border:1px solid #c47a2b;
   border-radius:10px;padding:14px 18px;margin-top:20px;
-  font-size:13px;color:var(--text-soft);line-height:1.7;
-}
+  font-size:13px;color:var(--text-soft);line-height:1.7}
 .download-note strong{color:#c47a2b}
-.download-note code{
-  background:var(--panel-alt);padding:2px 6px;border-radius:4px;
-  font-family:monospace;font-size:12px;color:var(--primary);
-}
+.download-note code{background:var(--panel-alt);padding:2px 6px;border-radius:4px;
+  font-family:monospace;font-size:12px;color:var(--primary)}
+
+.download-info{background:var(--bg-soft);border-radius:12px;
+  padding:18px 20px;margin-top:20px}
+.download-info h5{font-size:13px;font-weight:800;color:var(--primary);
+  margin:0 0 10px}
+.download-info ul{list-style:none;padding:0;margin:0}
+.download-info li{padding:6px 0;padding-inline-start:22px;position:relative;
+  font-size:12.5px;color:var(--text-soft)}
+.download-info li::before{content:"✓";position:absolute;inset-inline-start:0;
+  color:#5a8a4d;font-weight:800}
 
 /* CODE */
 .code-block{background:var(--code-bg);border:1px solid var(--code-border);
@@ -248,6 +243,15 @@ button{cursor:pointer;font-family:inherit;border:none;background:none;
 .copy-btn{background:var(--primary);color:#FFFFFF;padding:3px 10px;
   border-radius:5px;font-size:10px;font-weight:700}
 .copy-btn:hover{background:var(--primary-hover)}
+
+/* TABLE */
+.table-wrap{overflow-x:auto;border-radius:10px;border:1px solid var(--border);margin:14px 0}
+table{width:100%;border-collapse:collapse;font-size:13px}
+th,td{padding:12px 14px;text-align:start;border-bottom:1px solid var(--border)}
+th{background:var(--panel-alt);font-weight:700;font-size:11.5px;
+  text-transform:uppercase;letter-spacing:0.5px;color:var(--text-soft)}
+tr:last-child td{border-bottom:none}
+tr:hover td{background:var(--bg-soft)}
 
 /* STEPS */
 .steps{display:flex;flex-direction:column;gap:14px;margin:18px 0}
@@ -291,7 +295,7 @@ button{cursor:pointer;font-family:inherit;border:none;background:none;
 .cons-box li::before{content:"✗";position:absolute;inset-inline-start:0;
   color:#a8433c;font-weight:800;font-size:15px}
 
-/* UI cards */
+/* UI */
 .ui-grid{display:grid;gap:16px;grid-template-columns:repeat(2,1fr);margin:18px 0}
 @media(max-width:800px){.ui-grid{grid-template-columns:1fr}}
 .ui-card{background:var(--panel);border:1px solid var(--border);
@@ -308,15 +312,6 @@ button{cursor:pointer;font-family:inherit;border:none;background:none;
   padding-inline-start:18px;position:relative}
 .ui-card-body li::before{content:"›";position:absolute;inset-inline-start:0;
   color:var(--primary);font-weight:800;font-size:14px}
-
-/* TABLE */
-.table-wrap{overflow-x:auto;border-radius:10px;border:1px solid var(--border);margin:14px 0}
-table{width:100%;border-collapse:collapse;font-size:13px}
-th,td{padding:12px 14px;text-align:start;border-bottom:1px solid var(--border)}
-th{background:var(--panel-alt);font-weight:700;font-size:11.5px;
-  text-transform:uppercase;letter-spacing:0.5px;color:var(--text-soft)}
-tr:last-child td{border-bottom:none}
-tr:hover td{background:var(--bg-soft)}
 
 /* COPYRIGHT */
 .copyright-notice{background:linear-gradient(135deg,var(--panel) 0%,var(--bg-soft) 100%);
@@ -405,6 +400,10 @@ tr:hover td{background:var(--bg-soft)}
       <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="4"/></svg>
       <span data-i18n="navGoal">الهدف</span>
     </button>
+    <button class="nav-item" data-target="name">
+      <svg viewBox="0 0 24 24"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+      <span data-i18n="navName">سبب التسمية</span>
+    </button>
     <button class="nav-item" data-target="reason">
       <svg viewBox="0 0 24 24"><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"/><path d="M12 17h.01"/><circle cx="12" cy="12" r="10"/></svg>
       <span data-i18n="navReason">لماذا بُني؟</span>
@@ -422,6 +421,14 @@ tr:hover td{background:var(--bg-soft)}
     <button class="nav-item" data-target="proscons">
       <svg viewBox="0 0 24 24"><path d="M12 2v20M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg>
       <span data-i18n="navProsCons">الإيجابيات والسلبيات</span>
+    </button>
+    <button class="nav-item" data-target="architecture">
+      <svg viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/></svg>
+      <span data-i18n="navArch">المعمارية</span>
+    </button>
+    <button class="nav-item" data-target="stack">
+      <svg viewBox="0 0 24 24"><polyline points="4 14 12 18 20 14"/><polyline points="4 10 12 14 20 10"/><polyline points="4 6 12 10 20 6"/></svg>
+      <span data-i18n="navStack">التقنيات</span>
     </button>
 
     <div class="sidebar-section" data-i18n="navUse">الاستخدام</div>
@@ -530,6 +537,33 @@ tr:hover td{background:var(--bg-soft)}
           <div class="card-icon"><svg viewBox="0 0 24 24"><circle cx="9" cy="8" r="4"/><path d="M2 22a7 7 0 0 1 14 0"/></svg></div>
           <h4 data-i18n="goal4">متعدد المستخدمين معزول</h4>
           <p data-i18n="goal4P">كل مستخدم له قاعدة بياناته الخاصة وإعداداته وكاميراته. لا تسريب للبيانات.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- NAME -->
+    <section class="section" id="name">
+      <div class="section-header">
+        <div class="section-icon"><svg viewBox="0 0 24 24"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg></div>
+        <h2 class="section-title" data-i18n="nameTitle">سبب التسمية</h2>
+      </div>
+      <p class="section-lead" data-i18n="nameLead">لماذا اخترنا اسم SmartVisionAI وما الذي يعنيه كل جزء منه.</p>
+
+      <div class="cards-grid three">
+        <div class="card">
+          <div class="card-icon"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg></div>
+          <h4 data-i18n="name1">Smart — ذكي</h4>
+          <p data-i18n="name1P">قدرة النظام على اتخاذ قرارات تلقائية (متى يحفظ؟ متى يتجاهل؟).</p>
+        </div>
+        <div class="card">
+          <div class="card-icon"><svg viewBox="0 0 24 24"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg></div>
+          <h4 data-i18n="name2">Vision — رؤية</h4>
+          <p data-i18n="name2P">Computer Vision: قدرة الآلة على فهم محتوى الصور والفيديو.</p>
+        </div>
+        <div class="card">
+          <div class="card-icon"><svg viewBox="0 0 24 24"><rect x="4" y="4" width="16" height="16" rx="2"/><rect x="9" y="9" width="6" height="6"/></svg></div>
+          <h4 data-i18n="name3">AI — ذكاء اصطناعي</h4>
+          <p data-i18n="name3P">نموذج YOLOv8n الذي يكتشف الأشخاص والسيارات تلقائياً.</p>
         </div>
       </div>
     </section>
@@ -705,6 +739,79 @@ tr:hover td{background:var(--bg-soft)}
       </div>
     </section>
 
+    <!-- ARCHITECTURE -->
+    <section class="section" id="architecture">
+      <div class="section-header">
+        <div class="section-icon"><svg viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/></svg></div>
+        <h2 class="section-title" data-i18n="archTitle">المعمارية</h2>
+      </div>
+      <p class="section-lead" data-i18n="archLead">كيف يُنظَّم المشروع على القرص.</p>
+
+      <div class="code-block">
+        <div class="code-header"><span>SmartVisionAI/</span></div>
+        <pre>SmartVisionAI/
+├── app.py                  # المحرك الرئيسي
+├── invhead.py              # تقارير PDF
+├── index.html              # واجهة المستخدم
+├── SmartVisionAI.spec      # بناء EXE
+├── smartvision.db          # المستخدمون والجلسات
+├── global_config.json      # إعدادات عامة
+├── models/yolov8n.onnx
+├── fonts/{arial,arialbd}.ttf
+├── database/users/{id}/
+│   ├── user.db
+│   ├── config.json
+│   ├── cameras.json
+│   ├── imges/{persons,vehicles}/
+│   ├── recoding/{persons,vehicles}/
+│   └── reports/
+└── dist/SmartVisionAI/     # التطبيق النهائي</pre>
+      </div>
+    </section>
+
+    <!-- TECH STACK -->
+    <section class="section" id="stack">
+      <div class="section-header">
+        <div class="section-icon"><svg viewBox="0 0 24 24"><polyline points="4 14 12 18 20 14"/><polyline points="4 10 12 14 20 10"/><polyline points="4 6 12 10 20 6"/></svg></div>
+        <h2 class="section-title" data-i18n="stackTitle">التقنيات المستخدمة</h2>
+      </div>
+      <p class="section-lead" data-i18n="stackLead">كل مكتبة، لماذا اخترناها.</p>
+
+      <div class="table-wrap">
+        <table>
+          <thead><tr>
+            <th data-i18n="stackTech">التقنية</th>
+            <th data-i18n="stackVer">الإصدار</th>
+            <th data-i18n="stackWhy">السبب</th>
+          </tr></thead>
+          <tbody>
+            <tr><td>Python</td><td>3.10+</td><td data-i18n="stackPython">لغة سريعة التطوير، مكتبات CV/AI وفيرة</td></tr>
+            <tr><td>Flask</td><td>3.0+</td><td data-i18n="stackFlask">أخف من Django، أنسب لتطبيق محلي</td></tr>
+            <tr><td>OpenCV</td><td>4.9+</td><td data-i18n="stackCv2">معالجة صور + قراءة RTSP/HTTP</td></tr>
+            <tr><td>ONNX Runtime</td><td>1.17+</td><td data-i18n="stackOrt">تشغيل النموذج على CPU بكفاءة</td></tr>
+            <tr><td>YOLOv8n</td><td>-</td><td data-i18n="stackYolo">أخف نسخة (6MB)، 80 فئة COCO</td></tr>
+            <tr><td>SQLite</td><td>مدمج</td><td data-i18n="stackSqlite">قاعدة بيانات بلا خادم، ملف واحد</td></tr>
+            <tr><td>ReportLab</td><td>4.1+</td><td data-i18n="stackReport">توليد PDF برمجياً</td></tr>
+            <tr><td>Matplotlib</td><td>3.8+</td><td data-i18n="stackMpl">رسوم بيانية للتقارير (Agg backend)</td></tr>
+            <tr><td>arabic_reshaper + bidi</td><td>-</td><td data-i18n="stackAr">تشكيل الحروف العربية</td></tr>
+            <tr><td>Requests</td><td>2.31+</td><td data-i18n="stackReq">التواصل مع Telegram API</td></tr>
+            <tr><td>PyInstaller</td><td>6.0+</td><td data-i18n="stackPy">تحويل المشروع إلى EXE مستقل</td></tr>
+            <tr><td>NumPy</td><td>1.26+</td><td data-i18n="stackNumpy">العمليات الرياضية على المصفوفات</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <h3 data-i18n="devToolsTitle">أدوات التطوير</h3>
+      <ul>
+        <li data-i18n="tool1">VS Code أو PyCharm — محرر الكود</li>
+        <li data-i18n="tool2">Python venv — بيئة افتراضية معزولة</li>
+        <li data-i18n="tool3">pip — مدير حزم Python</li>
+        <li data-i18n="tool4">Git + GitHub — التحكم بالإصدارات</li>
+        <li data-i18n="tool5">Google Drive — استضافة ملف التحميل</li>
+        <li data-i18n="tool6">Ultralytics YOLO — تصدير النموذج إلى ONNX</li>
+      </ul>
+    </section>
+
     <!-- UI CONTROL -->
     <section class="section" id="ui">
       <div class="section-header">
@@ -878,54 +985,61 @@ tr:hover td{background:var(--bg-soft)}
           <li data-i18n="tgAlertsL4">حالة الكاميرات: /cameras</li>
         </ul>
       </div>
+
+      <h3 data-i18n="exportTitle">تصدير البيانات</h3>
+      <p data-i18n="exportP">من تبويب التقارير يمكنك تصدير كل الأحداث كملف CSV جاهز لفتحه في Excel.</p>
     </section>
 
-    <!-- ============ DOWNLOAD / APP ============ -->
+    <!-- ============ DOWNLOAD ============ -->
     <section class="section" id="app">
       <div class="section-header">
         <div class="section-icon"><svg viewBox="0 0 24 24"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg></div>
         <h2 class="section-title" data-i18n="appTitle">تحميل التطبيق</h2>
       </div>
-      <p class="section-lead" data-i18n="appLead">نظام كامل جاهز للتحميل والتشغيل مباشرة — بدون الحاجة إلى Python أو تثبيت أي شيء.</p>
+      <p class="section-lead" data-i18n="appLead">اختر تحميل المشروع كاملاً أو ملف EXE مباشرة.</p>
 
-      <!-- BIG DOWNLOAD CARD -->
-      <div style="display:flex;justify-content:center;margin:36px 0;">
-        <div class="download-card" style="max-width:580px;width:100%;padding:44px 32px;">
-          <div class="dl-icon" style="width:88px;height:88px;margin:0 auto 20px;">
-            <svg viewBox="0 0 24 24" style="width:44px;height:44px;">
-              <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
-              <polyline points="7 10 12 15 17 10"/>
-              <line x1="12" y1="15" x2="12" y2="3"/>
-            </svg>
+      <!-- TWO CARDS -->
+      <div class="download-grid">
+        <!-- ZIP card -->
+        <div class="download-card primary">
+          <div class="dl-icon primary">
+            <svg viewBox="0 0 24 24"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
           </div>
-          <h4 data-i18n="dlZipTitle" style="font-size:20px;margin-bottom:10px;">مجلد المشروع كاملاً (ZIP)</h4>
-          <p data-i18n="dlZipDesc" style="font-size:14px;margin-bottom:14px;color:var(--text-soft)">
-            يحتوي على التطبيق + المكتبات + النموذج + الخطوط
-          </p>
-          <span style="display:inline-block;font-size:12px;padding:5px 14px;margin-bottom:20px;background:var(--bg-soft);color:var(--muted);border-radius:6px;font-weight:700;">~450 MB</span>
-
-          <!-- ⬇️ Google Drive download link -->
-          <a href="https://drive.google.com/uc?export=download&id=1CtaJwI_3-cQ1rUzO-4yrUTFfo5D870g7"
+          <h4 data-i18n="dlZipTitle">مجلد المشروع كاملاً</h4>
+          <p data-i18n="dlZipDesc">يحتوي على التطبيق + المكتبات + النموذج + الخطوط</p>
+          <span class="meta">~450 MB</span>
+          <a href="https://drive.google.com/file/d/1CtaJwI_3-cQ1rUzO-4yrUTFfo5D870g7/view"
              target="_blank" rel="noopener"
-             class="download-btn"
-             style="font-size:15px;padding:15px 32px;">
-            <svg viewBox="0 0 24 24" style="width:20px;height:20px;">
-              <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
-              <polyline points="7 10 12 15 17 10"/>
-              <line x1="12" y1="15" x2="12" y2="3"/>
-            </svg>
+             class="download-btn primary">
+            <svg viewBox="0 0 24 24"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
             <span data-i18n="dlZipBtn">تحميل من Google Drive</span>
           </a>
+        </div>
 
-          <p style="font-size:11.5px;color:var(--muted);margin-top:14px;line-height:1.6;">
-            <span data-i18n="dlGdNote">إذا ظهرت رسالة تحذير من Google، اضغط على "Download anyway" لبدء التحميل.</span>
+        <!-- EXE card -->
+        <div class="download-card secondary">
+          <div class="dl-icon secondary">
+            <svg viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M9 9l6 6M15 9l-6 6"/></svg>
+          </div>
+          <h4 data-i18n="dlExeTitle">ملف EXE فقط</h4>
+          <p data-i18n="dlExeDesc">للمطورين — يحتاج مجلد _internal بجانبه</p>
+          <span class="meta">~2 MB</span>
+          <!-- ⬇️ ضع رابط EXE هنا عند رفعه منفصلاً، أو اتركه يشير للـ ZIP -->
+          <a href="https://drive.google.com/file/d/1CtaJwI_3-cQ1rUzO-4yrUTFfo5D870g7/view"
+             target="_blank" rel="noopener"
+             class="download-btn secondary">
+            <svg viewBox="0 0 24 24"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+            <span data-i18n="dlExeBtn">تحميل من Google Drive</span>
+          </a>
+          <p style="font-size:11px;color:var(--muted);margin-top:10px" data-i18n="dlExeNote">
+            (EXE موجود داخل المجلد — أو ارفعه منفصلاً وحدّث الرابط)
           </p>
         </div>
       </div>
 
       <!-- ZIP CONTENTS -->
       <div class="download-info">
-        <h5 data-i18n="dlContentsTitle">ماذا يحتوي ملف ZIP؟</h5>
+        <h5 data-i18n="dlContentsTitle">ماذا يحتوي المجلد؟</h5>
         <ul>
           <li data-i18n="dlC1">SmartVisionAI.exe — التطبيق النهائي</li>
           <li data-i18n="dlC2">_internal/ — المكتبات والنموذج والخطوط</li>
@@ -939,7 +1053,7 @@ tr:hover td{background:var(--bg-soft)}
       <!-- WARNING -->
       <div class="download-note">
         <strong data-i18n="dlNoteTitle">⚠️ مهم جداً:</strong>
-        <span data-i18n="dlNoteText">بعد التحميل، فك ضغط ZIP في أي مجلد، ثم شغّل SmartVisionAI.exe من داخله. لا تنسخ EXE وحده — يحتاج مجلد _internal المجاور. إذا ظهر تحذير من Windows Defender، أضف المجلد للاستثناءات.</span>
+        <span data-i18n="dlNoteText">بعد التحميل، فك ضغط ZIP في أي مجلد، ثم شغّل SmartVisionAI.exe من داخله. لا تنسخ EXE وحده — يحتاج مجلد _internal المجاور. إذا ظهر تحذير من Google أو Windows Defender، اضغط "Download anyway" أو أضف للاستثناءات.</span>
       </div>
 
       <!-- STEPS -->
@@ -948,8 +1062,8 @@ tr:hover td{background:var(--bg-soft)}
         <div class="step">
           <div class="step-num">1</div>
           <div class="step-body">
-            <strong data-i18n="appHow1">تحميل ZIP</strong>
-            <p data-i18n="appHow1P">اضغط زر "تحميل من Google Drive" وانتظر انتهاء التحميل (~450 MB).</p>
+            <strong data-i18n="appHow1">تحميل</strong>
+            <p data-i18n="appHow1P">اضغط زر التحميل وانتظر انتهاء التحميل (~450 MB).</p>
           </div>
         </div>
         <div class="step">
@@ -1031,7 +1145,6 @@ let introPhrases = INTRO.ar;
   const overlay = document.getElementById("introOverlay");
   const phraseEl = document.getElementById("introPhrase");
   const dots = document.querySelectorAll(".intro-dot");
-  let idx = 0;
   const FADE_IN = 150, VISIBLE = 900, FADE_OUT = 200;
   function showPhrase(i){
     if (i >= introPhrases.length){
@@ -1056,270 +1169,314 @@ let introPhrases = INTRO.ar;
 /* ============ I18N ============ */
 const I18N = {
   ar: {
-    brand: "تركي تقني", btnDiscover: "تعرف على المشروع", btnDownload: "تحميل التطبيق",
-    navStart: "البداية", navOverview: "نظرة عامة", navGoal: "الهدف",
-    navReason: "لماذا بُني؟", navTech: "الشرح التقني", navHow: "طريقة العمل",
-    navFeatures: "الميزات", navProsCons: "الإيجابيات والسلبيات",
-    navUse: "الاستخدام", navUI: "واجهة التحكم", navReports: "التقارير والإشعارات",
-    navApp: "تحميل التطبيق", navEnd: "الخاتمة", navCopyright: "حقوق المشروع",
-    heroBadge: "نظام مراقبة ذكي محلي",
-    heroTitle: "SmartVisionAI — رؤية ذكية بالذكاء الاصطناعي",
-    heroSub: "تطبيق Windows متكامل يعمل محلياً بدون كرت رسوميات، يكتشف الأشخاص والسيارات بالذكاء الاصطناعي، ويحفظ الأحداث مع تقارير PDF احترافية، وبوتات تلجرام متعددة، ومستخدمين معزولين تماماً.",
-    statCams: "كاميرات كحد أقصى", statPerms: "صلاحية", statCpu: "بدون GPU", statExe: "جاهز للتشغيل",
-    overviewTitle: "نظرة عامة",
-    overviewLead: "ما هو النظام، ما الذي يقدمه، وكيف يختلف عن الحلول التجارية.",
-    whatIs: "ما هو SmartVisionAI؟",
-    whatIsP: "SmartVisionAI هو تطبيق مراقبة ذكي محلي يعمل على أجهزة Windows ذات المواصفات الضعيفة باستخدام المعالج فقط. يستقبل بثاً من كاميرات IP عبر RTSP أو تطبيقات الجوال عبر HTTP، ويشغّل نموذج YOLOv8n بصيغة ONNX، ثم يحفظ لقطة احترافية معلَّقة لكل حدث في SQLite، ويولّد تقارير PDF بالعربية.",
-    layersTitle: "الطبقات الأربع",
-    layer1: "الاستقبال", layer1P: "كاميرات IP عبر RTSP، أو تطبيقات الجوال عبر HTTP، أو كاميرا ويب، أو ملف فيديو.",
-    layer2: "الذكاء الاصطناعي", layer2P: "YOLOv8n ONNX عبر ONNX Runtime مع تتبع خفيف لمنع التكرار.",
-    layer3: "التخزين", layer3P: "SQLite للأحداث والمستخدمين، وملفات JPG/MP4 للوسائط، وPDF للتقارير.",
-    layer4: "العرض", layer4P: "واجهة ويب متجاوبة مع دعم العربية والإنجليزية، وبوتات تلجرام بأوامر فورية.",
-    goalTitle: "الهدف", goalLead: "ما الذي يهدف إليه المشروع وما القيم التي يقدمها.",
-    goal1: "استقلالية كاملة عن السحابة", goal1P: "كل البيانات تُخزَّن على جهازك. لا تُرسَل صورة واحدة لأي خادم خارجي.",
-    goal2: "بدون اشتراكات شهرية", goal2P: "الحلول التجارية تفرض اشتراكات سحابية. هنا: صفر تكاليف تشغيل.",
-    goal3: "يعمل على أجهزة ضعيفة", goal3P: "لا يحتاج كرت رسوميات. YOLOv8n ONNX مُحسَّن ليعمل على CPU.",
-    goal4: "متعدد المستخدمين معزول", goal4P: "كل مستخدم له قاعدة بياناته وإعداداته وكاميراته. لا تسريب.",
-    reasonTitle: "لماذا بُني هذا النظام؟", reasonLead: "القصة وراء المشروع.",
-    reason1: "تكلفة عالية", reason1P: "Hikvision وأمثالها تفرض رسوماً سنوية.",
-    reason2: "خصوصية مهددة", reason2P: "الفيديوهات تُرسَل لخوادم بعيدة.",
-    reason3: "معقدة الإعداد", reason3P: "معظم الحلول تحتاج فنيين متخصصين.",
-    reason4: "قليلة التخصيص", reason4P: "لا يمكنك تعديل الواجهة بحرية.",
-    howTitle: "طريقة العمل", howLead: "كيف يتحول الفيديو إلى حدث محفوظ.",
-    how1: "الاتصال بالكاميرا", how1P: "فتح RTSP/HTTP/Webcam عبر OpenCV مع إعادة اتصال تلقائية.",
-    how2: "قراءة الإطارات", how2P: "حلقة قراءة مستمرة تحفظ الإطار للبث والكشف.",
-    how3: "الاستدلال", how3P: "تصغير الإطار، تشغيل YOLOv8n، فلترة الفئات، ثم NMS.",
-    how4: "التتبع ومنع التكرار", how4P: "تتبع IoU يمنع حفظ نفس الهدف مرتين.",
-    how5: "إنشاء اللقطة", how5P: "إطار + كاميرا + تاريخ + مربعات + عدادات.",
-    how6: "الحفظ والعرض", how6P: "الصورة تُحفظ، ويُضاف صف في SQLite، وتظهر في الواجهة.",
-    featuresTitle: "الميزات", featuresLead: "ما يميز SmartVisionAI.",
-    feat1: "كشف ذكي", feat1P: "YOLOv8n ONNX يكتشف الفئات المهمة بمربعات دقيقة.",
-    feat2: "منع تكرار", feat2P: "متتبع IoU يحفظ صورة واحدة فقط لكل حدث.",
-    feat3: "لقطات احترافية", feat3P: "إطار + كاميرا + تاريخ + مربعات + عدادات.",
-    feat4: "تقارير PDF", feat4P: "يومي/أسبوعي/شهري/سنوي مع رسوم ومقارنة.",
-    feat5: "مستخدمون معزولون", feat5P: "كل مستخدم له قاعدة بياناته المستقلة.",
-    feat6: "بوتات تلجرام", feat6P: "عدد لا نهائي من البوتات بأوامر كاملة.",
-    prosconsTitle: "الإيجابيات والسلبيات",
-    prosTitle: "الإيجابيات", consTitle: "السلبيات",
-    pros1: "مجاني بالكامل — بدون اشتراكات",
-    pros2: "خصوصية مطلقة — البيانات على جهازك",
-    pros3: "لا يحتاج GPU — يعمل على CPU فقط",
-    pros4: "دعم عربي حقيقي — واجهة وتقارير",
-    pros5: "متعدد المستخدمين مع عزل كامل",
-    pros6: "بوتات تلجرام متعددة",
-    pros7: "21 صلاحية دقيقة لكل مستخدم",
-    pros8: "تقارير PDF بالعربية + رسوم",
-    cons1: "يتطلب إعداداً يدوياً أولياً",
-    cons2: "YOLOv8n أقل دقة من النماذج الكبيرة",
-    cons3: "يعمل محلياً فقط بدون إعداد شبكة",
-    cons4: "يحتاج جهازاً يعمل 24/7",
-    cons5: "لا يدعم التعرف على الوجوه",
-    cons6: "لا يقرأ لوحات السيارات",
-    cons7: "يحتاج كاميرا وإضاءة معقولة",
-    cons8: "حد أقصى 3 كاميرات افتراضياً",
-    uiTitle: "واجهة التحكم الكاملة", uiLead: "ثمانية أقسام رئيسية في التطبيق.",
-    uiHome: "1. الرئيسية", uiHomeP: "لوحة تحكم شاملة:",
-    uiHomeL1: "4 بطاقات إحصائية", uiHomeL2: "3 رسوم بيانية",
-    uiHomeL3: "بطاقات الكاميرات المباشرة", uiHomeL4: "أزرار الفلاش والصوت",
-    uiCams: "2. الكاميرات", uiCamsP: "إدارة كاملة:",
-    uiCamsL1: "إضافة كاميرا", uiCamsL2: "تشغيل/إيقاف",
-    uiCamsL3: "حذف", uiCamsL4: "عرض الحالة",
-    uiEvents: "3. سجل الحركة", uiEventsP: "سجل كامل:",
-    uiEventsL1: "Pagination", uiEventsL2: "تصفية متقدمة",
-    uiEventsL3: "عرض بحجم كامل", uiEventsL4: "حذف",
-    uiReports: "4. التقارير", uiReportsP: "توليد تقارير:",
-    uiReportsL1: "يومي/أسبوعي/شهري/سنوي", uiReportsL2: "PDF فوري",
-    uiReportsL3: "ملخص مرئي", uiReportsL4: "إرسال تلجرام",
-    uiUsers: "5. المستخدمون", uiUsersP: "إدارة المستخدمين:",
-    uiUsersL1: "إنشاء مستخدم", uiUsersL2: "21 صلاحية",
-    uiUsersL3: "تعطيل/تفعيل/حذف", uiUsersL4: "طلبات التسجيل",
-    uiBots: "6. البوتات", uiBotsP: "إدارة البوتات:",
-    uiBotsL1: "إضافة بوت", uiBotsL2: "عدد لا نهائي",
-    uiBotsL3: "حذف/تعطيل", uiBotsL4: "/stats /last /photo /report",
-    uiSettings: "7. الإعدادات", uiSettingsP: "تحكم كامل:",
-    uiSettingsL1: "عام", uiSettingsL2: "الذكاء الاصطناعي",
-    uiSettingsL3: "التسجيل", uiSettingsL4: "الجدولة والصوت",
-    uiGuide: "8. الدليل", uiGuideP: "دليل مدمج:",
-    uiGuideL1: "شرح الأقسام", uiGuideL2: "أوامر البوت",
-    uiGuideL3: "التثبيت", uiGuideL4: "الأمان",
-    reportsTitle: "التقارير والإشعارات",
-    reportsLead: "تقارير احترافية تلقائية أو حسب الطلب.",
-    rep1: "يومي", rep1P: "مقارنة اليوم بالأمس.",
-    rep2: "أسبوعي", rep2P: "الأكثر طلباً — مع مقارنة الأسبوع السابق.",
-    rep3: "شهري", rep3P: "نشاط الشهر كاملاً.",
-    rep4: "سنوي", rep4P: "إحصاءات السنة كاملة.",
-    telegramAlertsTitle: "إشعارات تلجرام الفورية",
-    tgAlerts1: "البوت يمكنه:",
-    tgAlertsL1: "إرسال صورة + بيانات أي حدث: /last أو /photo 42",
-    tgAlertsL2: "إرسال تقرير كامل: /report daily",
-    tgAlertsL3: "إحصاءات سريعة: /stats",
-    tgAlertsL4: "حالة الكاميرات: /cameras",
-    appTitle: "تحميل التطبيق",
-    appLead: "نظام كامل جاهز للتحميل والتشغيل مباشرة — بدون الحاجة إلى Python أو تثبيت أي شيء.",
-    dlZipTitle: "مجلد المشروع كاملاً (ZIP)",
-    dlZipDesc: "يحتوي على التطبيق + المكتبات + النموذج + الخطوط",
-    dlZipBtn: "تحميل من Google Drive",
-    dlGdNote: "إذا ظهرت رسالة تحذير من Google، اضغط على \"Download anyway\" لبدء التحميل.",
-    dlContentsTitle: "ماذا يحتوي ملف ZIP؟",
-    dlC1: "SmartVisionAI.exe — التطبيق النهائي",
-    dlC2: "_internal/ — المكتبات والنموذج والخطوط",
-    dlC3: "models/yolov8n.onnx — نموذج الكشف",
-    dlC4: "fonts/arial.ttf + arialbd.ttf — الخطوط العربية",
-    dlC5: "config.json + global_config.json — الإعدادات",
-    dlC6: "قاعدة البيانات الفارغة جاهزة للاستخدام",
-    dlNoteTitle: "⚠️ مهم جداً:",
-    dlNoteText: "بعد التحميل، فك ضغط ZIP في أي مجلد، ثم شغّل SmartVisionAI.exe من داخله. لا تنسخ EXE وحده — يحتاج مجلد _internal المجاور. إذا ظهر تحذير من Windows Defender، أضف المجلد للاستثناءات.",
-    appHowTitle: "كيف تشغّل التطبيق بعد التحميل؟",
-    appHow1: "تحميل ZIP", appHow1P: "اضغط زر \"تحميل من Google Drive\" وانتظر انتهاء التحميل (~450 MB).",
-    appHow2: "فك الضغط", appHow2P: "افتح ZIP وفك الضغط في مجلد مثل C:\\SmartVisionAI\\.",
-    appHow3: "تشغيل EXE", appHow3P: "انقر مزدوجاً على SmartVisionAI.exe — ستفتح نافذة سوداء صغيرة.",
-    appHow4: "فتح المتصفح", appHow4P: "افتح http://127.0.0.1:5000 في أي متصفح.",
-    appHow5: "تسجيل أول مستخدم", appHow5P: "اضغط \"حساب جديد\" — أول مستخدم يصبح admin تلقائياً.",
-    appWarn: "مهم:", appWarnP: "إذا ظهر خطأ \"VCRUNTIME140.dll not found\" — ثبّت Visual C++ Redistributable من: aka.ms/vs/17/release/vc_redist.x64.exe",
-    copyrightTitle: "حقوق المشروع",
-    crTitle: "حقوق المشروع كاملة",
-    crSub: "جميع الحقوق الفكرية والتقنية لهذا المشروع محفوظة لـ",
-    crName: "تركي تقني",
-    crRole: "المطور والمصمم والمهندس الوحيد للنظام",
-    crRights: "© 2026 تركي تقني — جميع الحقوق محفوظة",
-    crNoCopy: "لا يجوز نسخ أو إعادة نشر أو تعديل أو بيع هذا المشروع بدون إذن كتابي.",
-    footerBrand: "تركي تقني",
-    footerTag: "نظام مراقبة ذكي محلي · خصوصية كاملة · بدون اشتراكات سحابية",
-    footerRights: "© 2026 تركي تقني — جميع الحقوق محفوظة",
-    footerTech: "بُني بـ Python · Flask · YOLOv8n ONNX · SQLite · ReportLab",
+    brand:"تركي تقني", btnDiscover:"تعرف على المشروع", btnDownload:"تحميل التطبيق",
+    navStart:"البداية", navOverview:"نظرة عامة", navGoal:"الهدف",
+    navName:"سبب التسمية", navReason:"لماذا بُني؟", navTech:"الشرح التقني",
+    navHow:"طريقة العمل", navFeatures:"الميزات", navProsCons:"الإيجابيات والسلبيات",
+    navArch:"المعمارية", navStack:"التقنيات", navUse:"الاستخدام",
+    navUI:"واجهة التحكم", navReports:"التقارير والإشعارات",
+    navApp:"تحميل التطبيق", navEnd:"الخاتمة", navCopyright:"حقوق المشروع",
+    heroBadge:"نظام مراقبة ذكي محلي",
+    heroTitle:"SmartVisionAI — رؤية ذكية بالذكاء الاصطناعي",
+    heroSub:"تطبيق Windows متكامل يعمل محلياً بدون كرت رسوميات، يكتشف الأشخاص والسيارات بالذكاء الاصطناعي، ويحفظ الأحداث مع تقارير PDF احترافية، وبوتات تلجرام متعددة، ومستخدمين معزولين تماماً.",
+    statCams:"كاميرات كحد أقصى", statPerms:"صلاحية", statCpu:"بدون GPU", statExe:"جاهز للتشغيل",
+    overviewTitle:"نظرة عامة", overviewLead:"ما هو النظام، ما الذي يقدمه، وكيف يختلف عن الحلول التجارية.",
+    whatIs:"ما هو SmartVisionAI؟",
+    whatIsP:"SmartVisionAI هو تطبيق مراقبة ذكي محلي يعمل على أجهزة Windows ذات المواصفات الضعيفة باستخدام المعالج فقط. يستقبل بثاً من كاميرات IP عبر RTSP أو تطبيقات الجوال عبر HTTP، ويشغّل نموذج YOLOv8n بصيغة ONNX، ثم يحفظ لقطة احترافية معلَّقة لكل حدث في SQLite، ويولّد تقارير PDF بالعربية.",
+    layersTitle:"الطبقات الأربع",
+    layer1:"الاستقبال", layer1P:"كاميرات IP عبر RTSP، أو تطبيقات الجوال عبر HTTP، أو كاميرا ويب، أو ملف فيديو.",
+    layer2:"الذكاء الاصطناعي", layer2P:"YOLOv8n ONNX عبر ONNX Runtime مع تتبع خفيف لمنع التكرار.",
+    layer3:"التخزين", layer3P:"SQLite للأحداث والمستخدمين، وملفات JPG/MP4 للوسائط، وPDF للتقارير.",
+    layer4:"العرض", layer4P:"واجهة ويب متجاوبة مع دعم العربية والإنجليزية، وبوتات تلجرام بأوامر فورية.",
+    goalTitle:"الهدف", goalLead:"ما الذي يهدف إليه المشروع.",
+    goal1:"استقلالية كاملة عن السحابة", goal1P:"كل البيانات تُخزَّن على جهازك. لا تُرسَل صورة واحدة لأي خادم خارجي.",
+    goal2:"بدون اشتراكات شهرية", goal2P:"الحلول التجارية تفرض اشتراكات سحابية. هنا: صفر تكاليف تشغيل.",
+    goal3:"يعمل على أجهزة ضعيفة", goal3P:"لا يحتاج كرت رسوميات. YOLOv8n ONNX مُحسَّن ليعمل على CPU.",
+    goal4:"متعدد المستخدمين معزول", goal4P:"كل مستخدم له قاعدة بياناته وإعداداته وكاميراته. لا تسريب.",
+    nameTitle:"سبب التسمية", nameLead:"لماذا اخترنا اسم SmartVisionAI.",
+    name1:"Smart — ذكي", name1P:"قدرة النظام على اتخاذ قرارات تلقائية.",
+    name2:"Vision — رؤية", name2P:"Computer Vision: قدرة الآلة على فهم محتوى الصور.",
+    name3:"AI — ذكاء اصطناعي", name3P:"نموذج YOLOv8n الذي يكتشف تلقائياً.",
+    reasonTitle:"لماذا بُني هذا النظام؟", reasonLead:"القصة وراء المشروع.",
+    reason1:"تكلفة عالية", reason1P:"Hikvision وأمثالها تفرض رسوماً سنوية.",
+    reason2:"خصوصية مهددة", reason2P:"الفيديوهات تُرسَل لخوادم بعيدة.",
+    reason3:"معقدة الإعداد", reason3P:"معظم الحلول تحتاج فنيين متخصصين.",
+    reason4:"قليلة التخصيص", reason4P:"لا يمكنك تعديل الواجهة بحرية.",
+    howTitle:"طريقة العمل", howLead:"كيف يتحول الفيديو إلى حدث محفوظ.",
+    how1:"الاتصال بالكاميرا", how1P:"فتح RTSP/HTTP/Webcam عبر OpenCV مع إعادة اتصال تلقائية.",
+    how2:"قراءة الإطارات", how2P:"حلقة قراءة مستمرة تحفظ الإطار للبث والكشف.",
+    how3:"الاستدلال", how3P:"تصغير الإطار، تشغيل YOLOv8n، فلترة الفئات، ثم NMS.",
+    how4:"التتبع ومنع التكرار", how4P:"تتبع IoU يمنع حفظ نفس الهدف مرتين.",
+    how5:"إنشاء اللقطة", how5P:"إطار + كاميرا + تاريخ + مربعات + عدادات.",
+    how6:"الحفظ والعرض", how6P:"الصورة تُحفظ، ويُضاف صف في SQLite، وتظهر في الواجهة.",
+    featuresTitle:"الميزات", featuresLead:"ما يميز SmartVisionAI.",
+    feat1:"كشف ذكي", feat1P:"YOLOv8n ONNX يكتشف الفئات المهمة بمربعات دقيقة.",
+    feat2:"منع تكرار", feat2P:"متتبع IoU يحفظ صورة واحدة فقط لكل حدث.",
+    feat3:"لقطات احترافية", feat3P:"إطار + كاميرا + تاريخ + مربعات + عدادات.",
+    feat4:"تقارير PDF", feat4P:"يومي/أسبوعي/شهري/سنوي مع رسوم ومقارنة.",
+    feat5:"مستخدمون معزولون", feat5P:"كل مستخدم له قاعدة بياناته المستقلة.",
+    feat6:"بوتات تلجرام", feat6P:"عدد لا نهائي من البوتات بأوامر كاملة.",
+    prosconsTitle:"الإيجابيات والسلبيات", prosTitle:"الإيجابيات", consTitle:"السلبيات",
+    pros1:"مجاني بالكامل — بدون اشتراكات", pros2:"خصوصية مطلقة — البيانات على جهازك",
+    pros3:"لا يحتاج GPU — يعمل على CPU فقط", pros4:"دعم عربي حقيقي — واجهة وتقارير",
+    pros5:"متعدد المستخدمين مع عزل كامل", pros6:"بوتات تلجرام متعددة",
+    pros7:"21 صلاحية دقيقة لكل مستخدم", pros8:"تقارير PDF بالعربية + رسوم",
+    cons1:"يتطلب إعداداً يدوياً أولياً", cons2:"YOLOv8n أقل دقة من النماذج الكبيرة",
+    cons3:"يعمل محلياً فقط بدون إعداد شبكة", cons4:"يحتاج جهازاً يعمل 24/7",
+    cons5:"لا يدعم التعرف على الوجوه", cons6:"لا يقرأ لوحات السيارات",
+    cons7:"يحتاج كاميرا وإضاءة معقولة", cons8:"حد أقصى 3 كاميرات افتراضياً",
+    archTitle:"المعمارية", archLead:"كيف يُنظَّم المشروع على القرص.",
+    stackTitle:"التقنيات المستخدمة", stackLead:"كل مكتبة، لماذا اخترناها.",
+    stackTech:"التقنية", stackVer:"الإصدار", stackWhy:"السبب",
+    stackPython:"لغة سريعة التطوير، مكتبات وفيرة",
+    stackFlask:"أخف من Django، أنسب لتطبيق محلي",
+    stackCv2:"معالجة صور + قراءة RTSP/HTTP",
+    stackOrt:"تشغيل النموذج على CPU بكفاءة",
+    stackYolo:"أخف نسخة (6MB)، 80 فئة COCO",
+    stackSqlite:"قاعدة بيانات بلا خادم، ملف واحد",
+    stackReport:"توليد PDF برمجياً",
+    stackMpl:"رسوم بيانية (Agg backend)",
+    stackAr:"تشكيل الحروف العربية",
+    stackReq:"التواصل مع Telegram API",
+    stackPy:"تحويل المشروع إلى EXE مستقل",
+    stackNumpy:"العمليات الرياضية على المصفوفات",
+    devToolsTitle:"أدوات التطوير",
+    tool1:"VS Code أو PyCharm — محرر الكود",
+    tool2:"Python venv — بيئة افتراضية معزولة",
+    tool3:"pip — مدير حزم Python",
+    tool4:"Git + GitHub — التحكم بالإصدارات",
+    tool5:"Google Drive — استضافة ملف التحميل",
+    tool6:"Ultralytics YOLO — تصدير النموذج إلى ONNX",
+    uiTitle:"واجهة التحكم الكاملة", uiLead:"ثمانية أقسام رئيسية في التطبيق.",
+    uiHome:"1. الرئيسية", uiHomeP:"لوحة تحكم شاملة:",
+    uiHomeL1:"4 بطاقات إحصائية", uiHomeL2:"3 رسوم بيانية",
+    uiHomeL3:"بطاقات الكاميرات المباشرة", uiHomeL4:"أزرار الفلاش والصوت",
+    uiCams:"2. الكاميرات", uiCamsP:"إدارة كاملة:",
+    uiCamsL1:"إضافة كاميرا", uiCamsL2:"تشغيل/إيقاف",
+    uiCamsL3:"حذف", uiCamsL4:"عرض الحالة",
+    uiEvents:"3. سجل الحركة", uiEventsP:"سجل كامل:",
+    uiEventsL1:"Pagination", uiEventsL2:"تصفية متقدمة",
+    uiEventsL3:"عرض بحجم كامل", uiEventsL4:"حذف",
+    uiReports:"4. التقارير", uiReportsP:"توليد تقارير:",
+    uiReportsL1:"يومي/أسبوعي/شهري/سنوي", uiReportsL2:"PDF فوري",
+    uiReportsL3:"ملخص مرئي", uiReportsL4:"إرسال تلجرام",
+    uiUsers:"5. المستخدمون", uiUsersP:"إدارة المستخدمين:",
+    uiUsersL1:"إنشاء مستخدم", uiUsersL2:"21 صلاحية",
+    uiUsersL3:"تعطيل/تفعيل/حذف", uiUsersL4:"طلبات التسجيل",
+    uiBots:"6. البوتات", uiBotsP:"إدارة البوتات:",
+    uiBotsL1:"إضافة بوت", uiBotsL2:"عدد لا نهائي",
+    uiBotsL3:"حذف/تعطيل", uiBotsL4:"/stats /last /photo /report",
+    uiSettings:"7. الإعدادات", uiSettingsP:"تحكم كامل:",
+    uiSettingsL1:"عام", uiSettingsL2:"الذكاء الاصطناعي",
+    uiSettingsL3:"التسجيل", uiSettingsL4:"الجدولة والصوت",
+    uiGuide:"8. الدليل", uiGuideP:"دليل مدمج:",
+    uiGuideL1:"شرح الأقسام", uiGuideL2:"أوامر البوت",
+    uiGuideL3:"التثبيت", uiGuideL4:"الأمان",
+    reportsTitle:"التقارير والإشعارات", reportsLead:"تقارير احترافية تلقائية أو حسب الطلب.",
+    rep1:"يومي", rep1P:"مقارنة اليوم بالأمس.",
+    rep2:"أسبوعي", rep2P:"الأكثر طلباً — مع مقارنة الأسبوع السابق.",
+    rep3:"شهري", rep3P:"نشاط الشهر كاملاً.",
+    rep4:"سنوي", rep4P:"إحصاءات السنة كاملة.",
+    telegramAlertsTitle:"إشعارات تلجرام الفورية",
+    tgAlerts1:"البوت يمكنه:",
+    tgAlertsL1:"إرسال صورة + بيانات أي حدث: /last أو /photo 42",
+    tgAlertsL2:"إرسال تقرير كامل: /report daily",
+    tgAlertsL3:"إحصاءات سريعة: /stats",
+    tgAlertsL4:"حالة الكاميرات: /cameras",
+    exportTitle:"تصدير البيانات",
+    exportP:"من تبويب التقارير يمكنك تصدير كل الأحداث كملف CSV جاهز لفتحه في Excel.",
+    appTitle:"تحميل التطبيق",
+    appLead:"اختر تحميل المشروع كاملاً أو ملف EXE مباشرة.",
+    dlZipTitle:"مجلد المشروع كاملاً",
+    dlZipDesc:"يحتوي على التطبيق + المكتبات + النموذج + الخطوط",
+    dlZipBtn:"تحميل من Google Drive",
+    dlExeTitle:"ملف EXE فقط",
+    dlExeDesc:"للمطورين — يحتاج مجلد _internal بجانبه",
+    dlExeBtn:"تحميل من Google Drive",
+    dlExeNote:"(EXE موجود داخل المجلد — أو ارفعه منفصلاً وحدّث الرابط)",
+    dlContentsTitle:"ماذا يحتوي المجلد؟",
+    dlC1:"SmartVisionAI.exe — التطبيق النهائي",
+    dlC2:"_internal/ — المكتبات والنموذج والخطوط",
+    dlC3:"models/yolov8n.onnx — نموذج الكشف",
+    dlC4:"fonts/arial.ttf + arialbd.ttf — الخطوط العربية",
+    dlC5:"config.json + global_config.json — الإعدادات",
+    dlC6:"قاعدة البيانات الفارغة جاهزة للاستخدام",
+    dlNoteTitle:"⚠️ مهم جداً:",
+    dlNoteText:"بعد التحميل، فك ضغط ZIP في أي مجلد، ثم شغّل SmartVisionAI.exe من داخله. لا تنسخ EXE وحده — يحتاج مجلد _internal المجاور. إذا ظهر تحذير من Google أو Windows Defender، اضغط \"Download anyway\" أو أضف للاستثناءات.",
+    appHowTitle:"كيف تشغّل التطبيق بعد التحميل؟",
+    appHow1:"تحميل", appHow1P:"اضغط زر التحميل وانتظر انتهاء التحميل (~450 MB).",
+    appHow2:"فك الضغط", appHow2P:"افتح ZIP وفك الضغط في مجلد مثل C:\\SmartVisionAI\\.",
+    appHow3:"تشغيل EXE", appHow3P:"انقر مزدوجاً على SmartVisionAI.exe — ستفتح نافذة سوداء صغيرة.",
+    appHow4:"فتح المتصفح", appHow4P:"افتح http://127.0.0.1:5000 في أي متصفح.",
+    appHow5:"تسجيل أول مستخدم", appHow5P:"اضغط \"حساب جديد\" — أول مستخدم يصبح admin تلقائياً.",
+    appWarn:"مهم:",
+    appWarnP:"إذا ظهر خطأ \"VCRUNTIME140.dll not found\" — ثبّت Visual C++ Redistributable من: aka.ms/vs/17/release/vc_redist.x64.exe",
+    copyrightTitle:"حقوق المشروع",
+    crTitle:"حقوق المشروع كاملة",
+    crSub:"جميع الحقوق الفكرية والتقنية لهذا المشروع محفوظة لـ",
+    crName:"تركي تقني",
+    crRole:"المطور والمصمم والمهندس الوحيد للنظام",
+    crRights:"© 2026 تركي تقني — جميع الحقوق محفوظة",
+    crNoCopy:"لا يجوز نسخ أو إعادة نشر أو تعديل أو بيع هذا المشروع بدون إذن كتابي.",
+    footerBrand:"تركي تقني",
+    footerTag:"نظام مراقبة ذكي محلي · خصوصية كاملة · بدون اشتراكات سحابية",
+    footerRights:"© 2026 تركي تقني — جميع الحقوق محفوظة",
+    footerTech:"بُني بـ Python · Flask · YOLOv8n ONNX · SQLite · ReportLab",
   },
   en: {
-    brand: "Turki Tech", btnDiscover: "Discover", btnDownload: "Download App",
-    navStart: "Start", navOverview: "Overview", navGoal: "Goal",
-    navReason: "Why Built?", navTech: "Technical", navHow: "How It Works",
-    navFeatures: "Features", navProsCons: "Pros & Cons",
-    navUse: "Usage", navUI: "Control Interface", navReports: "Reports & Alerts",
-    navApp: "Download App", navEnd: "Conclusion", navCopyright: "Copyright",
-    heroBadge: "Local Smart Surveillance System",
-    heroTitle: "SmartVisionAI — Smart Vision with AI",
-    heroSub: "A complete Windows application running locally without a GPU. Detects persons and vehicles with AI, saves events with professional PDF reports, multiple Telegram bots, and fully isolated users.",
-    statCams: "Max Cameras", statPerms: "Permissions", statCpu: "No GPU", statExe: "Ready to Run",
-    overviewTitle: "Overview",
-    overviewLead: "What the system is, what it delivers, and how it differs from commercial solutions.",
-    whatIs: "What is SmartVisionAI?",
-    whatIsP: "SmartVisionAI is a local smart surveillance application running on low-spec Windows machines using CPU only. It ingests streams from IP cameras via RTSP or mobile apps via HTTP, runs YOLOv8n ONNX model, saves an annotated professional snapshot for each event in SQLite, and generates PDF reports in Arabic.",
-    layersTitle: "The Four Layers",
-    layer1: "Ingestion", layer1P: "IP cameras via RTSP, mobile apps via HTTP, webcam, or video file.",
-    layer2: "AI Detection", layer2P: "YOLOv8n ONNX via ONNX Runtime with lightweight tracker.",
-    layer3: "Storage", layer3P: "SQLite for events and users, JPG/MP4 for media, PDF for reports.",
-    layer4: "Presentation", layer4P: "Responsive web UI with Arabic/English support, and Telegram bots.",
-    goalTitle: "Goal", goalLead: "What the project aims to achieve.",
-    goal1: "Full Cloud Independence", goal1P: "All data is stored on your device. Not a single image is sent to any external server.",
-    goal2: "No Monthly Subscriptions", goal2P: "Commercial solutions charge cloud subscriptions. Here: zero operational costs.",
-    goal3: "Runs on Weak Devices", goal3P: "No GPU needed. YOLOv8n ONNX is optimized for CPU.",
-    goal4: "Isolated Multi-User", goal4P: "Each user has their own database, settings, and cameras. No data leakage.",
-    reasonTitle: "Why Was This System Built?", reasonLead: "The story behind the project.",
-    reason1: "High Cost", reason1P: "Hikvision and similar charge annual fees.",
-    reason2: "Privacy at Risk", reason2P: "Videos are sent to remote servers.",
-    reason3: "Complex Setup", reason3P: "Most solutions require specialized technicians.",
-    reason4: "Limited Customization", reason4P: "You can't freely modify the interface.",
-    howTitle: "How It Works", howLead: "How video turns into a saved event.",
-    how1: "Connect to Camera", how1P: "Open RTSP/HTTP/Webcam via OpenCV with auto-reconnect.",
-    how2: "Read Frames", how2P: "Continuous read loop saves frames for stream and detection.",
-    how3: "Inference", how3P: "Resize, run YOLOv8n, filter classes, then NMS.",
-    how4: "Track & Dedup", how4P: "IoU tracker prevents saving the same target twice.",
-    how5: "Create Snapshot", how5P: "Frame + camera + date + boxes + counters.",
-    how6: "Save & Display", how6P: "Image saved, row added to SQLite, appears in UI.",
-    featuresTitle: "Features", featuresLead: "What sets SmartVisionAI apart.",
-    feat1: "Smart Detection", feat1P: "YOLOv8n ONNX detects relevant classes with accurate boxes.",
-    feat2: "Duplicate Prevention", feat2P: "IoU tracker saves one image per event.",
-    feat3: "Professional Snapshots", feat3P: "Frame + camera + date + boxes + counters.",
-    feat4: "PDF Reports", feat4P: "Daily/weekly/monthly/yearly with charts and comparison.",
-    feat5: "Isolated Users", feat5P: "Each user has their own independent database.",
-    feat6: "Telegram Bots", feat6P: "Unlimited bots with full commands.",
-    prosconsTitle: "Pros and Cons",
-    prosTitle: "Pros", consTitle: "Cons",
-    pros1: "Completely free — no subscriptions",
-    pros2: "Absolute privacy — data on your device",
-    pros3: "No GPU needed — CPU only",
-    pros4: "Real Arabic support — UI and reports",
-    pros5: "Isolated multi-user",
-    pros6: "Multiple Telegram bots",
-    pros7: "21 fine-grained permissions per user",
-    pros8: "Arabic PDF reports + charts",
-    cons1: "Requires initial manual setup",
-    cons2: "YOLOv8n less accurate than larger models",
-    cons3: "Works locally only without network setup",
-    cons4: "Needs a device running 24/7",
-    cons5: "No face recognition",
-    cons6: "No license plate reading",
-    cons7: "Needs reasonable camera and lighting",
-    cons8: "Max 3 cameras by default",
-    uiTitle: "Full Control Interface", uiLead: "Eight main sections in the app.",
-    uiHome: "1. Home", uiHomeP: "Comprehensive dashboard:",
-    uiHomeL1: "4 stat cards", uiHomeL2: "3 charts",
-    uiHomeL3: "Live camera cards", uiHomeL4: "Flash and audio buttons",
-    uiCams: "2. Cameras", uiCamsP: "Full management:",
-    uiCamsL1: "Add camera", uiCamsL2: "Start/stop",
-    uiCamsL3: "Delete", uiCamsL4: "Show status",
-    uiEvents: "3. Events Log", uiEventsP: "Complete log:",
-    uiEventsL1: "Pagination", uiEventsL2: "Advanced filter",
-    uiEventsL3: "Full-size view", uiEventsL4: "Delete",
-    uiReports: "4. Reports", uiReportsP: "Generate reports:",
-    uiReportsL1: "Daily/weekly/monthly/yearly", uiReportsL2: "Instant PDF",
-    uiReportsL3: "Visual summary", uiReportsL4: "Send to Telegram",
-    uiUsers: "5. Users", uiUsersP: "User management:",
-    uiUsersL1: "Create user", uiUsersL2: "21 permissions",
-    uiUsersL3: "Disable/enable/delete", uiUsersL4: "Pending requests",
-    uiBots: "6. Bots", uiBotsP: "Bot management:",
-    uiBotsL1: "Add bot", uiBotsL2: "Unlimited",
-    uiBotsL3: "Delete/disable", uiBotsL4: "/stats /last /photo /report",
-    uiSettings: "7. Settings", uiSettingsP: "Full control:",
-    uiSettingsL1: "General", uiSettingsL2: "AI",
-    uiSettingsL3: "Recording", uiSettingsL4: "Schedule & audio",
-    uiGuide: "8. Guide", uiGuideP: "Built-in guide:",
-    uiGuideL1: "Section explanations", uiGuideL2: "Bot commands",
-    uiGuideL3: "Installation", uiGuideL4: "Security",
-    reportsTitle: "Reports & Alerts",
-    reportsLead: "Professional automatic or on-demand reports.",
-    rep1: "Daily", rep1P: "Compare today with yesterday.",
-    rep2: "Weekly", rep2P: "Most requested — with previous week comparison.",
-    rep3: "Monthly", rep3P: "Full month activity.",
-    rep4: "Yearly", rep4P: "Full year statistics.",
-    telegramAlertsTitle: "Instant Telegram Alerts",
-    tgAlerts1: "The bot can:",
-    tgAlertsL1: "Send image + data of any event: /last or /photo 42",
-    tgAlertsL2: "Send full report: /report daily",
-    tgAlertsL3: "Quick stats: /stats",
-    tgAlertsL4: "Camera status: /cameras",
-    appTitle: "Download Application",
-    appLead: "Complete system ready to download and run — no Python or installation needed.",
-    dlZipTitle: "Complete Project Folder (ZIP)",
-    dlZipDesc: "Contains the app + libraries + model + fonts",
-    dlZipBtn: "Download from Google Drive",
-    dlGdNote: "If Google shows a warning, click \"Download anyway\" to start.",
-    dlContentsTitle: "What's in the ZIP file?",
-    dlC1: "SmartVisionAI.exe — final application",
-    dlC2: "_internal/ — libraries, model, fonts",
-    dlC3: "models/yolov8n.onnx — detection model",
-    dlC4: "fonts/arial.ttf + arialbd.ttf — Arabic fonts",
-    dlC5: "config.json + global_config.json — settings",
-    dlC6: "Empty database ready for use",
-    dlNoteTitle: "⚠️ Important:",
-    dlNoteText: "After downloading, unzip the ZIP in any folder, then run SmartVisionAI.exe from inside. Don't copy EXE alone — it needs _internal folder. If Windows Defender warns, add the folder to exclusions.",
-    appHowTitle: "How to run after download?",
-    appHow1: "Download ZIP", appHow1P: "Click \"Download from Google Drive\" and wait for completion (~450 MB).",
-    appHow2: "Unzip", appHow2P: "Open ZIP and extract to a folder like C:\\SmartVisionAI\\.",
-    appHow3: "Run EXE", appHow3P: "Double-click SmartVisionAI.exe — a small black window opens.",
-    appHow4: "Open Browser", appHow4P: "Open http://127.0.0.1:5000 in any browser.",
-    appHow5: "Register First User", appHow5P: "Click \"Register\" — first user becomes admin automatically.",
-    appWarn: "Important:", appWarnP: "If you get \"VCRUNTIME140.dll not found\" — install Visual C++ Redistributable from: aka.ms/vs/17/release/vc_redist.x64.exe",
-    copyrightTitle: "Project Rights",
-    crTitle: "Full Project Rights",
-    crSub: "All intellectual and technical rights of this project are reserved for",
-    crName: "Turki Tech",
-    crRole: "The sole developer, designer, and engineer of the system",
-    crRights: "© 2026 Turki Tech — All Rights Reserved",
-    crNoCopy: "Copying, republishing, modifying, or selling this project without written permission is not allowed.",
-    footerBrand: "Turki Tech",
-    footerTag: "Local smart surveillance system · Full privacy · No cloud subscriptions",
-    footerRights: "© 2026 Turki Tech — All Rights Reserved",
-    footerTech: "Built with Python · Flask · YOLOv8n ONNX · SQLite · ReportLab",
+    brand:"Turki Tech", btnDiscover:"Discover", btnDownload:"Download App",
+    navStart:"Start", navOverview:"Overview", navGoal:"Goal",
+    navName:"Name Origin", navReason:"Why Built?", navTech:"Technical",
+    navHow:"How It Works", navFeatures:"Features", navProsCons:"Pros & Cons",
+    navArch:"Architecture", navStack:"Tech Stack", navUse:"Usage",
+    navUI:"Control Interface", navReports:"Reports & Alerts",
+    navApp:"Download App", navEnd:"Conclusion", navCopyright:"Copyright",
+    heroBadge:"Local Smart Surveillance System",
+    heroTitle:"SmartVisionAI — Smart Vision with AI",
+    heroSub:"A complete Windows application running locally without a GPU. Detects persons and vehicles with AI, saves events with professional PDF reports, multiple Telegram bots, and fully isolated users.",
+    statCams:"Max Cameras", statPerms:"Permissions", statCpu:"No GPU", statExe:"Ready to Run",
+    overviewTitle:"Overview", overviewLead:"What the system is, what it delivers, and how it differs.",
+    whatIs:"What is SmartVisionAI?",
+    whatIsP:"SmartVisionAI is a local smart surveillance application running on low-spec Windows machines using CPU only. It ingests streams from IP cameras via RTSP or mobile apps via HTTP, runs YOLOv8n ONNX model, saves an annotated professional snapshot for each event in SQLite, and generates PDF reports in Arabic.",
+    layersTitle:"The Four Layers",
+    layer1:"Ingestion", layer1P:"IP cameras via RTSP, mobile apps via HTTP, webcam, or video file.",
+    layer2:"AI Detection", layer2P:"YOLOv8n ONNX via ONNX Runtime with lightweight tracker.",
+    layer3:"Storage", layer3P:"SQLite for events and users, JPG/MP4 for media, PDF for reports.",
+    layer4:"Presentation", layer4P:"Responsive web UI with Arabic/English support, and Telegram bots.",
+    goalTitle:"Goal", goalLead:"What the project aims to achieve.",
+    goal1:"Full Cloud Independence", goal1P:"All data is stored on your device.",
+    goal2:"No Monthly Subscriptions", goal2P:"Commercial solutions charge cloud subscriptions.",
+    goal3:"Runs on Weak Devices", goal3P:"No GPU needed. YOLOv8n ONNX is optimized for CPU.",
+    goal4:"Isolated Multi-User", goal4P:"Each user has their own database, settings, and cameras.",
+    nameTitle:"Name Origin", nameLead:"Why we chose SmartVisionAI.",
+    name1:"Smart", name1P:"The system's ability to make automatic decisions.",
+    name2:"Vision", name2P:"Computer Vision: understanding image content.",
+    name3:"AI", name3P:"YOLOv8n model that detects automatically.",
+    reasonTitle:"Why Was This System Built?", reasonLead:"The story behind the project.",
+    reason1:"High Cost", reason1P:"Hikvision and similar charge annual fees.",
+    reason2:"Privacy at Risk", reason2P:"Videos are sent to remote servers.",
+    reason3:"Complex Setup", reason3P:"Most solutions require specialized technicians.",
+    reason4:"Limited Customization", reason4P:"You can't freely modify the interface.",
+    howTitle:"How It Works", howLead:"How video turns into a saved event.",
+    how1:"Connect to Camera", how1P:"Open RTSP/HTTP/Webcam via OpenCV with auto-reconnect.",
+    how2:"Read Frames", how2P:"Continuous read loop saves frames.",
+    how3:"Inference", how3P:"Resize, run YOLOv8n, filter classes, then NMS.",
+    how4:"Track & Dedup", how4P:"IoU tracker prevents saving the same target twice.",
+    how5:"Create Snapshot", how5P:"Frame + camera + date + boxes + counters.",
+    how6:"Save & Display", how6P:"Image saved, row added to SQLite.",
+    featuresTitle:"Features", featuresLead:"What sets SmartVisionAI apart.",
+    feat1:"Smart Detection", feat1P:"YOLOv8n ONNX detects relevant classes.",
+    feat2:"Duplicate Prevention", feat2P:"IoU tracker saves one image per event.",
+    feat3:"Professional Snapshots", feat3P:"Frame + camera + date + boxes + counters.",
+    feat4:"PDF Reports", feat4P:"Daily/weekly/monthly/yearly with charts.",
+    feat5:"Isolated Users", feat5P:"Each user has their own database.",
+    feat6:"Telegram Bots", feat6P:"Unlimited bots with full commands.",
+    prosconsTitle:"Pros and Cons", prosTitle:"Pros", consTitle:"Cons",
+    pros1:"Completely free — no subscriptions", pros2:"Absolute privacy",
+    pros3:"No GPU needed", pros4:"Real Arabic support",
+    pros5:"Isolated multi-user", pros6:"Multiple Telegram bots",
+    pros7:"21 fine-grained permissions", pros8:"Arabic PDF reports + charts",
+    cons1:"Requires initial manual setup", cons2:"YOLOv8n less accurate than larger models",
+    cons3:"Works locally only", cons4:"Needs a device running 24/7",
+    cons5:"No face recognition", cons6:"No license plate reading",
+    cons7:"Needs reasonable camera and lighting", cons8:"Max 3 cameras by default",
+    archTitle:"Architecture", archLead:"How the project is organized on disk.",
+    stackTitle:"Tech Stack", stackLead:"Each library and why we chose it.",
+    stackTech:"Tech", stackVer:"Version", stackWhy:"Reason",
+    stackPython:"Fast development, rich libraries",
+    stackFlask:"Lighter than Django",
+    stackCv2:"Image processing + RTSP/HTTP",
+    stackOrt:"Efficient model execution on CPU",
+    stackYolo:"Lightest version (6MB)",
+    stackSqlite:"Serverless database",
+    stackReport:"PDF generation programmatically",
+    stackMpl:"Charts (Agg backend)",
+    stackAr:"Arabic letter shaping",
+    stackReq:"Communication with Telegram API",
+    stackPy:"Convert to standalone EXE",
+    stackNumpy:"Mathematical operations on arrays",
+    devToolsTitle:"Development Tools",
+    tool1:"VS Code or PyCharm — code editor",
+    tool2:"Python venv — isolated environment",
+    tool3:"pip — Python package manager",
+    tool4:"Git + GitHub — version control",
+    tool5:"Google Drive — file hosting",
+    tool6:"Ultralytics YOLO — export model to ONNX",
+    uiTitle:"Full Control Interface", uiLead:"Eight main sections in the app.",
+    uiHome:"1. Home", uiHomeP:"Comprehensive dashboard:",
+    uiHomeL1:"4 stat cards", uiHomeL2:"3 charts",
+    uiHomeL3:"Live camera cards", uiHomeL4:"Flash and audio buttons",
+    uiCams:"2. Cameras", uiCamsP:"Full management:",
+    uiCamsL1:"Add camera", uiCamsL2:"Start/stop",
+    uiCamsL3:"Delete", uiCamsL4:"Show status",
+    uiEvents:"3. Events Log", uiEventsP:"Complete log:",
+    uiEventsL1:"Pagination", uiEventsL2:"Advanced filter",
+    uiEventsL3:"Full-size view", uiEventsL4:"Delete",
+    uiReports:"4. Reports", uiReportsP:"Generate reports:",
+    uiReportsL1:"Daily/weekly/monthly/yearly", uiReportsL2:"Instant PDF",
+    uiReportsL3:"Visual summary", uiReportsL4:"Send to Telegram",
+    uiUsers:"5. Users", uiUsersP:"User management:",
+    uiUsersL1:"Create user", uiUsersL2:"21 permissions",
+    uiUsersL3:"Disable/enable/delete", uiUsersL4:"Pending requests",
+    uiBots:"6. Bots", uiBotsP:"Bot management:",
+    uiBotsL1:"Add bot", uiBotsL2:"Unlimited",
+    uiBotsL3:"Delete/disable", uiBotsL4:"/stats /last /photo /report",
+    uiSettings:"7. Settings", uiSettingsP:"Full control:",
+    uiSettingsL1:"General", uiSettingsL2:"AI",
+    uiSettingsL3:"Recording", uiSettingsL4:"Schedule & audio",
+    uiGuide:"8. Guide", uiGuideP:"Built-in guide:",
+    uiGuideL1:"Section explanations", uiGuideL2:"Bot commands",
+    uiGuideL3:"Installation", uiGuideL4:"Security",
+    reportsTitle:"Reports & Alerts", reportsLead:"Professional automatic or on-demand reports.",
+    rep1:"Daily", rep1P:"Compare today with yesterday.",
+    rep2:"Weekly", rep2P:"Most requested — with previous week comparison.",
+    rep3:"Monthly", rep3P:"Full month activity.",
+    rep4:"Yearly", rep4P:"Full year statistics.",
+    telegramAlertsTitle:"Instant Telegram Alerts",
+    tgAlerts1:"The bot can:",
+    tgAlertsL1:"Send image + data: /last or /photo 42",
+    tgAlertsL2:"Send full report: /report daily",
+    tgAlertsL3:"Quick stats: /stats",
+    tgAlertsL4:"Camera status: /cameras",
+    exportTitle:"Data Export",
+    exportP:"From the Reports tab you can export all events as a CSV file.",
+    appTitle:"Download Application",
+    appLead:"Choose to download the full project or the EXE file directly.",
+    dlZipTitle:"Complete Project Folder",
+    dlZipDesc:"Contains the app + libraries + model + fonts",
+    dlZipBtn:"Download from Google Drive",
+    dlExeTitle:"EXE File Only",
+    dlExeDesc:"For developers — needs _internal folder next to it",
+    dlExeBtn:"Download from Google Drive",
+    dlExeNote:"(EXE is inside the folder — or upload it separately and update the link)",
+    dlContentsTitle:"What's in the folder?",
+    dlC1:"SmartVisionAI.exe — final application",
+    dlC2:"_internal/ — libraries, model, fonts",
+    dlC3:"models/yolov8n.onnx — detection model",
+    dlC4:"fonts/arial.ttf + arialbd.ttf — Arabic fonts",
+    dlC5:"config.json + global_config.json — settings",
+    dlC6:"Empty database ready for use",
+    dlNoteTitle:"⚠️ Important:",
+    dlNoteText:"After downloading, unzip the ZIP in any folder, then run SmartVisionAI.exe from inside. Don't copy EXE alone — it needs _internal folder. If Google or Windows Defender warns, click \"Download anyway\" or add to exclusions.",
+    appHowTitle:"How to run after download?",
+    appHow1:"Download", appHow1P:"Click download and wait for completion (~450 MB).",
+    appHow2:"Unzip", appHow2P:"Open ZIP and extract to a folder like C:\\SmartVisionAI\\.",
+    appHow3:"Run EXE", appHow3P:"Double-click SmartVisionAI.exe — a small black window opens.",
+    appHow4:"Open Browser", appHow4P:"Open http://127.0.0.1:5000 in any browser.",
+    appHow5:"Register First User", appHow5P:"Click \"Register\" — first user becomes admin automatically.",
+    appWarn:"Important:",
+    appWarnP:"If you get \"VCRUNTIME140.dll not found\" — install Visual C++ Redistributable from: aka.ms/vs/17/release/vc_redist.x64.exe",
+    copyrightTitle:"Project Rights",
+    crTitle:"Full Project Rights",
+    crSub:"All intellectual and technical rights of this project are reserved for",
+    crName:"Turki Tech",
+    crRole:"The sole developer, designer, and engineer of the system",
+    crRights:"© 2026 Turki Tech — All Rights Reserved",
+    crNoCopy:"Copying, republishing, modifying, or selling without written permission is not allowed.",
+    footerBrand:"Turki Tech",
+    footerTag:"Local smart surveillance system · Full privacy · No cloud subscriptions",
+    footerRights:"© 2026 Turki Tech — All Rights Reserved",
+    footerTech:"Built with Python · Flask · YOLOv8n ONNX · SQLite · ReportLab",
   }
 };
 
