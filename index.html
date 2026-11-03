@@ -250,6 +250,7 @@ tr:hover td{background:var(--bg-soft)}
 .callout strong{color:var(--text)}
 .callout.warn{border-color:#c47a2b;background:rgba(196,122,43,0.08)}
 .callout.ok{border-color:#5a8a4d;background:rgba(90,138,77,0.08)}
+.callout.danger{border-color:#a8433c;background:rgba(168,67,60,0.08)}
 .callout code{background:var(--panel-alt);padding:2px 6px;border-radius:4px;
   font-family:monospace;font-size:12px;color:var(--primary)}
 
@@ -1056,6 +1057,7 @@ tr:hover td{background:var(--bg-soft)}
       </div>
     </section>
 
+    <!-- ============ COPYRIGHT + DISCLAIMER ============ -->
     <section class="section" id="copyright">
       <div class="section-header">
         <div class="section-icon"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M15 9.4a3.6 3.6 0 1 1 0 5.2"/></svg></div>
@@ -1071,6 +1073,20 @@ tr:hover td{background:var(--bg-soft)}
         <div class="rights" data-i18n="crRights">© 2026 تركي تقني — جميع الحقوق محفوظة</div>
         <p class="no-copy" data-i18n="crNoCopy">لا يجوز نسخ أو إعادة نشر أو تعديل أو بيع هذا المشروع بدون إذن كتابي صريح.</p>
       </div>
+
+      <!-- ============ DISCLAIMER ============ -->
+      <div class="callout danger">
+        <strong style="font-size:15px;display:block;margin-bottom:8px">⚠️ إخلاء مسؤولية</strong>
+        <p style="margin:0 0 8px;font-size:13.5px;line-height:1.8" data-i18n="disc1">
+          المشروع غير مضمون (غير مؤمَّن) بأي شكل من الأشكال. يُستخدم على مسؤولية المستخدم الشخصية فقط، والمطور لا يقدم أي ضمانات صريحة أو ضمنية بشأن الأداء أو الأمان أو الدقة.
+        </p>
+        <p style="margin:0 0 8px;font-size:13.5px;line-height:1.8" data-i18n="disc2">
+          المطور <strong style="color:var(--text)">تركي تقني</strong> يُخلي مسؤوليته الكاملة عن أي شخص يقوم بنشر هذا المشروع أو إعادة توزيعه أو استخدامه لأغراض غير قانونية.
+        </p>
+        <p style="margin:0;font-size:13.5px;line-height:1.8" data-i18n="disc3">
+          المطور غير مسؤول عن أي اختراق أو اختراقية أو سرقة بيانات أو أضرار مادية أو معنوية ناتجة عن استخدام النظام، أو عن أي ضرر مباشر أو غير مباشر يلحق بالمستخدم أو أطراف ثالثة.
+        </p>
+      </div>
     </section>
 
     <footer class="footer">
@@ -1080,6 +1096,7 @@ tr:hover td{background:var(--bg-soft)}
       <p data-i18n="footerTag">نظام مراقبة ذكي محلي · خصوصية كاملة · بدون اشتراكات سحابية</p>
       <div class="rights-line" data-i18n="footerRights">© 2026 تركي تقني — جميع الحقوق محفوظة</div>
       <p class="tech-line" data-i18n="footerTech">بُني بـ Python · Flask · YOLOv8n ONNX · SQLite · ReportLab</p>
+      <p style="font-size:11px;opacity:0.7;margin-top:8px" data-i18n="footerDisc">المشروع غير مضمون — يُستخدم على مسؤولية المستخدم الشخصية</p>
     </footer>
   </main>
 </div>
@@ -1267,10 +1284,14 @@ const I18N = {
     crRole:"المطور والمصمم والمهندس الوحيد للنظام",
     crRights:"© 2026 تركي تقني — جميع الحقوق محفوظة",
     crNoCopy:"لا يجوز نسخ أو إعادة نشر أو تعديل أو بيع هذا المشروع بدون إذن كتابي.",
+    disc1:"المشروع غير مضمون (غير مؤمَّن) بأي شكل من الأشكال. يُستخدم على مسؤولية المستخدم الشخصية فقط، والمطور لا يقدم أي ضمانات صريحة أو ضمنية بشأن الأداء أو الأمان أو الدقة.",
+    disc2:"المطور تركي تقني يُخلي مسؤوليته الكاملة عن أي شخص يقوم بنشر هذا المشروع أو إعادة توزيعه أو استخدامه لأغراض غير قانونية.",
+    disc3:"المطور غير مسؤول عن أي اختراق أو اختراقية أو سرقة بيانات أو أضرار مادية أو معنوية ناتجة عن استخدام النظام، أو عن أي ضرر مباشر أو غير مباشر يلحق بالمستخدم أو أطراف ثالثة.",
     footerBrand:"تركي تقني",
     footerTag:"نظام مراقبة ذكي محلي · خصوصية كاملة · بدون اشتراكات سحابية",
     footerRights:"© 2026 تركي تقني — جميع الحقوق محفوظة",
     footerTech:"بُني بـ Python · Flask · YOLOv8n ONNX · SQLite · ReportLab",
+    footerDisc:"المشروع غير مضمون — يُستخدم على مسؤولية المستخدم الشخصية",
   },
   en: {
     brand:"Turki Tech", btnDiscover:"Discover", btnDownload:"Download App",
@@ -1421,10 +1442,14 @@ const I18N = {
     crRole:"The sole developer, designer, and engineer of the system",
     crRights:"© 2026 Turki Tech — All Rights Reserved",
     crNoCopy:"Copying, republishing, modifying, or selling without written permission is not allowed.",
+    disc1:"This project is provided \"as is\" without warranty of any kind. Use at your own risk. The developer makes no express or implied warranties regarding performance, security, or accuracy.",
+    disc2:"The developer Turki Tech disclaims all responsibility for anyone who publishes, redistributes, or uses this project for illegal purposes.",
+    disc3:"The developer is not responsible for any hacking, breach, data theft, or material or moral damages resulting from the use of this system, or for any direct or indirect damage to the user or third parties.",
     footerBrand:"Turki Tech",
     footerTag:"Local smart surveillance system · Full privacy · No cloud subscriptions",
     footerRights:"© 2026 Turki Tech — All Rights Reserved",
     footerTech:"Built with Python · Flask · YOLOv8n ONNX · SQLite · ReportLab",
+    footerDisc:"This project is not guaranteed — use at your own risk",
   }
 };
 
